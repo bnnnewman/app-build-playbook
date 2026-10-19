@@ -1,0 +1,14 @@
+{
+  "name": "bnnnewman-playbook",
+  "description": "Ben Newman's app build playbook plugin.",
+  "owner": {
+    "name": "Ben Newman"
+  },
+  "plugins": [
+    {
+      "name": "playbook",
+      "source": "./",
+      "description": "App build playbook: stages, skills, review agents, templates and panel packs."
+    }
+  ]
+}
