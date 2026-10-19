@@ -66,5 +66,8 @@ Also:
 - Something the owner should look at? Note it as a Flag for the same block.
 - **No new steps mid-phase** without asking the owner. A late addition gets its own review pass.
 - Keep `TESTS.md` current: `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/coverage.py --spec SPEC.md --tests '<test glob>'`.
+  - **Standard and Full:** required.
+  - **Full:** also add it to CI (it exits 1 on any missing ID).
+  - **Light:** optional.
 
 When the last build step is done, run `/playbook:phase-close <n>`.

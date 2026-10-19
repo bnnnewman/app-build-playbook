@@ -29,7 +29,10 @@ With **`one-round`**, do steps 1–4 only, and return. `/playbook:phase-close` d
      - Round 1: the whole PLAN and SPEC, or the whole phase diff.
      - Later rounds: **only** the diff since the last round, plus the sections it touches, plus all invariants.
      - For code, give the commit range and say "probe in a scratch copy outside the repo". At stage R, say "no Bash".
-     - For Phase A: one auditor per module from `AS-IS.md`, launched in parallel, all frozen at the same HEAD.
+     - For Phase A round 1: one auditor per module from `AS-IS.md`, launched in parallel, all frozen at the same HEAD.
+       - Give each module a short code.
+       - Each auditor saves to `reviews/A-SA1-<mod>.md`, with IDs `A-SA1-<mod>-nn`.
+       - Later rounds use a single auditor over the fix diff (`A-SA2`, …).
    - **Invariants:** "Prove or refute every SPEC §3 invariant."
    - **Tests to recompute:** any whose rules changed.
    - **Do-not-re-raise list:**

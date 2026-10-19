@@ -17,7 +17,7 @@ Read `${CLAUDE_PLUGIN_ROOT}/PLAYBOOK.md` stage 4 and "Finding IDs", `${CLAUDE_PL
    - PLAN and SPEC exist.
    - SPEC §3 invariants are written. If not, write them first (`/playbook:design revise invariants`).
    - The spike is done or marked not applicable.
-2. **Choose the panel.** Its size comes from the Playbook map: Light = 3, Standard = 5–6, Full = 6–8.
+2. **Choose the panel.** Its size comes from the Playbook map: Light is about 3, Standard 5–6, Full 6–8. These are targets. If a Light project also needs the data or privacy reviewer, let the owner choose between going to 4 and dropping the domain expert.
    - **Core**, shipped with the playbook:
      - `logic-auditor` (SA) and `adherence-reviewer` (AD), always;
      - `data-reviewer` (DA), if the app reads sensors or APIs;

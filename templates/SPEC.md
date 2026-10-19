@@ -113,7 +113,7 @@ Behaviour and copy rules only, no pixel design. Which actions are possible from 
 |---|---|---|
 | 0 | Data spike + field report | <owner> has seen which fields arrive; SPEC updated to match |
 | R | Expert review panel + audit loop | Every Critical/Major decided; rechecks done; audit loop at 0 Critical, 0 Major |
-| 1 | Pure logic + tests | Every §13 test ID passes; invariant tests pass; `coverage.py` shows 0 missing |
+| 1 | Pure logic + tests | Every §13 test ID passes; invariant tests pass; `coverage.py` shows 0 missing (Standard and Full) |
 | 2 | Persistence, import, sync (+ CI, + a way to run it on the real device for your platform) | <observable outcome> |
 | 3… | <feature slice> | <one end-to-end scenario a person can try on the device> |
 

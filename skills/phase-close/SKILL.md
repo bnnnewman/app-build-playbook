@@ -16,7 +16,7 @@ The stage prefix is `P<n>`, or `A` for Phase A.
    - Record the base and head SHAs. Reviews cover exactly `<base>..<head>`. For Phase A, the scope is the whole codebase at HEAD.
    - No new commits until the reviews are back (L-18).
 2. **Review in parallel, in one message:**
-   - **Safety:** `/playbook:audit <stage> one-round` (`<stage>-SA1`). For Phase A, that means one `logic-auditor` per module from `AS-IS.md`. Each proves the invariants, and may probe in a scratch copy.
+   - **Safety:** `/playbook:audit <stage> one-round` (`<stage>-SA1`). For Phase A, that means one `logic-auditor` per module from `AS-IS.md`: `reviews/A-SA1-<mod>.md`, IDs `A-SA1-<mod>-nn`. Each proves the invariants, and may probe in a scratch copy.
    - **Code review** on the same range, at high effort:
      - Use the `code-review` skill if it's available. Otherwise use a general-purpose subagent briefed to review for correctness bugs, and to verify each finding with a probe test in a scratch copy.
      - Save the result to `reviews/<stage>-CR1.md`, using the AUDIT template's issue table and IDs `<stage>-CR1-nn`.

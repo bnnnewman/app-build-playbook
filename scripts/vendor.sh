@@ -88,4 +88,5 @@ if [ ${#skipped[@]} -gt 0 ]; then
 fi
 if [ ${#stale[@]} -gt 0 ]; then
   echo "No longer shipped by the playbook (delete them under .claude/ if unused): ${stale[*]}"
+  for s in "${stale[@]}"; do grep -vxF "$s" "$manifest" > "$manifest.tmp" || true; mv "$manifest.tmp" "$manifest"; done
 fi

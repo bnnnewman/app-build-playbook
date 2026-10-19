@@ -49,7 +49,7 @@ Running-App was health-adjacent: a wrong answer could injure someone. That justi
 
 | Size | When | Panel | Audit loop | Retros | Coverage matrix |
 |---|---|---|---|---|---|
-| **Light** | Worst case is annoyance or a small loss (e.g. a dead houseplant, a missed reminder) | 3 reviewers: `logic-auditor`, `adherence-reviewer`, 1 domain expert | Cap at 3 rounds, then the owner decides | Project end only | Optional |
+| **Light** | Worst case is annoyance or a small loss (e.g. a dead houseplant, a missed reminder) | About 3 reviewers: `logic-auditor`, `adherence-reviewer`, 1 domain expert (the owner chooses if data or privacy also matter) | Cap at 3 rounds, then the owner decides | Project end only | Optional |
 | **Standard** | Real money, data or property, or harm to pets or plants that matter to you | 5–6 | Usual exit (0/0), loop breakers at round 5 | Short one per phase | Yes |
 | **Full** | Health, safety or financial advice | 6–8, plus rechecks | Usual exit, every invariant every round | Short one per phase | Yes, and in CI |
 
@@ -223,7 +223,7 @@ Skills: `/playbook:phase-start` and `/playbook:phase-close`. Templates: `PHASE-H
 **Phase A (adopted apps only):**
 - Write the §13.I invariant tests for the existing code first.
 - Then audit module by module (one auditor per module, in parallel), frozen at the current HEAD.
-- IDs are `A-SA<n>-nn` and `A-CR1-nn`. The plan is `phases/PA-PLAN.md`.
+- IDs: round 1 is per module (`A-SA1-<mod>-nn`, in `reviews/A-SA1-<mod>.md`), then `A-SA2-nn` … from a single auditor; code review is `A-CR1-nn`. The plan is `phases/PA-PLAN.md`.
 - Fix the Criticals and Majors as numbered steps. The next phase is P1.
 
 **Architecture habit (L-13):** keep the logic pure and testable without the platform. The app-state layer is pure too: it decides what each screen shows and every write it makes. The UI holds no rules. There is one write path.
