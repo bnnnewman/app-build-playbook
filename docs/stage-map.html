@@ -1,0 +1,300 @@
+<title>Playbook Stage Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a single route line down the page; each stage is a station with a gate. The build phase is a loop off the line. */
+:root {
+  --paper: #f6f7f4;
+  --panel: #ffffff;
+  --ink: #18201d;
+  --muted: #5b6862;
+  --line: #d5dcd7;
+  --route: #1f6f5c;
+  --route-soft: #dcefe8;
+  --gate: #b5452a;
+  --gate-soft: #f6e3dc;
+  --chip: #eef1ee;
+  --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #111614; --panel: #18201d; --ink: #e8eeea; --muted: #9aa8a1; --line: #2c3833;
+    --route: #5cc4a6; --route-soft: #183a31; --gate: #f08a6c; --gate-soft: #3a211a; --chip: #212b27;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #111614; --panel: #18201d; --ink: #e8eeea; --muted: #9aa8a1; --line: #2c3833;
+  --route: #5cc4a6; --route-soft: #183a31; --gate: #f08a6c; --gate-soft: #3a211a; --chip: #212b27;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 56px;
+}
+.wrap { max-width: 920px; margin: 0 auto; display: grid; gap: 40px; }
+h1, h2, h3 { font-family: var(--display); font-stretch: 85%; letter-spacing: -0.01em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2rem, 6vw, 3.1rem); font-weight: 800; line-height: 1.02; }
+h2 { font-size: 1.45rem; font-weight: 700; }
+h3 { font-size: 1.12rem; font-weight: 700; }
+p { margin: 0; }
+code, .mono { font-family: var(--mono); font-size: 0.86em; }
+.eyebrow { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--route); }
+header { display: grid; gap: 14px; }
+header p.lede { color: var(--muted); max-width: 62ch; font-size: 1.05rem; }
+
+/* Size switch */
+.size { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.size .label { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--panel); }
+.seg button {
+  font: 600 0.9rem var(--body); color: var(--muted); background: none; border: 0; border-radius: 999px; padding: 6px 14px; cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--route); color: var(--paper); }
+.seg button:focus-visible, summary:focus-visible { outline: 2px solid var(--gate); outline-offset: 2px; }
+.size-note { color: var(--muted); font-size: 0.92rem; flex-basis: 100%; }
+
+/* Route */
+.route { position: relative; display: grid; gap: 14px; padding-left: 46px; }
+.route::before { content: ""; position: absolute; left: 17px; top: 18px; bottom: 18px; width: 4px; border-radius: 2px; background: var(--route); }
+.station { position: relative; }
+.station .node {
+  position: absolute; left: -46px; top: 10px; width: 38px; height: 38px; border-radius: 50%;
+  background: var(--panel); border: 4px solid var(--route); display: grid; place-items: center;
+  font: 800 1rem var(--display); color: var(--route);
+}
+.station.loop .node { background: var(--route); color: var(--paper); }
+details { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+summary { list-style: none; cursor: pointer; padding: 14px 16px; display: grid; gap: 8px; }
+summary::-webkit-details-marker { display: none; }
+.s-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; justify-content: space-between; }
+.cmd { font-family: var(--mono); font-size: 0.82rem; background: var(--chip); border-radius: 6px; padding: 2px 8px; white-space: nowrap; }
+.gate { display: flex; gap: 8px; align-items: flex-start; font-size: 0.94rem; }
+.gate b { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gate); background: var(--gate-soft); border-radius: 4px; padding: 2px 6px; flex: none; margin-top: 2px; }
+.more { font-size: 0.82rem; color: var(--muted); }
+details[open] .more { display: none; }
+.body { padding: 0 16px 16px; display: grid; gap: 12px; border-top: 1px dashed var(--line); padding-top: 14px; min-width: 0; }
+.body ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.out { font-size: 0.92rem; color: var(--muted); }
+.lessons { display: flex; flex-wrap: wrap; gap: 6px; }
+.lessons span { font-family: var(--mono); font-size: 0.74rem; border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; color: var(--muted); }
+.sized { font-weight: 700; color: var(--route); }
+
+/* Build loop */
+.loop-track { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.loop-track span { background: var(--route-soft); color: var(--ink); border-radius: 6px; padding: 4px 9px; font-size: 0.86rem; }
+.loop-track i { color: var(--route); font-style: normal; font-weight: 700; }
+.loop-track .stop { background: var(--gate-soft); }
+
+/* Reference cards */
+.refs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.idbreak { display: flex; flex-wrap: wrap; gap: 2px; font-family: var(--mono); font-size: 1.25rem; font-weight: 600; }
+.idbreak span { display: grid; text-align: center; gap: 2px; }
+.idbreak small { font-family: var(--body); font-size: 0.68rem; font-weight: 400; color: var(--muted); }
+.idbreak .p { color: var(--route); }
+.verdict { font-family: var(--mono); font-size: 0.86rem; background: var(--chip); padding: 8px 10px; border-radius: 8px; overflow-x: auto; white-space: nowrap; }
+.sev { display: grid; gap: 6px; font-size: 0.92rem; }
+.sev div { display: grid; grid-template-columns: 70px 1fr; gap: 8px; }
+.sev b { font-family: var(--mono); font-size: 0.78rem; }
+.adopt ol { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; font-size: 0.94rem; }
+footer { color: var(--muted); font-size: 0.88rem; }
+@media (max-width: 480px) {
+  .route { padding-left: 38px; }
+  .route::before { left: 13px; }
+  .station .node { left: -38px; width: 30px; height: 30px; font-size: 0.85rem; border-width: 3px; }
+}
+@media (prefers-reduced-motion: no-preference) { details[open] .body { animation: open .18s ease-out; } }
+@keyframes open { from { opacity: .4; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">app-build-playbook · v1.0.0</span>
+    <h1>From idea to tested build, one gate at a time</h1>
+    <p class="lede">Eight stages. Each one ends at a gate you can check. Reviewers advise and you decide. Tap a stage to see what happens inside it and which lessons shaped it.</p>
+    <div class="size" role="group" aria-labelledby="size-label">
+      <span class="label" id="size-label">Project size</span>
+      <span class="seg">
+        <button type="button" data-size="light" aria-pressed="false">Light</button>
+        <button type="button" data-size="standard" aria-pressed="true">Standard</button>
+        <button type="button" data-size="full" aria-pressed="false">Full</button>
+      </span>
+      <p class="size-note" id="size-note"></p>
+    </div>
+  </header>
+
+  <section class="route" aria-label="Stages">
+    <div class="station"><span class="node">0</span>
+      <details><summary>
+        <div class="s-top"><h3>Start or adopt</h3><span class="cmd">/playbook:start adopt</span></div>
+        <div class="gate"><b>Gate</b><span>You agree the Playbook map, the project size and the starting stage.</span></div>
+        <span class="more">Show what happens</span>
+      </summary><div class="body">
+        <ul>
+          <li><strong>New app:</strong> interview (purpose, stack, environment, data, the worst thing it could get wrong, constraints), then scaffold the docs.</li>
+          <li><strong>Half-built app</strong> (Flobbadob): baseline the git state, build and tests; scan for secrets; read your old notes; write <code>AS-IS.md</code>; recover the PLAN and SPEC; plan a Phase A audit of the existing code.</li>
+        </ul>
+        <p class="out">Out: <code>CLAUDE.md</code> Playbook map, <code>DECISIONS.md</code>, <code>NOTES-FOR-OWNER.md</code>, <code>AS-IS.md</code></p>
+      </div></details></div>
+
+    <div class="station"><span class="node">1</span>
+      <details><summary>
+        <div class="s-top"><h3>Plan: the domain truth</h3><span class="cmd">/playbook:design plan</span></div>
+        <div class="gate"><b>Gate</b><span>You could run it by hand from the document alone.</span></div>
+        <span class="more">Show what happens</span>
+      </summary><div class="body">
+        <ul>
+          <li>§0 "If you read nothing else", one screen.</li>
+          <li>§1 facts from your real data. §2 principles, which become invariants.</li>
+          <li>§6 decision rules, each with inputs, precedence and missing-data behaviour.</li>
+          <li>§8 doing it by hand, so the app being late never blocks you.</li>
+        </ul>
+        <div class="lessons"><span>L-04 one home per rule</span><span>L-11 works by hand</span></div>
+      </div></details></div>
+
+    <div class="station"><span class="node">2</span>
+      <details><summary>
+        <div class="s-top"><h3>SPEC: the software truth</h3><span class="cmd">/playbook:design spec</span></div>
+        <div class="gate"><b>Gate</b><span>Every plan rule has a SPEC home and a test. Invariants are listed.</span></div>
+        <span class="more">Show what happens</span>
+      </summary><div class="body">
+        <ul>
+          <li>§0 gates before any code. Locked constants, each with a test.</li>
+          <li>§3 invariants, checked every audit round. §4 definitions (windows, units, clock policy).</li>
+          <li>§7 rules: a pure module; state machines as tables, not prose.</li>
+          <li>§13 tests: <code>T001 | input | expected</code> with exact numbers, plus invariant tests <code>TI1a</code>.</li>
+        </ul>
+        <div class="lessons"><span>L-02 invariants first</span><span>L-06 state tables</span><span>L-08 invariant tests</span><span>L-09 definitions</span></div>
+      </div></details></div>
+
+    <div class="station"><span class="node">3</span>
+      <details><summary>
+        <div class="s-top"><h3>Data spike</h3><span class="cmd">/playbook:spike</span></div>
+        <div class="gate"><b>Gate</b><span>You've seen which fields really arrive, and the SPEC matches them.</span></div>
+        <span class="more">Show what happens</span>
+      </summary><div class="body">
+        <ul>
+          <li>Pull a year of your real data. Report fill rates, never values.</li>
+          <li>Any rule whose inputs never arrive is rewritten before the experts see it.</li>
+          <li>Skip it if the app reads no external data.</li>
+        </ul>
+        <div class="lessons"><span>L-01 spike before the panel: in Running-App, 3 fields never arrived and the spike reopened 7 audit rounds</span></div>
+      </div></details></div>
+
+    <div class="station"><span class="node">4</span>
+      <details><summary>
+        <div class="s-top"><h3>Expert review panel</h3><span class="cmd">/playbook:panel plant-care</span></div>
+        <div class="gate"><b>Gate</b><span>Every Critical and Major item has your accept, reject or modify.</span></div>
+        <span class="more">Show what happens</span>
+      </summary><div class="body">
+        <ul>
+          <li><span class="sized" data-light="About 3" data-standard="5–6" data-full="6–8">5–6</span> read-only reviewers run in parallel, all with the same brief and your context.</li>
+          <li>The main session writes SUMMARY: go/no-go, consensus, conflicts, C/M/N tables, reviewer errors caught.</li>
+          <li>⚠ marks anything that loosens a safety rule. Those always get their own question.</li>
+        </ul>
+        <div class="lessons"><span>L-12 reviewers advise, you decide</span><span>L-22 verified citations</span></div>
+      </div></details></div>
+
+    <div class="station"><span class="node">5</span>
+      <details><summary>
+        <div class="s-top"><h3>Audit loop</h3><span class="cmd">/playbook:audit R</span></div>
+        <div class="gate"><b>Gate</b><span>0 Critical, 0 Major. Minors fixed once, at the end.</span></div>
+        <span class="more">Show what happens</span>
+      </summary><div class="body">
+        <ul>
+          <li>The logic auditor proves every invariant, then fix → narrow re-audit → repeat.</li>
+          <li>Same area with a Major two rounds running: rewrite it, don't patch it.</li>
+          <li>Still Majors at round <span class="sized" data-light="3" data-standard="5" data-full="5">5</span>: the design question comes to you.</li>
+          <li>Waiting on you? The safest option is applied and marked "pending".</li>
+        </ul>
+        <div class="lessons"><span>L-03 exit rule up front</span><span>L-05 fix-impact checklist</span><span>L-10 safe defaults</span></div>
+      </div></details></div>
+
+    <div class="station loop"><span class="node">6</span>
+      <details open><summary>
+        <div class="s-top"><h3>Build phases (repeat)</h3><span class="cmd">/playbook:phase-start · phase-close</span></div>
+        <div class="gate"><b>Gate</b><span>Done-when holds, audit at 0/0, CI green, tried on your device (or recorded as not yet).</span></div>
+        <span class="more">Show what happens</span>
+      </summary><div class="body">
+        <div class="loop-track" aria-label="Phase loop">
+          <span>Handoff</span><i>→</i><span>Your questions first</span><i>→</i><span>Phase plan</span><i>→</i><span>Steps, commit each</span><i>→</i><span class="stop">Freeze</span><i>→</i><span>Audit + code review</span><i>→</i><span>Fix + regression tests</span><i>→</i><span class="stop">Re-audit to 0/0</span><i>→</i><span>CI</span><i>→</i><span>Try on device</span><i>→</i><span>Notes for you</span><i>→</i><span>PR</span><i>↺</i>
+        </div>
+        <ul>
+          <li>Adopted apps start with <strong>Phase A</strong>: invariant tests on the existing code, then an audit module by module.</li>
+          <li>Logic stays pure and testable. The UI holds no rules.</li>
+          <li>No new steps while reviewers run.</li>
+        </ul>
+        <div class="lessons"><span>L-14 handoffs</span><span>L-17 CI cost</span><span>L-18 freeze</span><span>L-19 device by Phase 2</span><span>L-29 questions first</span></div>
+      </div></details></div>
+
+    <div class="station"><span class="node">7</span>
+      <details><summary>
+        <div class="s-top"><h3>Retro</h3><span class="cmd">/playbook:retro</span></div>
+        <div class="gate"><b>Gate</b><span>Numbers recorded. At project end, lessons and playbook edits proposed.</span></div>
+        <span class="more">Show what happens</span>
+      </summary><div class="body">
+        <ul>
+          <li><span class="sized" data-light="Project end only" data-standard="Each phase: 5 minutes, numbers plus one question" data-full="Each phase: 5 minutes, numbers plus one question">Each phase: 5 minutes, numbers plus one question</span>.</li>
+          <li>Project end: new lessons, a METRICS block, and a playbook version bump via PR.</li>
+        </ul>
+      </div></details></div>
+  </section>
+
+  <section class="refs" aria-label="Quick reference">
+    <div class="card">
+      <h2>Reading a finding ID</h2>
+      <div class="idbreak">
+        <span><span class="p">R</span><small>stage</small></span>-<span><span>SA</span><small>reviewer</small></span><span><span class="p">3</span><small>round</small></span>-<span><span>02</span><small>number</small></span>
+      </div>
+      <p class="out">Stage: R design docs · A adopted code · P1–Pn build. The panel is round 0. Examples: <code>R-PP0-04</code> (pathologist, panel), <code>P2-CR1-06</code>.</p>
+    </div>
+    <div class="card">
+      <h2>Every audit opens with</h2>
+      <div class="verdict">Critical: 0 · Major: 0 · Minor: 4 · Nit: 2</div>
+      <div class="sev">
+        <div><b>Critical</b><span>Could cause harm or wrong advice, or acts without your Confirm.</span></div>
+        <div><b>Major</b><span>Materially hurts correctness or real-life use.</span></div>
+        <div><b>Minor</b><span>Polish. Batched, never looped.</span></div>
+      </div>
+    </div>
+    <div class="card adopt">
+      <h2>Flobbadob: first moves</h2>
+      <ol>
+        <li>Pull the playbook in (vendor.sh, or the plugin on your Mac).</li>
+        <li><code>/playbook-start adopt</code></li>
+        <li>Answer the sizing question. A houseplant app is likely Light or Standard.</li>
+        <li><code>/playbook-status</code> any time.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>Built from Running-App: 109 commits, 51 review files, 693 tests, 30 lessons. Full detail lives in <code>PLAYBOOK.md</code> and <code>LESSONS.md</code> in bnnnewman/app-build-playbook.</footer>
+</div>
+
+<script>
+(function () {
+  var notes = {
+    light: "Light: the worst case is annoyance or a small loss. About 3 reviewers, audit loop capped at 3 rounds, one retro at the end.",
+    standard: "Standard: real money, data, pets or plants that matter. 5–6 reviewers, the usual 0/0 exit, a short retro each phase.",
+    full: "Full: health, safety or financial advice. 6–8 reviewers plus rechecks, every invariant every round, coverage enforced in CI."
+  };
+  var buttons = document.querySelectorAll('.seg button');
+  function apply(size) {
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.size === size)); });
+    document.getElementById('size-note').textContent = notes[size];
+    document.querySelectorAll('.sized').forEach(function (el) { el.textContent = el.dataset[size]; });
+    try { localStorage.setItem('playbook-size', size); } catch (e) {}
+  }
+  buttons.forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.size); }); });
+  var saved = null;
+  try { saved = localStorage.getItem('playbook-size'); } catch (e) {}
+  apply(notes[saved] ? saved : 'standard');
+})();
+</script>

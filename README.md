@@ -2,6 +2,8 @@
 
 My process for building apps with Claude Code. It runs from first idea, through design docs, a real-data spike, an expert review panel and safety-logic audit loops, to phased builds with handoffs. Retros at the end of each phase and project make the process better each time.
 
+A one-page visual of the stages is in [`docs/stage-map.html`](docs/stage-map.html) (also published as a private Claude artifact: https://claude.ai/artifact/78qq2AYskPcS2u81k5QxSL).
+
 It comes in two forms in one repo:
 - **A readable playbook:** [`PLAYBOOK.md`](PLAYBOOK.md) explains every stage, gate and convention, and why.
 - **A Claude Code plugin:** `/playbook:*` skills run each stage, plus core review agents, templates and domain panel packs.
