@@ -1,6 +1,6 @@
 {
   "name": "playbook",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Ben's app build playbook: design docs, data spike, expert review panels, safety-logic audit loops to 0 Critical/0 Major, phased builds with handoffs, and retros that improve the playbook.",
   "author": { "name": "Ben Newman" },
   "repository": "https://github.com/bnnnewman/app-build-playbook",

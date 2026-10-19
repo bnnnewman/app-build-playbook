@@ -2,6 +2,10 @@
 
 Newest first. Versions use semver (see `.claude/CLAUDE.md`).
 
+## 1.0.2 · 19 Oct 2026
+
+- `scripts/cloud-setup.sh` says whether the token variable is visible, never prompts for a username, hides the token in any error, and no longer fails the session start.
+
 ## 1.0.1 · 19 Oct 2026
 
 - README: install for every session. On your own computer it's a user-scope plugin. In the cloud, the environment's setup script installs it (`scripts/cloud-setup.sh`, using a read-only token).

@@ -1,6 +1,6 @@
 # The app build playbook
 
-*Version 1.0.1 · 19 Oct 2026 · Built from the Running-App project (see `examples/running-app/CASE-STUDY.md`). Lessons are in `LESSONS.md` and are cited as L-nn.*
+*Version 1.0.2 · 19 Oct 2026 · Built from the Running-App project (see `examples/running-app/CASE-STUDY.md`). Lessons are in `LESSONS.md` and are cited as L-nn.*
 
 This is the process for building an app with Claude Code, from first idea through expert review to a tested build:
 - every stage has a **gate**: a clear "done when";

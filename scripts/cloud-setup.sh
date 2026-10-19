@@ -5,16 +5,37 @@
 #
 # Needs: an environment variable PLAYBOOK_GITHUB_TOKEN holding a fine-grained GitHub token with
 # access to bnnnewman/app-build-playbook only, Contents: Read-only. Not needed if the repo is public.
-# Never prints the token, and doesn't leave it in the clone's git config.
+# Never prints the token, never leaves it in the clone's git config, and never fails the session
+# start: if the install can't happen it says why and carries on.
 # ---
-if [ ! -d /opt/app-build-playbook ]; then
-  if [ -n "${PLAYBOOK_GITHUB_TOKEN:-}" ]; then
-    git clone --quiet --depth 1 "https://x-access-token:${PLAYBOOK_GITHUB_TOKEN}@github.com/bnnnewman/app-build-playbook" /opt/app-build-playbook
+export GIT_TERMINAL_PROMPT=0
+pb_token="${PLAYBOOK_GITHUB_TOKEN:-}"
+if [ -n "$pb_token" ]; then
+  echo "Playbook: PLAYBOOK_GITHUB_TOKEN is set (${#pb_token} characters)."
+else
+  echo "Playbook: PLAYBOOK_GITHUB_TOKEN is NOT set in the setup script. Check the variable's exact name in the environment settings."
+fi
+if [ ! -d /opt/app-build-playbook/.git ]; then
+  rm -rf /opt/app-build-playbook
+  if [ -n "$pb_token" ]; then
+    url="https://x-access-token:${pb_token}@github.com/bnnnewman/app-build-playbook"
+  else
+    url="https://github.com/bnnnewman/app-build-playbook"
+  fi
+  if git clone --quiet --depth 1 "$url" /opt/app-build-playbook 2>/tmp/playbook-clone.err; then
     git -C /opt/app-build-playbook remote set-url origin https://github.com/bnnnewman/app-build-playbook
   else
-    git clone --quiet --depth 1 https://github.com/bnnnewman/app-build-playbook /opt/app-build-playbook
+    echo "Playbook: clone failed: $(sed "s/${pb_token:-NO_TOKEN}/<token>/g" /tmp/playbook-clone.err | tail -1)"
+  fi
+  rm -f /tmp/playbook-clone.err
+fi
+if [ -d /opt/app-build-playbook/.git ]; then
+  claude plugin marketplace add /opt/app-build-playbook >/dev/null 2>&1 || true
+  if claude plugin install playbook@bnnnewman-playbook --scope user >/dev/null 2>&1; then
+    echo "Playbook installed: v$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' /opt/app-build-playbook/.claude-plugin/plugin.json)"
+  else
+    echo "Playbook: cloned, but 'claude plugin install' failed."
   fi
 fi
-claude plugin marketplace add /opt/app-build-playbook || true
-claude plugin install playbook@bnnnewman-playbook --scope user || true
-echo "Playbook installed: $(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' /opt/app-build-playbook/.claude-plugin/plugin.json)"
+unset pb_token url
+true
