@@ -43,7 +43,7 @@ The first version was mined from the Running-App project (Oct 2026). See [`examp
 
 ## Install
 
-### On your own computer (Claude Code CLI or desktop)
+### On your own computer: every project (Claude Code CLI or desktop)
 
 The repo is private, so your machine needs git access to GitHub first. Run this once:
 
@@ -75,9 +75,28 @@ After that, `/playbook:status` always tells you the next command. If the `/playb
 
 Background auto-update of a private marketplace needs a stored GitHub credential (`gh auth setup-git` does this).
 
-### In cloud sessions (claude.ai/code)
+### In every cloud session (claude.ai/code)
 
-Cloud sessions don't install plugins from a repo's settings, so copy (vendor) the playbook into the project instead:
+Cloud sessions start from a fresh container, so the cloud **environment** installs the playbook each time a session starts. Set it up once and every session in that environment has `/playbook:*`.
+
+1. **Make a read-only token** (skip this if the repo is public).
+   - GitHub → Settings → Developer settings → Personal access tokens → **Fine-grained tokens** → Generate new token.
+   - Repository access: **Only select repositories** → `app-build-playbook`.
+   - Permissions: **Contents: Read-only**. Nothing else.
+2. **Add the token to the environment.**
+   - In any cloud session, open the cloud environment menu in the title bar, then **Edit**.
+   - Add an **environment variable** named `PLAYBOOK_GITHUB_TOKEN` with the token as its value.
+   - Never paste the token into a chat.
+3. **Add the setup script.** In the same Edit screen, paste everything below the `# ---` line of [`scripts/cloud-setup.sh`](scripts/cloud-setup.sh) into **Setup script**, then save.
+4. **Check it.** Start a **new** session and type `/playbook:status`.
+   - If the command is there, you're done.
+   - If not, open the setup log, find the failing line, and bring it to a session that has this repo.
+
+Every new session clones the latest playbook, so improvements reach cloud sessions automatically.
+
+### Per project, without installing (fallback)
+
+If a session can't install plugins, copy (vendor) the playbook into the project instead:
 
 ```bash
 # from a clone of this repo
@@ -85,11 +104,10 @@ Cloud sessions don't install plugins from a repo's settings, so copy (vendor) th
 ```
 
 This copies the skills, agents, templates and scripts into `your-app/.claude/`, where every session, local or cloud, picks them up.
-- Vendored commands drop the namespace: `/playbook-status` instead of `/playbook:status`.
+- Vendored commands drop the namespace: `/playbook-status` instead of `/playbook:status`. They can sit alongside an installed plugin.
 - Re-run the script to update, and commit the result in the app repo.
 - `.claude/playbook/` is replaced on every run, so don't edit files there. Project-specific agents in `.claude/agents/` are never overwritten.
-
-Alternatively, attach this repo to the cloud session and ask Claude to "follow the playbook in app-build-playbook". The skills read fine as instructions.
+- If a session's safety check won't run scripts from another repo, ask Claude to do the same copy with `cp` and `sed`, following `vendor.sh` step by step. Then check that `grep -rn 'CLAUDE_PLUGIN_ROOT\|/playbook:' .claude/` finds nothing.
 
 ---
 

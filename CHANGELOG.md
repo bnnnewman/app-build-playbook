@@ -2,6 +2,12 @@
 
 Newest first. Versions use semver (see `.claude/CLAUDE.md`).
 
+## 1.0.1 · 19 Oct 2026
+
+- README: install for every session. On your own computer it's a user-scope plugin. In the cloud, the environment's setup script installs it (`scripts/cloud-setup.sh`, using a read-only token).
+- README: a manual-copy fallback for when a session's safety check blocks `vendor.sh`.
+- Added the visual stage map (`docs/stage-map.html`).
+
 ## 1.0.0 · 19 Oct 2026 (from Running-App)
 
 The first version, mined from the full Running-App history: 109 commits, 51 review files, 6 sessions.
