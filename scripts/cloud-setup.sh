@@ -3,8 +3,8 @@
 # for every session in that environment. Paste the lines below the "---" marker into the
 # environment's Setup script box (cloud environment menu in a session's title bar -> Edit).
 #
-# Needs: an environment variable PLAYBOOK_GITHUB_TOKEN holding a fine-grained GitHub token with
-# access to bnnnewman/app-build-playbook only, Contents: Read-only. Not needed if the repo is public.
+# The repo is public, so no token is needed. If it is ever made private, add an environment variable
+# PLAYBOOK_GITHUB_TOKEN holding a fine-grained token (this repo only, Contents: Read-only).
 # Never prints the token, never leaves it in the clone's git config, and never fails the session
 # start: if the install can't happen it says why and carries on.
 # ---

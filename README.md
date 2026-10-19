@@ -45,13 +45,7 @@ The first version was mined from the Running-App project (Oct 2026). See [`examp
 
 ### On your own computer: every project (Claude Code CLI or desktop)
 
-The repo is private, so your machine needs git access to GitHub first. Run this once:
-
-```bash
-gh auth login && gh auth setup-git
-```
-
-Then, in Claude Code:
+In Claude Code:
 
 ```
 /plugin marketplace add bnnnewman/app-build-playbook
@@ -73,22 +67,15 @@ After that, `/playbook:status` always tells you the next command. If the `/playb
 /plugin update playbook@bnnnewman-playbook
 ```
 
-Background auto-update of a private marketplace needs a stored GitHub credential (`gh auth setup-git` does this).
-
 ### In every cloud session (claude.ai/code)
 
 Cloud sessions start from a fresh container, so the cloud **environment** installs the playbook each time a session starts. Set it up once and every session in that environment has `/playbook:*`.
 
-1. **Make a read-only token** (skip this if the repo is public).
-   - GitHub → Settings → Developer settings → Personal access tokens → **Fine-grained tokens** → Generate new token.
-   - Repository access: **Only select repositories** → `app-build-playbook`.
-   - Permissions: **Contents: Read-only**. Nothing else.
-2. **Add the token to the environment.**
+1. **Add the setup script.**
    - In any cloud session, open the cloud environment menu in the title bar, then **Edit**.
-   - Add an **environment variable** named `PLAYBOOK_GITHUB_TOKEN` with the token as its value.
-   - Never paste the token into a chat.
-3. **Add the setup script.** In the same Edit screen, paste everything below the `# ---` line of [`scripts/cloud-setup.sh`](scripts/cloud-setup.sh) into **Setup script**, then save.
-4. **Check it.** Start a **new** session and type `/playbook:status`.
+   - Paste everything below the `# ---` line of [`scripts/cloud-setup.sh`](scripts/cloud-setup.sh) into **Setup script**, then save.
+   - The repo is public, so no token is needed. (If you ever make it private again, add a read-only fine-grained token as the environment variable `PLAYBOOK_GITHUB_TOKEN`, and the script will use it.)
+2. **Check it.** Start a **new** session and type `/playbook:status`.
    - If the command is there, you're done.
    - If not, open the setup log, find the failing line, and bring it to a session that has this repo.
 
