@@ -52,4 +52,4 @@ python3 <path-to-playbook>/scripts/coverage.py --spec SPEC.md --tests '<test glo
 
 ## Writing style
 
-Plain English. Short sentences. Concrete numbers. Lead with the answer. Questions to <owner> go as lettered options with a recommendation.
+Plain English. Short sentences. Concrete numbers. Lead with the answer. Questions to <owner> go through `/playbook:grill`: rounds of numbered questions, each with a recommended answer that "yes" accepts.

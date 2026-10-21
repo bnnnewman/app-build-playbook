@@ -15,6 +15,7 @@ This repo is both a readable playbook and a Claude Code plugin (`playbook`, publ
 | `templates/` | Doc templates the skills copy into projects |
 | `panels/<domain>/` | Domain reviewer templates with `<<PLACEHOLDERS>>`. Not loaded as agents |
 | `examples/` | Case studies of finished projects |
+| `THIRD-PARTY-NOTICES.md` | Licences for adapted work (e.g. the grill skill). Keep it current when adapting anything else |
 | `scripts/vendor.sh` | Copies the plugin into a project's `.claude/` for cloud sessions (must work with GNU and BSD sed) |
 | `scripts/coverage.py` | SPEC test ID → test coverage matrix |
 

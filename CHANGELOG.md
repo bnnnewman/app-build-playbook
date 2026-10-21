@@ -2,6 +2,13 @@
 
 Newest first. Versions use semver (see `.claude/CLAUDE.md`).
 
+## 1.1.0 · 21 Oct 2026
+
+- **New `/playbook:grill`**, adapted from Matt Pocock's `grilling` skill (MIT). It works through a design tree in rounds. Each question has a recommended answer that "yes" accepts, and facts are looked up by subagents rather than asked. Every answer goes into `DECISIONS.md`, and nothing is acted on before a shared-understanding yes. ⚠ loosenings are always asked alone. On Light projects, cheap reversible branches are left to defaults (L-31).
+- **start, design, decide and phase-start** now ask the owner everything through the grill.
+- **New gate: grill the PLAN and the SPEC before the panel.** Design stages 1–2 include it, and panel R0 checks it (L-32).
+- Added `THIRD-PARTY-NOTICES.md`. `vendor.sh` copies it.
+
 ## 1.0.2 · 19 Oct 2026
 
 - `scripts/cloud-setup.sh` says whether the token variable is visible, never prompts for a username, hides the token in any error, and no longer fails the session start.

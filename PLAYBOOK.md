@@ -1,6 +1,6 @@
 # The app build playbook
 
-*Version 1.0.2 · 19 Oct 2026 · Built from the Running-App project (see `examples/running-app/CASE-STUDY.md`). Lessons are in `LESSONS.md` and are cited as L-nn.*
+*Version 1.1.0 · 21 Oct 2026 · Built from the Running-App project (see `examples/running-app/CASE-STUDY.md`). Lessons are in `LESSONS.md` and are cited as L-nn.*
 
 This is the process for building an app with Claude Code, from first idea through expert review to a tested build:
 - every stage has a **gate**: a clear "done when";
@@ -29,8 +29,8 @@ The plugin skills (`/playbook:start`, `/playbook:status`, …) run each stage. T
 | Stage | Skill | Output | Gate (done when) |
 |---|---|---|---|
 | 0 Start / Adopt | `/playbook:start` | Project `CLAUDE.md` with the Playbook map; `AS-IS.md` if adopting | The owner agrees the map, the size and the starting stage |
-| 1 Plan | `/playbook:design plan` | `PLAN.md` | The owner can run the domain by hand from it |
-| 2 SPEC | `/playbook:design spec` | `SPEC.md` (invariants, definitions, state tables, tests) | Every PLAN rule has a SPEC home and at least one test; invariants listed |
+| 1 Plan | `/playbook:design plan` | `PLAN.md` | Plan grilled to a shared-understanding yes; the owner can run the domain by hand from it |
+| 2 SPEC | `/playbook:design spec` | `SPEC.md` (invariants, definitions, state tables, tests) | Every PLAN rule has a SPEC home and at least one test; invariants listed; SPEC grilled to a yes before the panel |
 | 3 Data spike | `/playbook:spike` | `spikes/<source>-field-report.md` (fill rates, no values) | The owner has seen which fields really arrive; SPEC updated |
 | 4 Expert panel | `/playbook:panel` | `reviews/R-<code>0.md`, `reviews/SUMMARY.md`, decisions | Every Critical and Major item has an owner decision; accepted changes applied |
 | 5 Audit loop | `/playbook:audit R` | `reviews/R-SA<n>.md`, then `phases/P1-HANDOFF.md` | 0 Critical, 0 Major; Minors batched once |
@@ -39,7 +39,8 @@ The plugin skills (`/playbook:start`, `/playbook:status`, …) run each stage. T
 
 At any point:
 - `/playbook:status` reads the project and says which stage you're at, what's open and what to do next.
-- `/playbook:decide` batches open questions for the owner and records the answers.
+- `/playbook:grill <topic>` interviews the owner about anything (a plan, a phase, an idea) until you share an understanding, recording every answer.
+- `/playbook:decide` batches waiting questions (panel proposals, pending defaults, flags) into grill rounds and records the answers.
 
 ---
 
@@ -106,6 +107,7 @@ Template: `templates/PLAN.md`.
 - **§6 Decision rules:** each with inputs, precedence and missing-data behaviour.
 - **§8 Doing it by hand:** the domain works with no app (L-11).
 - **One home for each rule.** The plan says what a rule means and why. The SPEC holds the numbers and tests (L-04).
+- **Grill it** (`/playbook:grill plan`) before calling it done (L-31).
 
 ## Stage 2: The SPEC (software truth, agent-facing)
 
@@ -122,6 +124,7 @@ Template: `templates/SPEC.md`. It keeps what made Running-App's SPEC work and ad
   - plus **§13.I invariant tests** `TI1a` … (L-08);
   - `scripts/coverage.py` maps IDs to tests.
 - **Versioning.** Bump only the document that changed. Every bump gets a CHANGELOG entry: the trigger, then the IDs, then the sections touched.
+- **Grill it before the panel** (`/playbook:grill spec`). Cover the invariants, the definitions, the state tables' unknown and overlap cases, and the phases. Closing your own gaps here is cheaper than reviewers finding them (L-32).
 
 ## Stage 3: Data spike (before the panel; L-01)
 
@@ -147,7 +150,7 @@ Skill: `/playbook:panel`. Templates: `REVIEW-PANEL.md`, `review-output.md`, `SUM
 
 | Step | What happens |
 |---|---|
-| R0 | Write the **invariants** and the **precedence order** for conflicts *before* the run. Freeze scope (L-07). |
+| R0 | The PLAN and SPEC have been grilled (L-32). Write the **invariants** and the **precedence order** for conflicts *before* the run. Freeze scope (L-07). |
 | R1 | Same brief for everyone: the files, **the owner context and hard constraints**, the remit, the template, a 900-word cap (the auditor is exempt), and citations verified or tagged `[unverified]` (L-22). |
 | R2 | Launch all reviewers **in parallel**. The panel is round 0: save each review to `reviews/R-<code>0.md`, with IDs `R-<code>0-nn`. |
 | R3 | The **main session** (never a subagent) writes `SUMMARY.md`: verdict roll-call, real-world go/no-go, consensus, conflicts resolved by precedence, change tables (C/M/N IDs with ⚠ on any loosening), deduplicated questions, and **reviewer errors caught**. |
@@ -247,10 +250,15 @@ Skill: `/playbook:retro`.
 
 ## Conventions (all stages)
 
-**Asking the owner.**
-- Use AskUserQuestion when it's available: up to 4 questions a call, 2–4 options each, the recommended option first, marked "(Recommended)".
-- Otherwise, ask in chat as lettered options with a recommendation, and wait.
+**Asking the owner: grill it (L-31).** Every decision the owner makes goes through `/playbook:grill`. Quick check-ins don't need it: the retro's one question, or where a credential lives. The grill is adapted from Matt Pocock's `grilling` skill (MIT; see `THIRD-PARTY-NOTICES.md`):
+- **Map a design tree.** Ask the **frontier** (every decision whose prerequisites are settled) as one round of numbered questions. Each question carries a recommended answer, worded so "yes" accepts it.
+- **Questions that depend on open answers** wait for a later round.
+- **Facts are Claude's job.** Subagents look them up while the round goes on. Only decisions go to the owner.
+- **Every answer** is recorded in `DECISIONS.md` as it arrives.
+- **Done** when every branch is visited and the owner confirms a shared understanding. Nothing is acted on before that yes.
+- **⚠ loosenings** are never in a round. They're asked alone, so "yes to all" can't accept one by accident.
 - Each question stands alone; the owner may be on their phone.
+- **Depth follows the size:** Light projects leave cheap, reversible branches to defaults. The shared-understanding yes is still required, so every grill gate applies at every size.
 
 **Decisions.**
 - Every decision lives in **`DECISIONS.md`**, one row per decision: ID, date, source, question, options, answer, who decided, reversible?, and status (`pending-default` / `confirmed` / `changed` / `rejected`).

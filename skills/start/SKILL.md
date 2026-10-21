@@ -1,6 +1,6 @@
 ---
 name: start
-description: Start a new app on the app build playbook, or adopt a half-built existing app into it. Interviews the owner, sizes the process, baselines and inventories existing code (adopt), writes AS-IS.md, scaffolds the project docs and CLAUDE.md Playbook map, and picks the stage to begin at. Use when the user says "start a new app", "set up the playbook", or "adopt/onboard this project".
+description: Start a new app on the app build playbook, or adopt a half-built existing app into it. Grills the owner, sizes the process, baselines and inventories existing code (adopt), writes AS-IS.md, scaffolds the project docs and CLAUDE.md Playbook map, and picks the stage to begin at. Use when the user says "start a new app", "set up the playbook", or "adopt/onboard this project".
 argument-hint: "[new | adopt]"
 ---
 # Start or adopt a project
@@ -9,11 +9,13 @@ argument-hint: "[new | adopt]"
 
 Read `${CLAUDE_PLUGIN_ROOT}/PLAYBOOK.md` first: "Sizing the process", Stage 0, "Conventions" and "Project layout". Skim `${CLAUDE_PLUGIN_ROOT}/LESSONS.md`.
 
-**Asking the owner:** use AskUserQuestion if you have it (up to 4 questions a call, 2–4 options each, the recommended option first, marked "(Recommended)"). Otherwise ask in chat as lettered options and wait. Keep the rounds short, and never send a wall of questions.
+**Asking the owner:** every question goes through `/playbook:grill`. That means rounds of numbered questions, each with a recommended answer that "yes" accepts, and facts you look up yourself instead of asking.
 
 **Mode:** take it from `$ARGUMENTS`. If there are none, look at the repo: app code means **adopt**, no code means **new**. Confirm the mode with the owner.
 
 ## The owner interview (both modes; skip anything the code already answers)
+
+Run `/playbook:grill start`, with these as the root branches of its design tree:
 
 1. What the app is for, and who uses it.
 2. **Stack and "device".** iOS, Android, web, desktop, or a script? What does "try it on the device" mean for it?
@@ -29,13 +31,12 @@ Read `${CLAUDE_PLUGIN_ROOT}/PLAYBOOK.md` first: "Sizing the process", Stage 0, "
 ## New app
 
 1. If the folder isn't a git repo, run `git init` (with the owner's OK).
-2. Run the interview.
-3. **Scaffold** from `${CLAUDE_PLUGIN_ROOT}/templates/`, filling in what you know and leaving `<…>` where you don't:
-   - **`CLAUDE.md`** (from `PROJECT-CLAUDE.md`), with the Playbook map (stage, size, environment, remote) and the Critical definition.
+2. **Scaffold first, so the grill has somewhere to record.** Copy from `${CLAUDE_PLUGIN_ROOT}/templates/`, leaving `<…>` where you don't know yet:
    - **`DECISIONS.md`, `NOTES-FOR-OWNER.md`, `CHANGELOG.md`.**
    - **Folders:** `spikes/`, `reviews/`, `phases/`, `retros/`.
    - **A `.gitignore`** covering raw spike output, exports and debug stores.
-4. Record the interview answers as D-001… in `DECISIONS.md`.
+3. **Run the interview** (`/playbook:grill start`) through to its shared-understanding yes. It records the answers as D-001… as it goes.
+4. **Write `CLAUDE.md`** (from `PROJECT-CLAUDE.md`) from the answers: the Playbook map (stage, size, environment, remote) and the Critical definition.
 5. **Show the owner the Playbook map and the starting stage, and get a yes.** That's the stage 0 gate.
 6. **Next:** `/playbook:design plan`.
 
@@ -59,9 +60,9 @@ Don't redesign anything yet. First understand it.
    - **rules found in the code** (AS-01…), each stated plainly with its file location and marked *intended / accidental / unknown*;
    - risks;
    - open questions.
-5. **Review `AS-IS.md` with the owner.** They mark each rule confirm / change / unknown and answer the open questions. Ask in batches. Log the answers in `DECISIONS.md`.
-6. Run the rest of the **interview**.
-7. **Scaffold** as in "New app" step 3. Fit around the existing layout:
+5. **Scaffold `DECISIONS.md` and `NOTES-FOR-OWNER.md`** (as in "New app" step 2), so the grill can record. Then **review `AS-IS.md` with the owner** via `/playbook:grill as-is`. Each AS-xx rule is a question: confirm, change or unknown. The open questions join the tree. The grill logs the answers in `DECISIONS.md`.
+6. Grill the rest of the **interview** (it can be the same grill session as step 5).
+7. **Finish the scaffold** (folders, `.gitignore`, `CLAUDE.md`), as in "New app" steps 2 and 4. Fit around the existing layout:
    - **If a `CLAUDE.md` exists, add a "Playbook" section to it. Never overwrite it.**
    - Map any existing names in the Playbook map rather than renaming files.
 8. **Recommend a re-entry plan**, and get the owner's yes. It's usually:

@@ -116,9 +116,9 @@ footer { color: var(--muted); font-size: 0.88rem; }
 
 <div class="wrap">
   <header>
-    <span class="eyebrow">app-build-playbook · v1.0.0</span>
+    <span class="eyebrow">app-build-playbook · v1.1.0</span>
     <h1>From idea to tested build, one gate at a time</h1>
-    <p class="lede">Eight stages. Each one ends at a gate you can check. Reviewers advise and you decide. Tap a stage to see what happens inside it and which lessons shaped it.</p>
+    <p class="lede">Eight stages. Each one ends at a gate you can check. Reviewers advise and you decide. Whenever a decision is needed, you get grilled: rounds of questions, each with a recommended answer you can accept with “yes”. Tap a stage to see what happens inside it and which lessons shaped it.</p>
     <div class="size" role="group" aria-labelledby="size-label">
       <span class="label" id="size-label">Project size</span>
       <span class="seg">
@@ -147,7 +147,7 @@ footer { color: var(--muted); font-size: 0.88rem; }
     <div class="station"><span class="node">1</span>
       <details><summary>
         <div class="s-top"><h3>Plan: the domain truth</h3><span class="cmd">/playbook:design plan</span></div>
-        <div class="gate"><b>Gate</b><span>You could run it by hand from the document alone.</span></div>
+        <div class="gate"><b>Gate</b><span>Plan grilled to a “shared understanding” yes. You could run it by hand from the document alone.</span></div>
         <span class="more">Show what happens</span>
       </summary><div class="body">
         <ul>
@@ -155,14 +155,15 @@ footer { color: var(--muted); font-size: 0.88rem; }
           <li>§1 facts from your real data. §2 principles, which become invariants.</li>
           <li>§6 decision rules, each with inputs, precedence and missing-data behaviour.</li>
           <li>§8 doing it by hand, so the app being late never blocks you.</li>
+          <li><code>/playbook:grill plan</code>: every rule, its order and its missing-data case get questioned until nothing is assumed.</li>
         </ul>
-        <div class="lessons"><span>L-04 one home per rule</span><span>L-11 works by hand</span></div>
+        <div class="lessons"><span>L-04 one home per rule</span><span>L-11 works by hand</span><span>L-31 grilling</span></div>
       </div></details></div>
 
     <div class="station"><span class="node">2</span>
       <details><summary>
         <div class="s-top"><h3>SPEC: the software truth</h3><span class="cmd">/playbook:design spec</span></div>
-        <div class="gate"><b>Gate</b><span>Every plan rule has a SPEC home and a test. Invariants are listed.</span></div>
+        <div class="gate"><b>Gate</b><span>Every plan rule has a SPEC home and a test. Invariants are listed. SPEC grilled before the panel.</span></div>
         <span class="more">Show what happens</span>
       </summary><div class="body">
         <ul>
@@ -170,8 +171,9 @@ footer { color: var(--muted); font-size: 0.88rem; }
           <li>§3 invariants, checked every audit round. §4 definitions (windows, units, clock policy).</li>
           <li>§7 rules: a pure module; state machines as tables, not prose.</li>
           <li>§13 tests: <code>T001 | input | expected</code> with exact numbers, plus invariant tests <code>TI1a</code>.</li>
+          <li><code>/playbook:grill spec</code> closes your own gaps before reviewers spend rounds finding them.</li>
         </ul>
-        <div class="lessons"><span>L-02 invariants first</span><span>L-06 state tables</span><span>L-08 invariant tests</span><span>L-09 definitions</span></div>
+        <div class="lessons"><span>L-32 grill before the panel</span><span>L-02 invariants first</span><span>L-06 state tables</span><span>L-08 invariant tests</span><span>L-09 definitions</span></div>
       </div></details></div>
 
     <div class="station"><span class="node">3</span>
@@ -224,7 +226,7 @@ footer { color: var(--muted); font-size: 0.88rem; }
         <span class="more">Show what happens</span>
       </summary><div class="body">
         <div class="loop-track" aria-label="Phase loop">
-          <span>Handoff</span><i>→</i><span>Your questions first</span><i>→</i><span>Phase plan</span><i>→</i><span>Steps, commit each</span><i>→</i><span class="stop">Freeze</span><i>→</i><span>Audit + code review</span><i>→</i><span>Fix + regression tests</span><i>→</i><span class="stop">Re-audit to 0/0</span><i>→</i><span>CI</span><i>→</i><span>Try on device</span><i>→</i><span>Notes for you</span><i>→</i><span>PR</span><i>↺</i>
+          <span>Handoff</span><i>→</i><span>Grill the phase</span><i>→</i><span>Phase plan</span><i>→</i><span>Steps, commit each</span><i>→</i><span class="stop">Freeze</span><i>→</i><span>Audit + code review</span><i>→</i><span>Fix + regression tests</span><i>→</i><span class="stop">Re-audit to 0/0</span><i>→</i><span>CI</span><i>→</i><span>Try on device</span><i>→</i><span>Notes for you</span><i>→</i><span>PR</span><i>↺</i>
         </div>
         <ul>
           <li>Adopted apps start with <strong>Phase A</strong>: invariant tests on the existing code, then an audit module by module.</li>
@@ -263,6 +265,11 @@ footer { color: var(--muted); font-size: 0.88rem; }
         <div><b>Major</b><span>Materially hurts correctness or real-life use.</span></div>
         <div><b>Minor</b><span>Polish. Batched, never looped.</span></div>
       </div>
+    </div>
+    <div class="card">
+      <h2>How a grill round looks</h2>
+      <div class="verdict" style="white-space:normal">❓ <b>Q1 - Winter watering</b>: pause, or stretch the interval?<br>➡️ Stretch to every 14 days.</div>
+      <p class="out">Answer “yes to all”, or “yes except Q2: (b)”. Questions that depend on your answers come in the next round. Facts get looked up, never asked. Adapted from Matt Pocock’s <code>grilling</code> skill.</p>
     </div>
     <div class="card adopt">
       <h2>Flobbadob: first moves</h2>

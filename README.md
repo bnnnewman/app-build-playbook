@@ -22,7 +22,8 @@ The first version was mined from the Running-App project (Oct 2026). See [`examp
 | `/playbook:spike [source]` | 3 | Real-data field coverage, before review |
 | `/playbook:panel [pack]` | 4 | Expert review panel: tailor, run in parallel, synthesise, owner decides, apply |
 | `/playbook:audit [R\|A\|P<n>]` | 5 / 6 | Safety-logic audit loop to 0 Critical / 0 Major |
-| `/playbook:decide` | any | Batch questions to the owner; record answers |
+| `/playbook:grill [topic]` | any | Interview you relentlessly about a plan, phase or idea until you share an understanding, recording every answer (adapted from Matt Pocock's `grilling`) |
+| `/playbook:decide` | any | Batch waiting questions into grill rounds; record answers |
 | `/playbook:phase-start <n>` | 6 | Handoff → questions → phase plan → build step by step |
 | `/playbook:phase-close <n\|A>` | 6 | Freeze → audit + code review → fix → CI → device → PR → handoff |
 | `/playbook:retro [stage]` | 7 | Numbers, lessons, and playbook improvements |
@@ -108,3 +109,9 @@ This is meant to grow with every app:
 5. **Panel packs grow.** After each project, promote its tailored reviewers back into `panels/<domain>/`.
 
 See [`.claude/CLAUDE.md`](.claude/CLAUDE.md) for the rules on editing the playbook itself.
+
+---
+
+## Credits
+
+`/playbook:grill` is adapted from the `grilling` skill in [mattpocock/skills](https://github.com/mattpocock/skills) (MIT). See [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).

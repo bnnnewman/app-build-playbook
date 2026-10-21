@@ -1,6 +1,6 @@
 ---
 name: decide
-description: Batch open questions, proposals, flags and pending conservative defaults for the owner, ask them as options with a recommendation, and record every answer in DECISIONS.md (and NOTES-FOR-OWNER.md for flags) with a Notes commit. Use whenever decisions are waiting - after a panel synthesis, at audit exit, or before a phase plan is fixed.
+description: Batch open questions, proposals, flags and pending conservative defaults for the owner, ask them as grill rounds with a recommendation, and record every answer in DECISIONS.md (and NOTES-FOR-OWNER.md for flags) with a Notes commit. Use whenever decisions are waiting - after a panel synthesis, at audit exit, or before a phase plan is fixed.
 ---
 # Owner decisions
 
@@ -16,11 +16,11 @@ The owner decides. Your job is to make deciding fast and to record it exactly.
 2. **Deduplicate and order them:**
    - Critical first, then ⚠ loosenings, then Major, then the rest.
    - Put things that block the next step ahead of things that don't.
-3. **Ask.**
-   - **If you have AskUserQuestion:** up to 4 questions a call, 2–4 options each, the recommended option first, marked "(Recommended)".
-   - **Otherwise:** ask in chat as a short numbered list, with lettered options and your recommendation. Then wait.
+3. **Ask in grill rounds**, using `/playbook:grill`'s format and its recording rules, with source `Decide <date> R<n>`:
+   - numbered questions, each with a recommended answer that "yes" accepts, so "yes to all" or "yes except Q3: (b)" works;
+   - questions that depend on another open answer wait for the next round.
    - Each question is self-contained. The owner may be on their phone with no other context, so say what it's about in one line.
-   - A ⚠ loosening is **always its own question**, saying plainly that it loosens a safety rule.
+   - A ⚠ loosening is **never in a round**. Ask it alone, with AskUserQuestion if you have it, saying plainly that it loosens a safety rule.
    - For panel proposals, ask accept / reject / modify. Minors can be batched: "Accept all Minors except…?"
    - For `pending-default` items: "We've been using <default>. Keep it?"
 4. **Record each answer immediately** in `DECISIONS.md`:
@@ -31,4 +31,4 @@ The owner decides. Your job is to make deciding fast and to record it exactly.
    - Rejected items keep their row.
 5. **Commit straight away**, separate from code: `Notes: <short summary> (<IDs>)`.
 6. If an answer changes a rule, follow up with `/playbook:design revise decision <IDs>`. If it reopens a closed area, run one narrow audit round on it.
-7. **Tell the owner what changed**, in 2–4 lines.
+7. **Tell the owner what changed**, in 2–4 lines. decide ends when every gathered item has a recorded answer, or a `pending-default`. Then hand back to the skill that called it (panel R4, audit exit, phase-start).

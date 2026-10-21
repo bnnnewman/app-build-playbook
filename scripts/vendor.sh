@@ -7,7 +7,7 @@
 # Result in the project:
 #   .claude/skills/playbook-<name>/SKILL.md   -> /playbook-<name>
 #   .claude/agents/<core agent>.md            -> logic-auditor, adherence-reviewer, ...
-#   .claude/playbook/                          -> PLAYBOOK.md, LESSONS.md, templates/, panels/, scripts/, VERSION
+#   .claude/playbook/                          -> PLAYBOOK.md, LESSONS.md, THIRD-PARTY-NOTICES.md, templates/, panels/, scripts/, VERSION
 #
 # .claude/playbook/ is owned by the playbook and replaced on every run: don't edit files there.
 # Agent files the playbook didn't put there (e.g. a project-tailored adherence-reviewer) are never overwritten.
@@ -44,7 +44,7 @@ cp "$src/scripts/coverage.py" "$root/scripts/"
 find "$root/templates" "$root/panels" -name '*.md' | while read -r f; do
   rewrite < "$f" > "$f.tmp" && mv "$f.tmp" "$f"
 done
-for f in PLAYBOOK.md LESSONS.md; do rewrite < "$src/$f" > "$root/$f"; done
+for f in PLAYBOOK.md LESSONS.md THIRD-PARTY-NOTICES.md; do rewrite < "$src/$f" > "$root/$f"; done
 echo "$version" > "$root/VERSION"
 
 # Skills, renamed playbook-<name>.

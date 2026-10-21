@@ -21,7 +21,7 @@ Read `${CLAUDE_PLUGIN_ROOT}/PLAYBOOK.md` stage 6, and lessons L-13, L-14, L-15, 
 
 ## 2. Settle questions before planning (L-29)
 
-Ask the owner (see `/playbook:decide`) before the step plan is fixed:
+Run `/playbook:grill phase <n>` before the step plan is fixed, with these as the tree's roots:
 - **Scope:** anything to add or drop?
 - **Policy questions this phase raises:**
   - fail-safe behaviour for untrusted inputs (clock, empty or partial fetches);
@@ -29,7 +29,7 @@ Ask the owner (see `/playbook:decide`) before the step plan is fixed:
   - privacy (what leaves the device).
 - Anything the handoff lists as open.
 
-Use conservative defaults for anything unanswered, logged as `pending-default`.
+Anything the owner parks gets a conservative default, logged as `pending-default`. Write the plan only after the grill's shared-understanding yes.
 
 ## 3. Write `phases/P<n>-PLAN.md`
 

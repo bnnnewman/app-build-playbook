@@ -8,6 +8,7 @@ Every lesson has an ID, the project it came from, the evidence, and where the pl
 
 | Source | Project |
 |---|---|
+| OF | Owner feedback, given directly (date in the lesson) |
 | RA | Running-App (Oct 2026): adaptive training app, iOS + rules engine, 109 commits, 35 safety-audit rounds after the panel, 5 code reviews, 693 tests |
 
 ---
@@ -41,6 +42,19 @@ Phase 2 took 5 audit rounds, mostly on a wrong device clock, and grew a whole su
 **L-16 · Change · Settle data-format strictness before the first persisted byte.** *(RA)*
 A handoff rule (tolerant decoding) was reversed mid-phase (P1-04), which made earlier stores unreadable.
 → SPEC §6 schema-evolution rule.
+
+**L-31 · Keep · The owner likes being interviewed. Make interviews thorough and easy to answer.** *(OF, 21 Oct 2026)*
+Being interviewed was the part of the process the owner valued most. Matt Pocock's `grilling` technique makes interviews thorough and easy to answer:
+- a design tree asked in rounds;
+- a recommended answer that "yes" accepts;
+- facts looked up, never asked;
+- a shared-understanding finish.
+
+→ `/playbook:grill`, adapted from it (MIT). Every skill that puts a decision to the owner now uses it.
+
+**L-32 · Change · Grill the PLAN and SPEC before the panel.** *(RA)*
+Many Running-App audit findings were really questions for the owner that surfaced late. About 12 bundles of SPEC §13 questions were answered with conservative defaults "pending Ben" during the audit loop, and settled only afterwards.
+→ A spec grill now sits between the SPEC and the panel (PLAYBOOK stage 2; panel R0 checks it).
 
 ## Review panel and audits
 

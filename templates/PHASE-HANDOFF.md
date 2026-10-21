@@ -46,7 +46,7 @@ The APIs this phase must feed:
 
 ## Decisions needed before step 1
 
-Ask early, as options with a recommendation. Each one notes the default used meanwhile.
+These become the roots of the phase grill (`/playbook:grill phase <n>`). Each notes the default used meanwhile.
 1. **Scope:** anything to add or drop from this phase? (L-29)
 2. **Policy:** <fail-safe for untrusted inputs, data strictness, privacy> (L-15, L-16)
 3. …
