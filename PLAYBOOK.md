@@ -1,6 +1,6 @@
 # The app build playbook
 
-*Version 1.2.0 · 23 Oct 2026 · Built from the Running-App project (see `examples/running-app/CASE-STUDY.md`). Lessons are in `LESSONS.md` and are cited as L-nn.*
+*Version 1.3.0 · 23 Oct 2026 · Built from the Running-App project (see `examples/running-app/CASE-STUDY.md`). Lessons are in `LESSONS.md` and are cited as L-nn.*
 
 This is the process for building an app with Claude Code, from first idea through expert review to a tested build:
 - every stage has a **gate**: a clear "done when";
@@ -265,6 +265,7 @@ For illustrations, icons, widget art and other drawn assets. Agents are good at 
 | A7 Directed edits | One Maker per edit: the exact changes, a "must not change" list, a byte-identical rebuild of the last version (L-35, L-40) | Gates pass; the owner's next note or a lock |
 | A8 Final review | Two reviewers, told what's decided; at most 5 small fixes (L-38) | Fixes applied; the owner locks |
 | A9 Verify | Every final vector: valid, a viewBox, no gradients, colours all tokens, size budget; rebuild check | All pass |
+| A10 Family review | Every panellist reviews all locked pieces as one set, at real size, light and dark; points merged, clashes marked; the owner ticks; one Maker per area applies them (one owns the token file); then A9 again (L-42) | The owner locks the family |
 
 - **Rubric** (critics, 1–5): subject and place truth, line quality, value structure in both modes, legibility at 1×, family match, calm, and **composition**: a continuous ground, every object grounded (L-37).
 - **Review points** go to the owner as a tick list with clash notes (L-41).

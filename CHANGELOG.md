@@ -2,6 +2,10 @@
 
 Newest first. Versions use semver (see `.claude/CLAUDE.md`).
 
+## 1.3.0 · 23 Oct 2026
+
+- **Art loop step A10, the family review** (L-42): after the last piece locks, every panellist reviews the whole set together; merged points with clash marks go to the owner as a tick list; one Maker per area applies them; then the vector check and the family lock.
+
 ## 1.2.0 · 23 Oct 2026
 
 - **New: the art loop** (PLAYBOOK "The art loop", from Running-App's art rounds, 21–23 Oct): coherence review and a family style sheet, calibrated gates, a wide round of three Makers, two blind critics with today's art as a control, the owner's pick, directed edits, a final review, and a vector check. One family board for every iteration.

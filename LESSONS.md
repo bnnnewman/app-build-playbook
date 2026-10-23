@@ -189,3 +189,12 @@ Each variant folder held only its changed generator files and a `make.py` that r
 "Have sub agents review it and send me their feedback for whether I agree or not." The owner ticked four of six points and rejected two (one clashed with an earlier decision, which the question said).
 → Merge both reviewers' points, put them as a multi-select question with a recommendation and a clash note, apply only the ticked ones.
 
+**L-42 · Keep · Finish with one family review of every piece together.** *(RA-art, OF 23 Oct 2026)*
+Each piece had passed its own final review, yet six panellists looking at the whole set at once found 16 cross-piece
+points: one tree drawn with two outline colours, a warm plane among cool greys, paper-coloured patches that would show
+on tinted icons, a lilac-tinted shadow, token drift between the colour file and the art. The owner agreed 12 and
+rejected 4 (each clash with an earlier pick was marked).
+→ After the last piece is locked: every panellist reviews the family as one unit, points are merged with "who raised
+it" and clash marks, the owner ticks what to apply, fixes run one Maker per area (one owner of the token file), then a
+full vector check and the lock.
+
