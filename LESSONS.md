@@ -10,6 +10,7 @@ Every lesson has an ID, the project it came from, the evidence, and where the pl
 |---|---|
 | OF | Owner feedback, given directly (date in the lesson) |
 | RA | Running-App (Oct 2026): adaptive training app, iOS + rules engine, 109 commits, 35 safety-audit rounds after the panel, 5 code reviews, 693 tests |
+| RA-art | Running-App's art loop (21–23 Oct 2026): 5 ink drawings (widget, spot tree, launch mark, body map, street scene), about 40 Maker and Critic runs, one family board |
 
 ---
 
@@ -147,3 +148,44 @@ The Phase 4 planner was added mid-phase and produced its largest cluster of Majo
 
 **L-30 · Keep · Fix root causes, then narrowly re-audit the fix.** *(RA)*
 Fixes introduced new Criticals (E2-01). Root-cause fixes plus a narrow re-audit of the fix commit closed them.
+
+## Art and visual design
+
+See PLAYBOOK "The art loop" and `examples/running-app/ART-LOOP.md`.
+
+**L-33 · Keep · Gates before taste, calibrated on today's art.** *(RA-art)*
+Agents can't judge fine detail at true size. Every visual verdict carried numbers from a script: line width at display size, contrast, a dark-mode outline-to-fill ratio, gradients, colours that aren't tokens, file size. Each gate was first run on today's art: the street's measured 0.44 pt median matched the earlier coherence measure before any Maker ran. The widget pilot's first line gate was wrong, and two Makers caught it.
+→ Write and calibrate the gate script before the wide round; test it on known inputs (ruled test lines).
+
+**L-34 · Keep · Blind critics with today's art hidden as a control.** *(RA-art)*
+Today's art, relabelled among the variants, ranked last in every blind round across five pieces. One critic's score moved by ±0.4 on the same image between runs, so two critics are averaged.
+→ Two blind critics per round, variants shuffled, today's art hidden. If the control doesn't come last, the review is broken.
+
+**L-35 · Change · The owner picks straight after the wide round; polish is directed edits.** *(RA-art)*
+In the widget pilot, open-ended polish rounds fixed checkable faults but drifted on taste: the jacaranda became an acacia while meeting every number.
+→ After the wide round, the owner picks or mixes. Each later edit is one Maker with an exact change list and a "must not change" list.
+
+**L-36 · Keep · One board for every piece, at real size, light and dark.** *(OF, 22 Oct 2026)*
+Family problems (two pens, three dark-mode treatments, a 2× spread in line weight) only showed with every drawing side by side. The owner asked for every iteration to go on one page, updated in place.
+→ A generated family board, one link, republished after every round; history rows below the current pieces.
+
+**L-37 · Change · The owner's eye catches what the rubric misses: add a composition check.** *(RA-art)*
+Critics scored the street's directed edit well. The owner saw at once that it had no ground ("everything looks disjointed") and that a half-outlined skyline looked wrong; later, that the bins didn't sit on the footpath.
+→ The rubric gains a composition item: a continuous ground, every object grounded, one treatment per depth layer.
+
+**L-38 · Change · Tell final reviewers what's decided.** *(RA-art)*
+Reviewers twice asked to redraw the shared jacaranda, the app's one tree, which the owner had fixed as an input.
+→ Final-review briefs list the decided points and ask for at most 5 small fixes, or "none".
+
+**L-39 · Change · When cutting detail, keep each element's frame.** *(RA-art)*
+Halving the terrace lines turned the balconies into "just a shade". The owner asked for the frame back.
+→ Cut infill (lace, repeats, hatching) before frames (rails, posts, edges).
+
+**L-40 · Keep · Reproducible variants.** *(RA-art)*
+Each variant folder held only its changed generator files and a `make.py` that rebuilt the export byte-identical from the base branch. Rounds resumed cleanly after four container restarts, and every edit could be diffed.
+→ Every Maker confirms the previous variant rebuilds byte-identical before editing, and delivers a `make.py`.
+
+**L-41 · Keep · Reviewer points go to the owner as a tick list.** *(OF, 23 Oct 2026)*
+"Have sub agents review it and send me their feedback for whether I agree or not." The owner ticked four of six points and rejected two (one clashed with an earlier decision, which the question said).
+→ Merge both reviewers' points, put them as a multi-select question with a recommendation and a clash note, apply only the ticked ones.
+

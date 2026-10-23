@@ -2,6 +2,12 @@
 
 Newest first. Versions use semver (see `.claude/CLAUDE.md`).
 
+## 1.2.0 · 23 Oct 2026
+
+- **New: the art loop** (PLAYBOOK "The art loop", from Running-App's art rounds, 21–23 Oct): coherence review and a family style sheet, calibrated gates, a wide round of three Makers, two blind critics with today's art as a control, the owner's pick, directed edits, a final review, and a vector check. One family board for every iteration.
+- Lessons L-33 to L-41 (RA-art and owner feedback).
+- New `templates/ART-BRIEF.md`; worked example `examples/running-app/ART-LOOP.md`.
+
 ## 1.1.0 · 21 Oct 2026
 
 - **New `/playbook:grill`**, adapted from Matt Pocock's `grilling` skill (MIT). It works through a design tree in rounds. Each question has a recommended answer that "yes" accepts, and facts are looked up by subagents rather than asked. Every answer goes into `DECISIONS.md`, and nothing is acted on before a shared-understanding yes. ⚠ loosenings are always asked alone. On Light projects, cheap reversible branches are left to defaults (L-31).

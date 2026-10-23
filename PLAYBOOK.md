@@ -1,6 +1,6 @@
 # The app build playbook
 
-*Version 1.1.0 · 21 Oct 2026 · Built from the Running-App project (see `examples/running-app/CASE-STUDY.md`). Lessons are in `LESSONS.md` and are cited as L-nn.*
+*Version 1.2.0 · 23 Oct 2026 · Built from the Running-App project (see `examples/running-app/CASE-STUDY.md`). Lessons are in `LESSONS.md` and are cited as L-nn.*
 
 This is the process for building an app with Claude Code, from first idea through expert review to a tested build:
 - every stage has a **gate**: a clear "done when";
@@ -41,6 +41,7 @@ At any point:
 - `/playbook:status` reads the project and says which stage you're at, what's open and what to do next.
 - `/playbook:grill <topic>` interviews the owner about anything (a plan, a phase, an idea) until you share an understanding, recording every answer.
 - `/playbook:decide` batches waiting questions (panel proposals, pending defaults, flags) into grill rounds and records the answers.
+- **The art loop** (below) makes and polishes illustrations, icons and other drawn art at any stage.
 
 ---
 
@@ -245,6 +246,32 @@ Skill: `/playbook:retro`.
   3. Add the project's block to `METRICS.md` in the playbook repo.
   4. Add new lessons to `LESSONS.md` (next free ID, Keep or Change).
   5. For each Change lesson, edit the playbook (template, skill or this file) on a branch. Bump the playbook version and CHANGELOG, and offer a PR.
+
+---
+
+## The art loop (any stage that makes art)
+
+For illustrations, icons, widget art and other drawn assets. Agents are good at catching faults and poor at taste, so they make variants and check them against numbers, and **the owner makes every taste call** (L-12). The art is code (generators, fixed seeds), so every variant can be reproduced and diffed (L-40). Worked example: `examples/running-app/ART-LOOP.md`.
+
+| Step | What | Gate (done when) |
+|---|---|---|
+| A0 Coherence | Reviewers (illustrator, art director, colour and accessibility, vector production) look at every drawing together and draft a family style sheet: line weights in pt at display size, one pen, one colour source, the dark-mode rule, one way to stand on the ground, build rules | The owner OKs the style sheet |
+| A1 Foundation | One size table, one token file, a lint over every finished vector | Exports byte-identical apart from agreed changes |
+| A2 Brief | Fixed inputs, what changes, three directions, a "look to avoid", gates, rubric (`templates/ART-BRIEF.md`) | The owner picks the directions |
+| A3 Gates | A renderer and a gate script, calibrated on today's art (L-33) | Today's numbers match the coherence measure |
+| A4 Wide round | Three Makers in parallel, one direction each, each in its own copy | Every variant passes every gate (a fail goes back once) |
+| A5 Blind critics | Two critics; variants shuffled; today's art hidden as a control (L-34) | Scores recorded; the control ranks last |
+| A6 Owner picks | The family board updated (L-36); one question with a recommendation | Picked, mixed or redirected |
+| A7 Directed edits | One Maker per edit: the exact changes, a "must not change" list, a byte-identical rebuild of the last version (L-35, L-40) | Gates pass; the owner's next note or a lock |
+| A8 Final review | Two reviewers, told what's decided; at most 5 small fixes (L-38) | Fixes applied; the owner locks |
+| A9 Verify | Every final vector: valid, a viewBox, no gradients, colours all tokens, size budget; rebuild check | All pass |
+
+- **Rubric** (critics, 1–5): subject and place truth, line quality, value structure in both modes, legibility at 1×, family match, calm, and **composition**: a continuous ground, every object grounded (L-37).
+- **Review points** go to the owner as a tick list with clash notes (L-41).
+- **Cutting detail** removes infill before frames (L-39).
+- **Stop rules:** at most one wide round plus directed edits per brief; if nothing passes the gates, rethink the brief with the owner.
+- **References:** analysis only, never traced; links and licences in `SOURCES.md`, no third-party images in the repo.
+- **The board** stays under the artifact page limit (16 MB): older history rows drop to one state.
 
 ---
 
