@@ -27,3 +27,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## pbakaus/impeccable (Apache 2.0) and pjt222/agent-almanac (MIT)
+
+The scored-review idea and the scorecard layout in `skills/critique/SKILL.md` are adapted from impeccable's
+`critique` skill (https://github.com/pbakaus/impeccable, Apache License 2.0) and agent-almanac's `review-ux-ui`
+(https://github.com/pjt222/agent-almanac, MIT License), reworded. No source text is copied; the ideas are credited.

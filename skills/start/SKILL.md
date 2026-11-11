@@ -1,84 +1,70 @@
 ---
 name: start
-description: Start a new app on the app build playbook, or adopt a half-built existing app into it. Grills the owner, sizes the process, baselines and inventories existing code (adopt), writes AS-IS.md, scaffolds the project docs and CLAUDE.md Playbook map, and picks the stage to begin at. Use when the user says "start a new app", "set up the playbook", or "adopt/onboard this project".
+description: Start a new project on the playbook, or adopt an existing one. Asks the harm questions, sets the size (Mini, Light, Standard, Full), the project type (phone app, web tool, tool with a routine) and the teaching mode, proves the set-up, and scaffolds the project. Use when the owner says "start a new app/tool", "set this up", or "adopt/onboard this project".
 argument-hint: "[new | adopt]"
 ---
 # Start or adopt a project
 
-*`${CLAUDE_PLUGIN_ROOT}` is the playbook folder. If you see it literally, not replaced with a path, find the folder by searching for `PLAYBOOK.md` under `~/.claude/plugins/` or `.claude/playbook/`.*
+*`${CLAUDE_PLUGIN_ROOT}` is the playbook folder. If you see it literally, find the folder by searching for `PLAYBOOK.md` under `~/.claude/plugins/`, `/opt/app-build-playbook` or `.claude/playbook/`.*
 
-Read `${CLAUDE_PLUGIN_ROOT}/PLAYBOOK.md` first: "Sizing the process", Stage 0, "Conventions" and "Project layout". Skim `${CLAUDE_PLUGIN_ROOT}/LESSONS.md`.
+Read first: `${CLAUDE_PLUGIN_ROOT}/OWNER.md`, then `${CLAUDE_PLUGIN_ROOT}/PLAYBOOK.md` ("Three choices at the start", "Stage 0", "Project layout").
 
-**Asking the owner:** every question goes through `/playbook:grill`. That means rounds of numbered questions, each with a recommended answer that "yes" accepts, and facts you look up yourself instead of asking.
+**Mode:** from `$ARGUMENTS`. If none: code in the repo means **adopt**, none means **new**. Say which, in one line.
 
-**Mode:** take it from `$ARGUMENTS`. If there are none, look at the repo: app code means **adopt**, no code means **new**. Confirm the mode with the owner.
+## 1. The interview (one grill, via `/playbook:grill start`)
 
-## The owner interview (both modes; skip anything the code already answers)
+Skip anything `OWNER.md` or the repo already answers. Ask the harm questions **before** the size.
 
-Run `/playbook:grill start`, with these as the root branches of its design tree:
+1. **What it is for**, in one sentence, and what it is *not* for.
+2. **Who uses it, and who must agree.** Roles, not names. Anyone besides the owner?
+3. **Harms.** Does it show or store data about real people? Could one person see another's? Could a wrong answer
+   cost money or a deadline? Could it affect health or safety? Could a pet or child be harmed?
+4. **Size**, recommended from the harm answers (PLAYBOOK table): Mini / Light / Standard / Full. Any "yes" in 3 means
+   at least Standard.
+5. **Type:** phone app / web tool or page / tool with a routine. What is the "device"?
+6. **Teaching mode:** teach / explain / ship.
+7. **Outside data or systems**, and who else builds part of it.
+8. **How it works today with no app.**
 
-1. What the app is for, and who uses it.
-2. **Stack and "device".** iOS, Android, web, desktop, or a script? What does "try it on the device" mean for it?
-3. **Environment.**
-   - Do you work on your own machine, in Claude Code cloud sessions, or both?
-   - What's installed (Xcode, Node, Python…)?
-   - Is there a git remote?
-4. **External data:** APIs, sensors, exports they already have.
-5. **The worst thing the app could get wrong,** and who or what it would hurt. This defines "Critical", and it sets the **size**: Light / Standard / Full. Recommend a size and let the owner choose.
-6. Hard constraints: time per day, budget, equipment.
-7. How the domain works today without the app. This becomes PLAN §8.
+The harm answers become "What Critical means here" in `CLAUDE.md`.
 
-## New app
+## 2. Prove the set-up (before any feature)
 
-1. If the folder isn't a git repo, run `git init` (with the owner's OK).
-2. **Scaffold first, so the grill has somewhere to record.** Copy from `${CLAUDE_PLUGIN_ROOT}/templates/`, leaving `<…>` where you don't know yet:
-   - **`DECISIONS.md`, `NOTES-FOR-OWNER.md`, `CHANGELOG.md`.**
-   - **Folders:** `spikes/`, `reviews/`, `phases/`, `retros/`.
-   - **A `.gitignore`** covering raw spike output, exports and debug stores.
-3. **Run the interview** (`/playbook:grill start`) through to its shared-understanding yes. It records the answers as D-001… as it goes.
-4. **Write `CLAUDE.md`** (from `PROJECT-CLAUDE.md`) from the answers: the Playbook map (stage, size, environment, remote) and the Critical definition.
-5. **Show the owner the Playbook map and the starting stage, and get a yes.** That's the stage 0 gate.
-6. **Next:** `/playbook:design plan`.
+- **Can this session build and test it?** Run it once. If it can't (for example an iOS screen on Linux), set up what
+  stands in, from `${CLAUDE_PLUGIN_ROOT}/platforms/<type>.md`, and record "what runs where".
+- **How does a change reach the owner?** Write it as one paragraph. Every session must give the same answer.
+- **CI:** prove it runs once, or record "no CI" on purpose with the pre-push checks that replace it.
+- **`.gitignore`** from `${CLAUDE_PLUGIN_ROOT}/templates/gitignore` before the first commit.
 
-## Adopt an existing app
+## 3. Scaffold
 
-Don't redesign anything yet. First understand it.
+From `${CLAUDE_PLUGIN_ROOT}/templates/`, into the layout in PLAYBOOK "Project layout":
+- **Mini:** `BRIEF.md` (it holds the plan, rules, decisions and checks), `CLAUDE.md`, `STATUS.md`. Stop there.
+- **Other sizes:** `CLAUDE.md` (from `PROJECT-CLAUDE.md`), `STATUS.md`, `DECISIONS.md`, `IDEAS.md`, `CHANGELOG.md`,
+  `docs/owner/`, `work/`, `retros/`, `spikes/`; `design/` if it has a screen.
+- If a `CLAUDE.md` exists, **add** the playbook sections. Never overwrite the owner's own words.
+- Optional: `.claude/settings.json` from `templates/settings.json`, so local sessions load the plugin.
 
-1. **Baseline.**
-   - Record `git status`, the branch, the last commit and the remote.
-   - If the tree is dirty, ask the owner to commit or stash first.
-   - Create and switch to a `playbook/adopt` branch.
-   - Run the build and the tests. Record what happened: it builds yes/no; tests N pass / N fail / none.
-2. **Secret and personal-data scan.**
-   - Grep the tree and `git log -p` for keys, tokens, passwords, `.env` files, exports, photos with location, and personal data.
-   - Check the `.gitignore` coverage.
-   - **Report findings to the owner before any push.** Recommend rotating any exposed key.
-3. **Owner's intent.** Ask for existing notes, issues, chat exports or idea lists, and read them first. They show what the app was *meant* to do; the code shows what it *does*.
-4. **Inventory.** For a large codebase, use parallel Explore agents, split by area (structure and stack; features and screens; data and storage; external data; tests and CI). Each returns findings, not file dumps. Then write `AS-IS.md` from `${CLAUDE_PLUGIN_ROOT}/templates/AS-IS.md`:
-   - the baseline results;
-   - features, each with a state (works / partial / stub / broken);
-   - **rules found in the code** (AS-01…), each stated plainly with its file location and marked *intended / accidental / unknown*;
-   - risks;
-   - open questions.
-5. **Scaffold `DECISIONS.md` and `NOTES-FOR-OWNER.md`** (as in "New app" step 2), so the grill can record. Then **review `AS-IS.md` with the owner** via `/playbook:grill as-is`. Each AS-xx rule is a question: confirm, change or unknown. The open questions join the tree. The grill logs the answers in `DECISIONS.md`.
-6. Grill the rest of the **interview** (it can be the same grill session as step 5).
-7. **Finish the scaffold** (folders, `.gitignore`, `CLAUDE.md`), as in "New app" steps 2 and 4. Fit around the existing layout:
-   - **If a `CLAUDE.md` exists, add a "Playbook" section to it. Never overwrite it.**
-   - Map any existing names in the Playbook map rather than renaming files.
-8. **Recommend a re-entry plan**, and get the owner's yes. It's usually:
-   - `/playbook:design`: recover the PLAN and SPEC, with each rule's provenance tagged (found in code AS-xx / confirmed / new);
-   - `/playbook:spike`, if the app reads external data;
-   - `/playbook:panel` and `/playbook:audit R` on the recovered docs;
-   - **Phase A**: retro-fit the invariant tests, audit the existing code module by module, and fix the Criticals and Majors (`/playbook:phase-close A`);
-   - build phases P1… for what's left.
-9. Record the plan in the Playbook map's Stage row and in `CHANGELOG.md`.
+Scaffold `DECISIONS.md` **before** the grill, so answers have somewhere to go. Decision IDs here are `D-S0-nn`.
 
-## Finish
+## 4. Adopt only
 
-- Commit: `Playbook: start (<new|adopt>), stage <n> next`.
-- Push only if there's a remote, the secret scan is clean, and the owner agrees.
-- Tell the owner, in 3–5 lines:
-  - what was created;
-  - the size and the stage they're at;
-  - anything from the scan;
-  - the single next command.
+Do these before the interview finishes. Don't redesign anything yet.
+1. **Baseline** on this session's branch: git state; build and tests if they can run here. If not: write "not run",
+   and ask the owner to run them. Never state a count no command produced.
+2. **Scan for secrets and personal data**, in the tree and in `git log -p`. Report before any push.
+3. **Ask for existing notes** and read them first.
+4. **`AS-IS.md`** from the template: features and their state, rules found in the code (AS-01…, each *intended /
+   accidental / unknown*), risks, questions. For a large codebase, use parallel Explore agents by area.
+5. **Grill the as-is rules** (confirm / change / unknown).
+6. **A bug that touches a Critical harm is fixed now**, with its own decision and a check on the device.
+7. **One decision log:** import an older log's rows as `P-nn`.
+8. **Re-entry plan**, for the owner's yes: `plan` and `spec` (recovered, with provenance) → `spike` → `design` if
+   wanted → `panel` and `audit` → `build A` (audit the existing code first, then plan fixes from the findings).
+
+## 5. Finish
+
+- Write `STATUS.md` (run `/playbook:status`).
+- Commit: `Playbook: start (<new|adopt>): <size>, <type>, <mode>`. Push this session's branch.
+- Tell the owner in five lines: what was set up, the size and why, how a change reaches him, anything the scan
+  found, and the one next step.

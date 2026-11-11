@@ -1,24 +1,28 @@
-## Phase <n>: <deliverable>
+## <Build id>: <what you'll see, in one line>
 
-**Goal (SPEC §12):** <Done-when, verbatim>
+**What changes for you:** <two or three lines, in terms of screens and behaviour. No file names.>
 
-**Base:** `<base branch>`. <Merge order if stacked: "Merge #k first", or "merge top-down: #c → #b → #a → main". Say which.>
+**After "merge <N>":** <how and when it reaches the phone or goes live>.
 
-### What's in it
-- **<module>:** …
+### What was checked, and what was found
+| Check | Found | Fixed | Left as it is (why) |
+|---|---|---|---|
+| Safety audit | <n Major, n Minor> | all | <or "2 small things, both on the safe side"> |
+| Code review | | | |
+| Design-lock check | | | |
+| <Logic / Privacy / Automation> | | | |
 
-### Reviews
-| Review | Round results (C/M) | File |
-|---|---|---|
-| Safety audit | C/M per round, e.g. 0/7 → 0/3 → 0/0 | `reviews/P<n>-SA1.md` … `SA3.md` |
-| Code review | 0/6, fixed with regression tests | `reviews/P<n>-CR1.md` |
+### Tested here
+<The command>: <N> tests, 0 failures. **Not run here:** <what>.
 
-### Testing
-- Linux: <N> tests, 0 failures.
-- CI: run <#>, <jobs> green.
-- Device: <done / not done, and why>.
+### For you to check on the device (about <n> minutes)
+See `docs/owner/ACCEPTANCE.md` → "<build>". <k> steps. Please also send screenshots of <screens>: light, dark,
+largest text.
 
-### Decisions and not-done
-- Decisions: <D-IDs>.
-- Left as is: <IDs>.
-- Not done here: <…>.
+### For you to know
+- <Choices made where no decision covered it, each the cautious reading.>
+- New wording: <"words fine" given on <date>, or the wording-page link>.
+
+**One question:** anything this time that felt slow, confusing or great?
+
+*Decisions: <IDs>. Base: `<branch>`. If stacked, merge order: <…>.*

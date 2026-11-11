@@ -1,69 +1,43 @@
-# Phase R: expert review summary
+# Review summary: <build or stage>
 
-*Synthesised by the main session from the <n> reviews in this folder, <date>. Reviewers advise; <owner> decides. Nothing in the PLAN or SPEC has changed yet.*
+*Written by the main session from the <n> reviews in this folder, <date>. Reviewers advise; the owner decides.
+Nothing has been changed yet.*
 
-| Reviewer | Verdict |
-|---|---|
-| <role> | Approve with changes |
-
----
-
-## 1. Overall verdict
-
-**<Answer the real-world question first, e.g. "Yes, you can start using the plan by hand on Monday.">**
-- What is safe now: …
-- What must be fixed before <event>: <Critical IDs>.
-- One or two cross-cutting weaknesses: …
-
-## 2. Consensus points (raised by 2 or more reviewers)
-
-1. <Point>: *<who raised it, with their IDs>*.
-
-## 3. Conflicts
-
-Resolved by the precedence in `REVIEW-PANEL.md` §2.
-
-| ID | Conflict | Views | Recommended resolution |
+| Reviewer | Verdict | C / M / minor | After the verifier |
 |---|---|---|---|
-| X1 | | A says … / B says … | … because … |
 
-## 4. Change proposals
+## 1. The answer first
+**<The real-world question, answered: "Yes, you can keep using it as it is while we fix these.">**
+What must be fixed before <event>: <Critical IDs>.
 
-⚠ = loosens a rule, so it needs the owner's separate, explicit yes.
+## 2. Raised by two or more
+1. <Point> *(who)*.
 
-### Critical
-| ID | Raised by | Proposed change | File + section | Evidence vs opinion | Effort (S/M/L) |
+## 3. Conflicts, settled by the agreed order
+| ID | Conflict | Views | Resolution, and why |
+|---|---|---|---|
+
+## 4. Changes proposed
+⚠ = loosens a rule; asked on its own. ↺ = clashes with an earlier decision (named).
+
+**Critical**
+| ID | Raised by | Change, in plain words | Where | Evidence or opinion | Size |
 |---|---|---|---|---|---|
-| C01 | | | | | |
+| C01 | | | | | S/M/L |
 
-### Major
-| ID | … |
-|---|---|
-| M01 | |
+**Major** (M01…) · **Minor** (N01…): same columns.
 
-### Minor
-| ID | … |
-|---|---|
-| N01 | |
+## 5. Questions for the owner
+Deduplicated. Decisions first, then facts about him that would sharpen the numbers.
 
-## 5. Questions for <owner>
-
-**Decisions (needed for the changes above):**
-1. …
-
-**About you (these refine the numbers):**
-1. …
-
-## 6. Reviewer errors caught during synthesis
-
-Verify reviewers' arithmetic, dates and claimed contradictions.
+## 6. Reviewer errors caught
 - <Reviewer> said …; in fact … (checked against …).
+- Did not read the files they were asked to: <who>.
 
-## 7. Decisions (round 1)
-
-Record each answer in `DECISIONS.md` too. Later rounds (rechecks, audit questions) append sections 8, 9, … in the same shape, so this file keeps the full story of Phase R.
-
-| ID | Decision | Notes |
+## 7. The owner's decisions
+| ID | Decision | His words |
 |---|---|---|
 | C01 | Accepted | |
-| M18 | Rejected | Stays recorded, so it is not raised again. |
+| M18 | Rejected: do not raise again | |
+
+Later rounds (rechecks, audit questions) add sections 8, 9… in the same shape.

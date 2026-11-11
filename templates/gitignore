@@ -1,0 +1,19 @@
+# Copy to .gitignore at the project root before the first commit.
+# Real data, exports and scratch output never reach the repo.
+spikes/out/
+exports/
+*.export.*
+scratch/
+dist/tmp/
+# Screenshots and render output (may show real data). Save these outside the repo anyway.
+screenshots/
+Screenshot*.png
+Screen Shot*.png
+render-out/
+# Secrets
+.env
+.env.*
+*.pem
+# OS and editor
+.DS_Store
+xcuserdata/

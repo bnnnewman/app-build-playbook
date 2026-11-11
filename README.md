@@ -1,50 +1,66 @@
 # App build playbook
 
-My process for building apps with Claude Code. It runs from first idea, through design docs, a real-data spike, an expert review panel and safety-logic audit loops, to phased builds with handoffs. Retros at the end of each phase and project make the process better each time.
+How I build apps and tools with Claude Code, written down so every session works the same way.
 
-A one-page visual of the stages is in [`docs/stage-map.html`](docs/stage-map.html) (also published as a private Claude artifact: https://claude.ai/artifact/78qq2AYskPcS2u81k5QxSL).
+It is two things in one repo:
+- **Something to read:** [`PLAYBOOK.md`](PLAYBOOK.md) (the process and why), [`GLOSSARY.md`](GLOSSARY.md) (plain
+  words), [`OWNER.md`](OWNER.md) (how to work with me).
+- **A Claude Code plugin:** skills that run each step, reviewers, templates and checks.
 
-It comes in two forms in one repo:
-- **A readable playbook:** [`PLAYBOOK.md`](PLAYBOOK.md) explains every stage, gate and convention, and why.
-- **A Claude Code plugin:** `/playbook:*` skills run each stage, plus core review agents, templates and domain panel packs.
-
-The first version was mined from the Running-App project (Oct 2026). See [`examples/running-app/CASE-STUDY.md`](examples/running-app/CASE-STUDY.md) for what happened there, and [`LESSONS.md`](LESSONS.md) for what changed because of it.
+Version 2 was rebuilt in November 2026 from four projects and about 1,100 recorded decisions. What changed and why:
+[`examples/2026-11-deep-dive.md`](examples/2026-11-deep-dive.md).
 
 ---
 
-## Commands
+## You don't need to remember commands
 
-| Command | Stage | What it does |
-|---|---|---|
-| `/playbook:start [new\|adopt]` | 0 | Set up a new app, or adopt a half-built one (baseline, secret scan, `AS-IS.md`, recovered docs); sizes the process (Light / Standard / Full) |
-| `/playbook:status` | any | Where are we, what's open, what's next |
-| `/playbook:design [plan\|spec\|revise …]` | 1–2 | Write or revise PLAN.md and SPEC.md (invariants, definitions, state tables, tests) |
-| `/playbook:spike [source]` | 3 | Real-data field coverage, before review |
-| `/playbook:panel [pack]` | 4 | Expert review panel: tailor, run in parallel, synthesise, owner decides, apply |
-| `/playbook:audit [R\|A\|P<n>]` | 5 / 6 | Safety-logic audit loop to 0 Critical / 0 Major |
-| `/playbook:grill [topic]` | any | Interview you relentlessly about a plan, phase or idea until you share an understanding, recording every answer (adapted from Matt Pocock's `grilling`) |
-| `/playbook:decide` | any | Batch waiting questions into grill rounds; record answers |
-| `/playbook:phase-start <n>` | 6 | Handoff → questions → phase plan → build step by step |
-| `/playbook:phase-close <n\|A>` | 6 | Freeze → audit + code review → fix → CI → device → PR → handoff |
-| `/playbook:retro [stage]` | 7 | Numbers, lessons, and playbook improvements |
+Say what you want. The session picks the right step. These are the things worth knowing:
 
-**Also:** `scripts/coverage.py` maps SPEC test IDs to tests and writes `TESTS.md`.
+| Say this | What happens |
+|---|---|
+| **"Where are we?"** | A short status: what's merged, what's waiting for you, what's on your phone, the one next step. |
+| **"Start a new app"** / **"adopt this project"** | Sets it up: asks what could go wrong, sizes the process, picks a teaching mode. |
+| **"Grill me on this"** | A round of numbered questions with a recommendation each. Answer "yes to all except 3: b". |
+| **"Show me options"** | A mock-up page with A / B / C on made-up data. Pick one, or mix them. |
+| **"Log it"** | Adds the idea to the list and carries on. Nothing gets built yet. |
+| **"Merge 65"** | Puts that finished change into the real project. Nothing reaches it until you say so. |
+| **"Is that done?"** (with a screenshot) | Tells you what you should be seeing, and what "done" looks like. |
+| **"What are my options for…"** | Researches it, compares 3–5 ways, recommends one, and answers your doubt directly. |
+| **"Hand off to a new session"** | Writes a hand-over so a fresh session carries on. |
+| **"Tidy this repo"** | Proposes a clean-up. Changes nothing until you agree. |
 
-**Agents** (namespaced `playbook:<name>`):
-- `logic-auditor`
-- `adherence-reviewer`
-- `data-reviewer`
-- `privacy-reviewer`
+Three choices are made once per project and can change later:
+- **Size:** Mini (a few days' tool, one file) · Light · Standard · Full (health, safety, money).
+- **Type:** a phone app · a web tool or page · a tool with a scheduled routine.
+- **Teaching mode:** teach me as we go · explain decisions · just ship.
 
-**Panel packs** (copied into a project and tailored):
-- `panels/health-fitness/` (used on Running-App)
-- `panels/plant-care/` (draft, for Flobbadob)
+A picture of the stages: [`docs/stage-map.html`](docs/stage-map.html).
+
+---
+
+## All the skills
+
+| Skill | When |
+|---|---|
+| `start` · `status` | Set a project up · say where it stands |
+| `plan` · `spec` · `spike` | Write what it's for · the exact rules and tests · check what's really there |
+| `design` · `mock` · `critique` · `art` | The look, before the first screen · mock-ups to choose from · a design critique · drawn art |
+| `panel` · `audit` | Expert reviewers · the safety check, sized to the change |
+| `grill` · `decide` · `options` | Ask me things · clear what's waiting on me · research and options |
+| `build` · `close` · `coordinate` | One build · its review lanes and "merge N" · running several sessions |
+| `release` · `ideas` · `gaps` · `logic-review` · `operate` | Acceptance on my phone · the ideas list · what's missing · do the rules add up · run a live tool |
+| `retro` · `handoff` · `tidy` | Five-minute retro that feeds this repo · hand-over · housekeeping |
+
+Invoked as `/playbook:<name>`. Reviewers (`playbook:<name>`): `logic-auditor`, `adherence-reviewer`,
+`data-reviewer`, `privacy-reviewer`, `design-reviewer`, `automation-reviewer`, `finding-verifier`.
+Domain packs in `panels/`: health and fitness, plant care, governance, design.
+Platform notes in `platforms/`: iPhone apps, web tools, routines.
 
 ---
 
 ## Install
 
-### On your own computer: every project (Claude Code CLI or desktop)
+### On my own computer (every project)
 
 In Claude Code:
 
@@ -53,65 +69,48 @@ In Claude Code:
 /plugin install playbook@bnnnewman-playbook
 ```
 
-Restart Claude Code.
+Restart. To update later: `/plugin marketplace update bnnnewman-playbook`, then
+`/plugin update playbook@bnnnewman-playbook`.
 
-**First run on a project.**
-- For a half-built app (like Flobbadob): open Claude Code in the app's folder and run `/playbook:start adopt`.
-- For a new app: use an empty folder and `/playbook:start new`.
+To teach as we build: `/output-style` and pick **Playbook Teach**.
 
-After that, `/playbook:status` always tells you the next command. If the `/playbook:` commands don't appear, use the vendor script below instead.
+### In every cloud session (claude.ai/code and the phone app)
 
-**To update later:**
+Cloud sessions start from a saved snapshot, so the **environment** installs the playbook.
 
-```
-/plugin marketplace update bnnnewman-playbook
-/plugin update playbook@bnnnewman-playbook
-```
+1. In any cloud session: the cloud environment menu in the title bar → **Edit**.
+2. Paste everything below the `# ---` line of [`scripts/cloud-setup.sh`](scripts/cloud-setup.sh) into **Setup
+   script**. Save.
+3. Start a **new** session and say "where are we?".
 
-### In every cloud session (claude.ai/code)
+What the script does: clones this repo to `/opt/app-build-playbook`, installs the plugin, and adds `OWNER.md` to the
+session's standing instructions. After that the plugin keeps its own copy up to date in the background.
 
-Cloud sessions start from a fresh container, so the cloud **environment** installs the playbook each time a session starts. Set it up once and every session in that environment has `/playbook:*`.
+**If you set this up before version 2, paste the script again**: the new one also installs the owner profile.
 
-1. **Add the setup script.**
-   - In any cloud session, open the cloud environment menu in the title bar, then **Edit**.
-   - Paste everything below the `# ---` line of [`scripts/cloud-setup.sh`](scripts/cloud-setup.sh) into **Setup script**, then save.
-   - The repo is public, so no token is needed. (If you ever make it private again, add a read-only fine-grained token as the environment variable `PLAYBOOK_GITHUB_TOKEN`, and the script will use it.)
-2. **Check it.** Start a **new** session and type `/playbook:status`.
-   - If the command is there, you're done.
-   - If not, open the setup log, find the failing line, and bring it to a session that has this repo.
-
-Every new session clones the latest playbook, so improvements reach cloud sessions automatically.
-
-### Per project, without installing (fallback)
-
-If a session can't install plugins, copy (vendor) the playbook into the project instead:
+### Per project, with nothing installed (fallback)
 
 ```bash
-# from a clone of this repo
-./scripts/vendor.sh /path/to/your-app
+./scripts/vendor.sh /path/to/project
 ```
 
-This copies the skills, agents, templates and scripts into `your-app/.claude/`, where every session, local or cloud, picks them up.
-- Vendored commands drop the namespace: `/playbook-status` instead of `/playbook:status`. They can sit alongside an installed plugin.
-- Re-run the script to update, and commit the result in the app repo.
-- `.claude/playbook/` is replaced on every run, so don't edit files there. Project-specific agents in `.claude/agents/` are never overwritten.
-- If a session's safety check won't run scripts from another repo, ask Claude to do the same copy with `cp` and `sed`, following `vendor.sh` step by step. Then check that `grep -rn 'CLAUDE_PLUGIN_ROOT\|/playbook:' .claude/` finds nothing.
+Copies the skills (as `/playbook-<name>`), reviewers, templates and scripts into the project's `.claude/`. Re-run to
+update. If a session won't run a script from another repo, ask it to do the same copy by hand.
 
 ---
 
-## Improving the playbook
+## How it gets better
 
-This is meant to grow with every app:
-1. **Every phase close** ends with a short `/playbook:retro`: the numbers and one question to you.
-2. **At project end,** `/playbook:retro project` turns those into new lessons in `LESSONS.md` (Keep / Change, with evidence) and a block in `METRICS.md`. It then proposes edits to this repo.
-3. **Check the numbers** against the targets in `METRICS.md`. That shows whether the changes helped.
-4. **Changes** land as PRs on this repo. Bump the version in `.claude-plugin/plugin.json` and add a `CHANGELOG.md` entry. Each project records which playbook version it used.
-5. **Panel packs grow.** After each project, promote its tailored reviewers back into `panels/<domain>/`.
+1. Every merge ends with a five-minute retro: numbers filled in by a script, and one question to me.
+2. Each project writes what it learned to `retros/playbook-proposals.md`.
+3. `/playbook:retro sync` brings those here as a branch: new lessons in [`LESSONS.md`](LESSONS.md), numbers in
+   [`METRICS.md`](METRICS.md), and the edits themselves.
+4. I merge playbook changes like any other.
 
-See [`.claude/CLAUDE.md`](.claude/CLAUDE.md) for the rules on editing the playbook itself.
-
----
+Rules for editing this repo: [`.claude/CLAUDE.md`](.claude/CLAUDE.md).
 
 ## Credits
 
-`/playbook:grill` is adapted from the `grilling` skill in [mattpocock/skills](https://github.com/mattpocock/skills) (MIT). See [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).
+`/playbook:grill` is adapted from the `grilling` skill in [mattpocock/skills](https://github.com/mattpocock/skills)
+(MIT). The scorecard idea in `/playbook:critique` is adapted from pbakaus/impeccable (Apache 2.0) and
+pjt222/agent-almanac (MIT). See [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).

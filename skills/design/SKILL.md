@@ -1,75 +1,52 @@
 ---
 name: design
-description: Write or revise the domain PLAN (human-facing truth) and the SPEC (agent-facing software truth) for a playbook project, including invariants, definitions, state tables, build phases and Input→Expected acceptance tests. Use for stages 1-2, when recovering design docs for an adopted app, or whenever an accepted change must be applied to the docs.
-argument-hint: "[plan | spec | revise <reason>]"
+description: Run the visual design track for anything with a screen - the look-and-feel brief, round-0 mock-ups with directions to pick or mix, and the design lock (style guide plus a scan test) - before the first screen is built. Use at stage 4, when the owner wants a redesign or "my visual imprint", or when a new surface (widget, watch, web page) needs its own lock.
+argument-hint: "[brief | round0 | lock | surface <name>]"
 ---
-# Design: PLAN and SPEC
+# Design
 
-*`${CLAUDE_PLUGIN_ROOT}` is the playbook folder. If you see it literally, find the folder by searching for `PLAYBOOK.md` under `~/.claude/plugins/` or `.claude/playbook/`.*
+*`${CLAUDE_PLUGIN_ROOT}` is the playbook folder. If you see it literally, find the folder by searching for `PLAYBOOK.md` under `~/.claude/plugins/`, `/opt/app-build-playbook` or `.claude/playbook/`.*
 
-Read `${CLAUDE_PLUGIN_ROOT}/PLAYBOOK.md` stages 1–2, plus lessons L-04, L-06, L-08, L-09, L-11, L-15 and L-16 in `${CLAUDE_PLUGIN_ROOT}/LESSONS.md`. Read the project `CLAUDE.md`, `DECISIONS.md`, and, for an adopted app, **`AS-IS.md` and the owner's notes before anything else**.
+Read first: `${CLAUDE_PLUGIN_ROOT}/OWNER.md` (taste defaults), `${CLAUDE_PLUGIN_ROOT}/PLAYBOOK.md` "Stage 4", the
+SPEC's screen list. Decision IDs here are `D-LK-nn`. No argument: do the next step that's missing.
 
-Ask the owner things through `/playbook:grill`. It asks in rounds, with recommended answers, and logs every answer in `DECISIONS.md`. Look facts up yourself; only decisions go to the owner.
+**By size.** *Mini:* a mock-up before anything visible; no lock. *Light:* a five-question brief, one mock round, a
+one-page style guide. *Standard:* all three steps and a scan test of about 10 rules. *Full:* plus a panel on the
+lock, a page inventory, a flow map, and `/playbook:art` for drawn art.
 
-## `plan`: write PLAN.md
+## `brief` → `design/DESIGN-BRIEF.md`
 
-1. Start from `${CLAUDE_PLUGIN_ROOT}/templates/PLAN.md`.
-2. Fill §1 from **real data** the owner has (exports, history, the AS-IS code). Summarise facts. Commit no personal values.
-3. Draft the §6 decision rules. For each, state:
-   - its inputs;
-   - its precedence ("first match wins" / "lowest wins" / "strictest wins");
-   - what happens when an input is missing.
-   - **For adopted apps,** tag each rule's provenance: found in code (AS-xx) / confirmed by owner / new.
-4. Write §2 principles. These become SPEC invariants.
-5. Write §8 "Doing it by hand", so the domain works with no app.
-6. Write §0 last: one screen.
-7. **Grill the plan:** `/playbook:grill plan`. The tree's roots are the §6 rules, their precedence and missing-data cases, the §2 principles, and §8 by hand. Fold the answers into the PLAN.
-8. **Gate:** the grill ends with the owner's "shared understanding" yes, and the owner confirms they could run the domain by hand from the document alone. On Light projects the grill may leave cheap, reversible branches to defaults, but the yes is still required.
+From `${CLAUDE_PLUGIN_ROOT}/templates/DESIGN-BRIEF.md`. Grill (skip what `OWNER.md` settles):
+- **Apps he likes, by element** ("small grey label over a big bold number"), and what he does *not* want from each.
+- Who uses it and in what moment (a glance at 6 am; one-handed; at a desk).
+- His phone, light or dark, text size.
+- Spelling and units; a **reading-level line** ("could he follow it at 6 am without the plan open?").
+- **Font licence** (free to embed) and **where art comes from** (drawn for this, never traced; references as links).
+- **The accessibility bar**, set as a decision now: largest text sizes, screen reader, contrast, 44 pt targets.
+- Does it sit beside another of his apps? Then say what carries over.
 
-## `spec`: write SPEC.md
+## `round0` → one mock-up page
 
-1. Start from `${CLAUDE_PLUGIN_ROOT}/templates/SPEC.md`.
-2. **One home for each rule.** Each SPEC rule section cites its PLAN section ("§7.2 (plan 6B)") and holds the exact numbers and algorithm. Don't restate meaning the PLAN already gives.
-3. **§3 Invariants.** Derive them from PLAN §2 and from the harms in the Critical definition. Each must be testable, and each gets a §13.I invariant test (`TI1a` …).
-4. **§4 Definitions.** Cover statistics, windows, units, time zone, the device-clock fail-safe policy, and what counts as an event. Anything that's a real choice goes to the spec grill (step 10).
-5. **§6 Data model.** Fields are split into synced / manual / computed, plus the schema-evolution rule. Settle the rule with the owner in the spec grill (L-16).
-6. **§7 Rules.** Write every lifecycle as a state/transition table, including overlap, reopen and unknown cases. Write precedence as an ordered list. Tag provenance for adopted apps.
-7. **§12 Build phases.**
-   - Phase 0 (spike) and Phase R come first. For adopted apps, add Phase A.
-   - Each phase has a "Done when" the owner can observe.
-   - A way to run the app on the real device, for this platform, belongs in Phase 2.
-   - Platform CI starts in the first phase that touches platform code. A local-only project may not need CI.
-8. **§13 Acceptance tests.**
-   - Use IDs `T001` …, with Input | Expected, exact numbers and a named fixture.
-   - Cover every rule's normal case, each precedence branch, boundaries (exactly at a threshold), missing data, and first/last rows.
-   - Then add invariant tests `TI…`.
-9. **§14:** point to `DECISIONS.md`. Every open question gets a D-ID, with the conservative default in use.
-10. **Grill the SPEC before the panel:** `/playbook:grill spec`. The tree's roots are:
-    - the invariants (is each one right, and is anything missing?);
-    - the definitions;
-    - every state table's unknown and overlap cases;
-    - the schema rule;
-    - the build phases and their Done-whens.
+Use `/playbook:mock round0`. One page, opened on his phone: 2–3 named directions; fonts; colours; the main screen in
+**every state**, true size, light and dark, largest text. Made-up data only. He picks, or mixes. Repeat until he
+says lock. A design panel (`${CLAUDE_PLUGIN_ROOT}/panels/design/`) may review the **mock-up**, never code.
 
-    This is the cheapest place to close your own gaps, before reviewers spend rounds finding them (L-32). If the spike later changes the SPEC, grill only the changed parts.
-11. **Gate:** every PLAN rule has a SPEC home and at least one test, and the invariants are listed. Self-check it: grep each PLAN §6 heading for a matching SPEC section. The spec grill has ended with the owner's yes. On Light projects the grill may leave cheap, reversible branches to defaults, but the yes is still required.
+## `lock` → `design/STYLE-GUIDE.md`, `design/LEDGER.md`, a scan test
 
-## `revise <reason>`: change either document
+From `${CLAUDE_PLUGIN_ROOT}/templates/STYLE-GUIDE.md`:
+1. Fill voice, words we don't show, the glossary, tokens, components, page types, from his picks.
+2. **Safety wording:** list every safety line; one component draws them; pin each with an exact-text test; add a scan
+   that fails a stray safety-looking line.
+3. **A scan test** that reads the UI code as text: no one-off colours or fonts, the shared components used, no
+   shrinking text, banned words. An allow-list entry needs a decision ID.
+4. Test the lock with one question: **would two careful builders make the same choice?** Where not, add the rule.
+5. The owner locks it (one grill). Add the design block to the project `CLAUDE.md` (from
+   `templates/PROJECT-CLAUDE.md`).
 
-Apply the **fix-impact checklist** (L-05) to every change ID. List every surface the ID touches, edit every one, and grep for the old wording:
-- PLAN section;
-- SPEC prose, table and data model;
-- screens and notifications;
-- tests (including recomputing affected expected values);
-- `DECISIONS.md`;
-- `CHANGELOG.md`.
+After the lock, changes follow the three lanes in the style guide: *conformance* (no decision), *pattern* (mock-up →
+decision → lock text → code, one commit), *safety* (audited, asked alone). History goes to the ledger.
 
-Then:
-- Mark any loosening ⚠ and get the owner's separate yes.
-- **Bump only the document(s) that changed:** PLAN v<a>.<b+1> and/or SPEC v<x>.<y+1>. Update the other document's companion-version line.
-- Add a CHANGELOG entry. The heading lists both current versions, then the trigger, then the IDs, then the sections touched.
+## `surface <name>`
 
-## Finish
-
-- Commit, e.g. `Design: PLAN v1.0, SPEC v1.0`. Update the Playbook map.
-- Tell the owner the next step: usually `/playbook:spike`, or `/playbook:panel` if there's no external data.
+A widget, watch face or web page gets its own short lock that **inherits** the main one and lists each difference as
+a named override with a reason. Anything else that differs is a defect.

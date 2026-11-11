@@ -1,34 +1,42 @@
 # Working on the playbook itself
 
-This repo is both a readable playbook and a Claude Code plugin (`playbook`, published through the `bnnnewman-playbook` marketplace in `.claude-plugin/`).
+This repo is a readable playbook and a Claude Code plugin (`playbook`, published through the `bnnnewman-playbook`
+marketplace in `.claude-plugin/`). It is **public**: no personal data, no employer or third-party names, no health
+values, in any file or example. Projects are referred to by their codes in `LESSONS.md`.
+
+**Main is live.** Cloud sessions pull this repo's main branch. Work on a branch; the owner merges.
 
 ## Layout
 
 | Path | What |
 |---|---|
-| `PLAYBOOK.md` | The process: stages, gates, conventions. The source of truth for *why* |
-| `LESSONS.md` | Numbered lessons (L-nn), Keep/Change, with evidence. Never renumber |
-| `METRICS.md` | One block per project, one row per stage |
-| `CHANGELOG.md` | Playbook versions |
-| `skills/<name>/SKILL.md` | The `/playbook:<name>` commands. They reference files as `${CLAUDE_PLUGIN_ROOT}/…` |
+| `OWNER.md` | The owner's standing preferences. Printed into every session by the hook. Change a line only on his word |
+| `PLAYBOOK.md` | The process and why: stages, gates, conventions |
+| `GLOSSARY.md` | Plain words for the owner; what each check catches; what each size of change costs |
+| `LESSONS.md` | Numbered lessons (L-nn), Keep or Change, with evidence. **Only this repo assigns L-numbers.** Never renumber |
+| `METRICS.md` | One block per project; targets for the next |
+| `skills/<name>/SKILL.md` | The `/playbook:<name>` commands. They cite files as `${CLAUDE_PLUGIN_ROOT}/…` |
 | `agents/` | Core reviewers, loaded as `playbook:<name>` |
-| `templates/` | Doc templates the skills copy into projects |
 | `panels/<domain>/` | Domain reviewer templates with `<<PLACEHOLDERS>>`. Not loaded as agents |
-| `examples/` | Case studies of finished projects |
-| `THIRD-PARTY-NOTICES.md` | Licences for adapted work (e.g. the grill skill). Keep it current when adapting anything else |
-| `scripts/vendor.sh` | Copies the plugin into a project's `.claude/` for cloud sessions (must work with GNU and BSD sed) |
-| `scripts/coverage.py` | SPEC test ID → test coverage matrix |
+| `platforms/` | Set-up notes per kind of project |
+| `templates/` | Documents the skills copy into projects |
+| `hooks/hooks.json`, `scripts/orient.sh` | The session-start hook. It must never fail a session start |
+| `scripts/` | `cloud-setup.sh`, `vendor.sh` (GNU and BSD sed), `coverage.py`, `decisions.py`, `metrics.py` |
+| `output-styles/` | The Playbook Teach style |
+| `examples/` | Case studies. `THIRD-PARTY-NOTICES.md`: licences for adapted work |
 
 ## Rules for changes
 
-- **Every process change traces to a lesson.** Add or cite an L-ID in `LESSONS.md`, then change PLAYBOOK, the template or the skill so they agree. Grep for the old wording across all files: skills restate parts of PLAYBOOK.
-- **Keep skills operational.** Skills say what to do, step by step; PLAYBOOK says why. Keep each SKILL.md under about 150 lines, and put detail in templates.
-- **Versioning (semver)** in `.claude-plugin/plugin.json`:
-  - patch: wording;
-  - minor: a process or template change;
-  - major: a restructure that changes stage numbers or file layout.
-  Update the version in the PLAYBOOK.md header too, and add a CHANGELOG entry.
-- **Validate before committing:** `claude plugin validate . --strict`.
-- **Generic over specific.** Domain content goes in panel packs or examples, never in core skills, agents or templates.
-- **Style:** plain English, short sentences, concrete numbers. Match the existing files.
-- No model names in commits or code. No personal health data or other personal data in examples.
+- **Every process change traces to a lesson** with evidence from a project. Add the lesson, then change PLAYBOOK,
+  the skill and the template so they agree. Search for the old wording everywhere: skills restate parts of PLAYBOOK.
+- **Lessons arrive from projects** as `<project>-L<n>` in their `retros/playbook-proposals.md`. Number them here.
+- **Skills say what to do; PLAYBOOK says why.** Keep each SKILL.md under about 120 lines. Detail goes in templates.
+- **Write for the owner's reading:** plain English, short sentences, concrete numbers, no jargon he'd have to look
+  up. He is not a professional developer.
+- **Generic over specific.** Domain content goes in `panels/`, platform content in `platforms/`, stories in
+  `examples/`. Never in core skills, agents or templates.
+- **Versioning** in `.claude-plugin/plugin.json` and the `PLAYBOOK.md` header, with a `CHANGELOG.md` entry: patch for
+  wording, minor for a process or template change, major for a restructure.
+- **Before committing:** `claude plugin validate . --strict`; `bash -n` on the shell scripts; run `vendor.sh` into a
+  scratch folder and check no `${CLAUDE_PLUGIN_ROOT}` or `/playbook:` is left in it.
+- No model names in commits or code.

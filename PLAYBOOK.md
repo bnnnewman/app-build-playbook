@@ -1,345 +1,355 @@
 # The app build playbook
 
-*Version 1.1.0 · 21 Oct 2026 · Built from the Running-App project (see `examples/running-app/CASE-STUDY.md`). Lessons are in `LESSONS.md` and are cited as L-nn.*
+*Version 2.0.0 · 11 Nov 2026 · Rebuilt from four projects and about 1,100 recorded decisions (see
+`examples/2026-11-deep-dive.md`). Lessons are in `LESSONS.md` and are cited as L-nn.*
 
-This is the process for building an app with Claude Code, from first idea through expert review to a tested build:
+This is how the owner builds apps and tools with Claude Code:
 - every stage has a **gate**: a clear "done when";
 - every change is **traceable**: an ID, a decision, a commit;
-- the owner **decides**, and reviewers only advise.
+- the owner **decides**; reviewers only advise;
+- the owner's standing preferences are written once, in `OWNER.md`, and never re-asked.
 
-The plugin skills (`/playbook:start`, `/playbook:status`, …) run each stage. This file explains the why.
+The skills (`/playbook:start`, `/playbook:status`, …) say what to do, step by step. This file says why.
+`GLOSSARY.md` says it in plain words.
 
 ---
 
-## The stages at a glance
+## The map
 
 ```
-0 Start / Adopt ─► 1 Plan ─► 2 SPEC ─► 3 Data spike ─► 4 Expert panel ─► 5 Audit loop ─┐
-                                                                                       │
-     ┌──────────────── (adopted apps: Phase A, an audit of the existing code) ◄────────┘
-     ▼
-6 Build phases (repeat):  handoff ─► questions ─► phase plan ─► steps (commit each) ─► freeze ─►
-                          safety audit + code review ─► fix ─► narrow re-audit to 0/0 ─►
-                          CI green ─► try it on the device ─► status + notes + CHANGELOG ─► PR ─► next handoff
-     │
-     ▼
-7 Retro: a short one per phase; a full one at project end that feeds LESSONS.md and the playbook
+SET UP      0 Start ──► size, type, teaching mode, "how a change reaches you"
+THINK       1 Plan ──► 2 Spec ──► 3 Spike (real data, or the real platform)
+LOOK        4 Design: brief ──► round-0 mock-ups ──► design lock        (anything with a screen)
+CHECK       5 Panel ──► audit loop to 0 Critical / 0 Major
+BUILD       6 Builds (repeat):  brief ─► mock-up if visible ─► steps ─► freeze ─►
+                                review lanes in parallel ─► fix ─► re-check ─► "merge N"
+SHIP        7 Release: acceptance on the real device ─► owner docs ─► tag
+LIVE        8 Use it ─► ideas ─► idea builds · gap analysis · logic review · critique · operate
+ALWAYS      status · grill · decide · mock · options · coordinate · handoff · retro · tidy
 ```
 
 | Stage | Skill | Output | Gate (done when) |
 |---|---|---|---|
-| 0 Start / Adopt | `/playbook:start` | Project `CLAUDE.md` with the Playbook map; `AS-IS.md` if adopting | The owner agrees the map, the size and the starting stage |
-| 1 Plan | `/playbook:design plan` | `PLAN.md` | Plan grilled to a shared-understanding yes; the owner can run the domain by hand from it |
-| 2 SPEC | `/playbook:design spec` | `SPEC.md` (invariants, definitions, state tables, tests) | Every PLAN rule has a SPEC home and at least one test; invariants listed; SPEC grilled to a yes before the panel |
-| 3 Data spike | `/playbook:spike` | `spikes/<source>-field-report.md` (fill rates, no values) | The owner has seen which fields really arrive; SPEC updated |
-| 4 Expert panel | `/playbook:panel` | `reviews/R-<code>0.md`, `reviews/SUMMARY.md`, decisions | Every Critical and Major item has an owner decision; accepted changes applied |
-| 5 Audit loop | `/playbook:audit R` | `reviews/R-SA<n>.md`, then `phases/P1-HANDOFF.md` | 0 Critical, 0 Major; Minors batched once |
-| 6 Build phase | `/playbook:phase-start`, `/playbook:phase-close` | Code, tests, `phases/P<n>-PLAN.md`, notes, PR, next handoff | The SPEC "Done when" holds; safety audit at 0/0; code review fixed; CI green; device check done or recorded as not met |
-| 7 Retro | `/playbook:retro` | `retros/<stage>.md`; at project end, lessons and metrics | Numbers recorded; at project end, playbook changes proposed |
+| 0 Start / adopt | `start` | `CLAUDE.md`, `STATUS.md`; `AS-IS.md` if adopting | Owner agrees size, type, mode and the starting stage |
+| 1 Plan | `plan` | `PLAN.md` | Grilled to a yes; the owner could run it by hand |
+| 2 Spec | `spec` | `SPEC.md`: invariants, definitions, state tables, tests | Every plan rule has a home and a test; grilled to a yes |
+| 3 Spike | `spike` | `spikes/<source>-report.md` | The owner has seen what really arrives; SPEC matches |
+| 4 Design | `design` | `design/DESIGN-BRIEF.md`, round-0 mock-ups, `design/STYLE-GUIDE.md` | The owner locks the look; the scan test passes |
+| 5 Panel + audit | `panel`, `audit` | `work/R/reviews/…`, `SUMMARY.md` | Every Critical and Major decided; audit at 0/0 |
+| 6 Build | `build`, `close` | `work/<build>/…`, code, tests, a PR | Every lane at 0/0; the owner says "merge N" |
+| 7 Release | `release` | `docs/owner/ACCEPTANCE.md`, owner docs, a tag | Acceptance done on the device; owner docs exist |
+| 8 Live | `ideas`, `gaps`, `logic-review`, `critique`, `operate` | `IDEAS.md`, reports, the live tool | (a loop, not a gate) |
+| Retro | `retro` | `retros/…`, proposals for this repo | Numbers recorded; proposals sent to the playbook |
 
-At any point:
-- `/playbook:status` reads the project and says which stage you're at, what's open and what to do next.
-- `/playbook:grill <topic>` interviews the owner about anything (a plan, a phase, an idea) until you share an understanding, recording every answer.
-- `/playbook:decide` batches waiting questions (panel proposals, pending defaults, flags) into grill rounds and records the answers.
-
----
-
-## Sizing the process
-
-Running-App was health-adjacent: a wrong answer could injure someone. That justified 8 reviewers and 35 audit rounds. Most apps need less. `/playbook:start` asks **"How bad is the worst thing the app could get wrong?"** and records the size in the Playbook map.
-
-| Size | When | Panel | Audit loop | Retros | Coverage matrix |
-|---|---|---|---|---|---|
-| **Light** | Worst case is annoyance or a small loss (e.g. a dead houseplant, a missed reminder) | About 3 reviewers: `logic-auditor`, `adherence-reviewer`, 1 domain expert (the owner chooses if data or privacy also matter) | Cap at 3 rounds, then the owner decides | Project end only | Optional |
-| **Standard** | Real money, data or property, or harm to pets or plants that matter to you | 5–6 | Usual exit (0/0), loop breakers at round 5 | Short one per phase | Yes |
-| **Full** | Health, safety or financial advice | 6–8, plus rechecks | Usual exit, every invariant every round | Short one per phase | Yes, and in CI |
-
-Every size keeps the same core:
-- PLAN and SPEC with invariants;
-- the spike when there's external data;
-- owner decisions;
-- invariant tests;
-- handoffs;
-- the phase-close review.
-
-The size can change. Revisit it if a harm turns up that's worse than expected.
+At any point `status` says where things stand and the one next action, and writes it to `STATUS.md`.
 
 ---
 
-## Stage 0: Start a new app, or adopt a half-built one
+## Three choices at the start
 
-**New app.** Interview the owner, covering:
-- purpose;
-- stack, and what the "device" is for this platform;
-- environment: local machine, cloud sessions, or both;
-- external data;
-- the worst harm (this sets the size and defines "Critical");
-- hard constraints;
-- how the domain works without an app today.
+`start` asks three things and records them in the project's `CLAUDE.md`. Each can change later.
 
-Then create the project layout (below) and the project `CLAUDE.md` from `templates/PROJECT-CLAUDE.md`.
+### 1. Size: how bad is the worst thing it could get wrong?
 
-**Adopt an existing app.** This is the path for something like Flobbadob. Don't throw away what's built, and don't redesign anything before you understand it:
-1. **Baseline.**
-   - Record `git status`, the branch and the last commit. If the tree is dirty, ask the owner to commit or stash first.
-   - Work on a `playbook/adopt` branch.
-   - Run the build and tests, and record what happens.
-2. **Secret and personal-data scan.** Check the tree and the history for keys, tokens, exports and personal data. Check the `.gitignore` coverage. Report to the owner before any push.
-3. **Owner's intent.** Ask for existing notes, issues, chat exports and ideas, and read them first. The code shows what the app *does*. The notes show what it was *meant* to do.
-4. **Inventory.** Write **`AS-IS.md`**:
-   - features, each with a state;
-   - **rules found in the code** (AS-01…), each marked *intended / accidental / unknown*;
-   - risks;
-   - open questions.
-5. **Recover the design docs.** Draft `PLAN.md` and `SPEC.md` from AS-IS, the notes and an owner interview. Tag each rule's provenance: *found in code (AS-xx)*, *confirmed by owner*, or *new*.
-6. **Re-enter the stages:**
-   - stage 3, if the app uses external data;
-   - then stages 4–5 on the recovered docs;
-   - then **Phase A**: retro-fit the invariant tests, then audit the existing code module by module against the SPEC and fix the Criticals and Majors;
-   - then normal build phases, starting at P1, for what's left.
+Ask the harm questions **first** (L-50): real people's data? one person seeing another's? money or a deadline?
+health or safety? pets or children? Then size it.
 
-## Stage 1: The plan (domain truth, human-facing)
+| Size | When | Docs | Panel | Audit loop | Design | Retro |
+|---|---|---|---|---|---|---|
+| **Mini** | A few days' tool; every harm answer is "no" | One `BRIEF.md` | None; one review pass, findings kept | None | Mock-up before anything visible | At the end |
+| **Light** | Annoyance or a small loss | PLAN, SPEC (short) | About 3 reviewers | Up to 3 rounds, then simplify | Brief, one mock round, one-page style guide | At release |
+| **Standard** | Real data, money, property, pets, or other users | Full set | 5–6 | To 0/0; simplify offered at round 3 | Brief → round 0 → lock → per-build checks | Each merge to main (5 minutes) |
+| **Full** | Health, safety, financial advice | Full set | 6–8, with verifiers and rechecks | To 0/0; every invariant every round | Everything, plus lock panel, flow map, art loop | Each merge to main |
 
-Template: `templates/PLAN.md`.
-- **§0 "If you read nothing else":** one screen with the few rules that matter.
-- **§1 Real data first:** facts from what the owner actually has, not hopes.
-- **§2 Principles:** these become SPEC invariants.
-- **§6 Decision rules:** each with inputs, precedence and missing-data behaviour.
-- **§8 Doing it by hand:** the domain works with no app (L-11).
-- **One home for each rule.** The plan says what a rule means and why. The SPEC holds the numbers and tests (L-04).
-- **Grill it** (`/playbook:grill plan`) before calling it done (L-31).
+**Size the stages separately** (L-58): a project can take a Standard panel and a Light build routine.
 
-## Stage 2: The SPEC (software truth, agent-facing)
+**The grow trigger** (L-49). At every session start, `status` re-asks: has a harm answer changed? Is there now a
+second system, a second builder, or a date set by someone else? Any yes moves the project up a size and splits the
+brief into the full documents. Small tools grow; one grew from a 3-day prototype into a 7-week programme handling
+personal data without ever being sized.
 
-Template: `templates/SPEC.md`. It keeps what made Running-App's SPEC work and adds the fixes. Its section numbers differ from Running-App's: phases are §12 here (§11 there), tests §13 (§12 there), questions §14 (§13 there).
-- **§0 "Before writing any app code":** an ordered gate list (read, real data, spike, panel, open questions). It tells the agent when to stop and report.
-- **Constants table** with an *Editable?* column and a **locked** list, each with a test.
-- **§3 Invariants:** numbered and testable. The auditor checks every one, every round (L-02).
-- **§4 Definitions:** statistics, windows, units, time and the fail-safe policy (L-09, L-15).
-- **§7 Rules:** a pure module, "now" injected, every output carries reasons, precedence as an ordered list ("first match wins"), and **state machines as tables** (L-06).
-- **§12 Build phases**, each with a "Done when". Phase 0 and Phase R are phases too.
-- **§13 Acceptance tests:**
-  - ID | Input | Expected, with exact numbers;
-  - IDs `T001` …, never renumbered, with tombstones for removed tests;
-  - plus **§13.I invariant tests** `TI1a` … (L-08);
-  - `scripts/coverage.py` maps IDs to tests.
-- **Versioning.** Bump only the document that changed. Every bump gets a CHANGELOG entry: the trigger, then the IDs, then the sections touched.
-- **Grill it before the panel** (`/playbook:grill spec`). Cover the invariants, the definitions, the state tables' unknown and overlap cases, and the phases. Closing your own gaps here is cheaper than reviewers finding them (L-32).
+### 2. Type: what is the "device"?
 
-## Stage 3: Data spike (before the panel; L-01)
+| | Phone app | Web tool / page | Tool with a routine | 
+|---|---|---|---|
+| The "device" | The phone, via the store's test channel | The live link, light and dark, two widths | The routine's delivered message |
+| Try-out | A build on the phone | Private preview, then a trial copy with made-up data | A test run compared with expected output |
+| Stage 3 spike | The data source or sensor | Counts from the live data, read-only | **The platform**: permissions, connectors, what can be set |
+| After building | Release, then the ideas loop | **Operate**: updates, go-live decisions | Operate, plus routine change control |
+| Platform notes | `platforms/ios.md` | `platforms/web.md` | `platforms/routine.md` |
 
-Skip it only if the app reads no external data. Template: `templates/SPIKE-REPORT.md`.
-1. Write a small script that pulls a long window of the owner's real data. Credentials come from the env or Keychain, never the command line. If the session can't reach the network, the owner runs the script and sends back the redacted report.
-2. Print **every field**, with its fill rate and type. Mark the fields the rules depend on.
-3. Do the same for any export file: columns, fill rate, format quirks, implausible rows. An implausible row becomes test data.
-4. Commit a **redacted** report (counts and fill rates only). Raw output stays git-ignored (L-28).
-5. Rewrite any rule whose inputs don't really arrive. Field missing ≠ bad.
-6. Keep a **replay harness** for thresholds you can't settle yet. It runs the rule over real history and reports counts only.
+### 3. Teaching mode
 
-## Stage 4: Expert review panel (Phase R)
+The owner set this himself before the playbook existed: "treat every session as teaching, not just building" (L-51).
+- **Teach:** explain before doing; small chunks; one check question after each new idea; log new ideas in
+  `docs/owner/LEARNING.md`.
+- **Explain:** build at pace; explain each decision and anything he must do by hand.
+- **Ship:** build; report results.
 
-Skill: `/playbook:panel`. Templates: `REVIEW-PANEL.md`, `review-output.md`, `SUMMARY.md`.
-
-**Who sits on the panel** (the size sets how many):
-- **Always:** the `logic-auditor` (SA: consistency, unsafe paths, invariants, test gaps; exhaustive; at stage R it only reads) and the `adherence-reviewer` (AD: friction, framing, real-life use).
-- **When the app reads sensors or APIs:** the `data-reviewer` (DA).
-- **When personal data is involved:** the `privacy-reviewer` (PV).
-- **Domain experts** from a panel pack (`panels/<domain>/`), tailored with the owner's context. Each has a two-letter code.
-
-**The run:**
-
-| Step | What happens |
-|---|---|
-| R0 | The PLAN and SPEC have been grilled (L-32). Write the **invariants** and the **precedence order** for conflicts *before* the run. Freeze scope (L-07). |
-| R1 | Same brief for everyone: the files, **the owner context and hard constraints**, the remit, the template, a 900-word cap (the auditor is exempt), and citations verified or tagged `[unverified]` (L-22). |
-| R2 | Launch all reviewers **in parallel**. The panel is round 0: save each review to `reviews/R-<code>0.md`, with IDs `R-<code>0-nn`. |
-| R3 | The **main session** (never a subagent) writes `SUMMARY.md`: verdict roll-call, real-world go/no-go, consensus, conflicts resolved by precedence, change tables (C/M/N IDs with ⚠ on any loosening), deduplicated questions, and **reviewer errors caught**. |
-| R4 | The owner marks each ID **accept / reject / modify** (`/playbook:decide`). Nothing proceeds until every Critical and Major item has a decision. Rejected items stay recorded so they aren't raised again. |
-| R5 | Apply only accepted IDs, using the fix-impact checklist (L-05). Bump versions, write the CHANGELOG, then go to stage 5. |
-| R6 | Rechecks (round 1, `R-<code>1.md`): any expert whose numbers depended on unknown data or on deferred items re-runs. Do this **before** the audit loop if you can (L-07). |
-
-**Guardrails:**
-- Reviewers never edit files.
-- Never weaken a safety rule without the owner's explicit, separate confirmation.
-- Respect the owner's hard constraints.
-- Keep evidence separate from opinion.
-- No diagnosis: say "recommend getting X checked".
-
-## Stage 5: The audit loop
-
-Skill: `/playbook:audit`. Template: `templates/AUDIT.md`.
-
-**Each round:**
-- The `logic-auditor` reads the changed docs, or the frozen code.
-- It starts with a verdict line: `Critical: n · Major: n · Minor: n · Nit: n` (L-24).
-- It proves or refutes **every invariant**, recomputes the named tests, and lists missing tests as input → expected.
-
-**Between rounds:**
-- The main session fixes the issues and bumps versions.
-- It uses the **fix-impact checklist** and greps for the old wording.
-
-**Exit rule (L-03):**
-- **0 Critical and 0 Major.**
-- Minors go into **one** polish batch at the end, not into the loop. If the polish touches rules or tests, one narrow check of that diff follows.
-
-**Scope:**
-- Round 1 is the whole document.
-- From round 2, the scope is the diff plus its dependents, the invariants and any new Critical or Major.
-- Each brief carries a **do-not-re-raise list**: decided items, deferred items and pending defaults.
-
-**Loop breakers:**
-- If the same area yields a Major **two rounds running**, stop patching. Rewrite it as one canonical definition or table (L-06).
-- At **round 5 or later** with Majors still coming, escalate the design question to the owner. For Light-sized projects, escalate at round 3.
-
-**While waiting on the owner:**
-- Apply the **most conservative** answer, mark it `pending-default` in `DECISIONS.md`, and keep going (L-10). Confirm the batch later.
-- **A Critical or Major item can be built on a default, but its phase can't close until the owner confirms it.**
-
-**Owner reversals.** If the owner later reverses a decision in an area the loop already closed, treat the change as a new diff. Apply it, then run one narrow round on it.
-
-**When it exits:** write `phases/P1-HANDOFF.md` (or `PA-HANDOFF.md` for an adopted app) so the build can start cold.
-
-## Stage 6: Build phases
-
-Skills: `/playbook:phase-start` and `/playbook:phase-close`. Templates: `PHASE-HANDOFF.md`, `PHASE-PLAN.md`, `DEVICE-STEPS.md`, `NOTES-FOR-OWNER.md`, `PR-BODY.md`.
-
-**Phase start:**
-1. Read the handoff written by the previous session. It has fixed fields: branch, where things stand, read-first list, sources of truth with versions, goal, carried-forward rules by ID, existing APIs and stubs, open questions, toolchain, step order, model table and guardrails (L-14).
-2. **Ask the scope and policy questions now**, before the step plan is fixed (L-29, L-15, L-16).
-3. Write `phases/P<n>-PLAN.md` as numbered steps. Each step names its SPEC sections and test IDs. The hardest coupled logic gets its own step. The last step is always "end to end, then review", with one end-to-end test that encodes the phase's "Done when".
-
-**Steps:**
-- Commit after each step, and push if there's a remote. Title: `P<n> step k: <outcome>`. The body lists what landed and the test count.
-- Split oversized steps. Label draft or unverifiable steps "(draft)".
-
-**Phase close:**
-1. **Freeze** the branch, or snapshot it (L-18).
-2. Run **one round** of the `logic-auditor` (safety and invariants) and a code review on the phase diff, **in parallel**. Reviewers may run probe tests in a scratch copy (L-23).
-3. Fix with root-cause fixes (L-30). Commits cite IDs. Each review gets a **regression test file**, mutation-checked (L-26).
-4. **Narrowly re-audit the fix commits** (`P<n>-SA2`, `SA3`, …) until 0 Critical, 0 Major.
-5. Get **CI green**. In the cloud, the cheap job runs per push and platform jobs run by hand or on the PR (L-17). On a local machine, run the full suite yourself.
-6. **Try it on the device.** A short numbered script for the owner, with what to send back. A way to run it on the real device exists from Phase 2 (L-19).
-7. Append a **Status** section to the phase plan. Add the phase's block to **`NOTES-FOR-OWNER.md`** (Flags to look at, and Interpretations taken). Add **one CHANGELOG entry**, and bump the SPEC if any rule changed (L-20).
-8. Open the **PR** using `PR-BODY.md`. Merge it before the next phase, or state the merge order (L-25).
-9. Write the **next handoff**, then a short retro.
-
-**Phase A (adopted apps only):**
-- Write the §13.I invariant tests for the existing code first.
-- Then audit module by module (one auditor per module, in parallel), frozen at the current HEAD.
-- IDs: round 1 is per module (`A-SA1-<mod>-nn`, in `reviews/A-SA1-<mod>.md`), then `A-SA2-nn` … from a single auditor; code review is `A-CR1-nn`. The plan is `phases/PA-PLAN.md`.
-- Fix the Criticals and Majors as numbered steps. The next phase is P1.
-
-**Architecture habit (L-13):** keep the logic pure and testable without the platform. The app-state layer is pure too: it decides what each screen shows and every write it makes. The UI holds no rules. There is one write path.
-
-## Stage 7: Retro and feeding the playbook
-
-Skill: `/playbook:retro`.
-- **Phase retro** (5 minutes; skip on Light):
-  - the numbers;
-  - one question to the owner;
-  - `retros/P<n>.md`.
-  No playbook edits yet; just collect.
-- **Project-end retro** (or whenever a lesson is urgent):
-  1. Read every phase retro.
-  2. Fill in `templates/RETRO.md` for the project.
-  3. Add the project's block to `METRICS.md` in the playbook repo.
-  4. Add new lessons to `LESSONS.md` (next free ID, Keep or Change).
-  5. For each Change lesson, edit the playbook (template, skill or this file) on a branch. Bump the playbook version and CHANGELOG, and offer a PR.
+`build` re-asks the mode at the start of each build, because the right answer moves.
 
 ---
 
-## Conventions (all stages)
+## Stage 0: Start, or adopt
 
-**Asking the owner: grill it (L-31).** Every decision the owner makes goes through `/playbook:grill`. Quick check-ins don't need it: the retro's one question, or where a credential lives. The grill is adapted from Matt Pocock's `grilling` skill (MIT; see `THIRD-PARTY-NOTICES.md`):
-- **Map a design tree.** Ask the **frontier** (every decision whose prerequisites are settled) as one round of numbered questions. Each question carries a recommended answer, worded so "yes" accepts it.
-- **Questions that depend on open answers** wait for a later round.
-- **Facts are Claude's job.** Subagents look them up while the round goes on. Only decisions go to the owner.
-- **Every answer** is recorded in `DECISIONS.md` as it arrives.
-- **Done** when every branch is visited and the owner confirms a shared understanding. Nothing is acted on before that yes.
-- **⚠ loosenings** are never in a round. They're asked alone, so "yes to all" can't accept one by accident.
-- Each question stands alone; the owner may be on their phone.
-- **Depth follows the size:** Light projects leave cheap, reversible branches to defaults. The shared-understanding yes is still required, so every grill gate applies at every size.
+**New.** Grill the owner (harms, type, size, mode, where he works, what's installed). Scaffold the layout below.
+Prove the set-up before any feature (L-53): can this session build and test it? If not, what stands in (a
+Linux-testable rules package, a type-check harness, scan tests)? How does a change reach the owner? Write that as one
+paragraph in `CLAUDE.md` so every session gives the same answer.
 
-**Decisions.**
-- Every decision lives in **`DECISIONS.md`**, one row per decision: ID, date, source, question, options, answer, who decided, reversible?, and status (`pending-default` / `confirmed` / `changed` / `rejected`).
-- Record the answer as soon as it arrives, in a `Notes:` commit.
-- Plan-vs-SPEC conflicts are always raised as questions, never resolved silently.
+**Adopt.** Don't redesign before you understand:
+1. **Baseline** on the session's own branch: git state, and the build and tests if they can run here. If they can't,
+   say "not run" and ask the owner to run them. **Never state a test count no command produced** (L-54).
+2. **Secret and personal-data scan**, tree and history, before any push.
+3. **The owner's notes and intent**, read first.
+4. **`AS-IS.md`**: features with a state, the rules found in the code, risks, questions.
+5. **Bugs that touch a Critical harm are fixed now**, each with its own decision and a device check. Everything else
+   waits.
+6. Recover PLAN and SPEC with provenance; import the old decision log as `P-nn` rows so there is **one** log.
+7. Re-enter: spike → design (if wanted) → panel and audit → **build A**: audit the existing code first, then plan the
+   fixes from the findings (L-57).
 
-**Notes for the owner.** `NOTES-FOR-OWNER.md` is a plain-English diary, one block per phase, that the owner actually reads. It has two kinds of entry:
-- **Flag:** something the owner should look at.
-- **Interpretation:** a reading taken inside the stated rules, always the conservative one.
+## Stages 1–2: Plan and spec
 
-Each entry gets the owner's answer and the date. `DECISIONS.md` is the formal log behind it.
+Templates: `PLAN.md`, `SPEC.md`. What matters:
+- The plan works **by hand**, with no app (L-11). The spec holds numbers, algorithms and tests. One home for each
+  rule (L-04).
+- **Invariants** are numbered, and each has a test of the promise, not of one example (L-02, L-08). Auditors cite the
+  invariant IDs. Three audits and a retro complained when a spec had none.
+- **Definitions**: windows, units, time zone, what counts as an event (L-09).
+- **State machines are tables**, including the unknown and overlapping cases (L-06).
+- **Unknown or missing input is never good news.** It fails to the cautious side or to a human.
+- **Acceptance comes first** (L-62): write the acceptance items with the spec. Tag each one *machine*, *partly* or
+  *device*. Automate what can be; the owner checks only the rest.
+- Both are **grilled** before anyone reviews them (L-31, L-32).
 
-**Severity** (define Critical for the domain in the project `CLAUDE.md`):
-- **Critical:** could plausibly cause harm, or give unsafe or wrong advice; or a path that loosens a guardrail or acts without the owner's Confirm.
-- **Major:** materially reduces correctness, effectiveness or adherence.
-- **Minor:** polish or latent.
-- **Nit:** cleanup.
+## Stage 3: Spike (L-01)
 
-**Finding IDs** (L-21): `<stage>-<code><round>-<nn>`.
-- Stage: `R` = design docs (panel and audit loop), `A` = Phase A, `P1`…`Pn` = build phases. Spike findings are `S-nn`.
-- Code:
-  - core: `SA` logic auditor, `CR` code review, `AD` adherence, `DA` data, `PV` privacy;
-  - domain experts use the two-letter code in their pack's README.
-- Round: the panel is round 0, rechecks are round 1+, and the audit loop counts from 1.
-- Examples: `R-PH0-04` (physio, panel), `R-SA3-02` (audit round 3), `P4-CR1-06`.
+Before the panel, look at what is really there.
+- **Data spike:** pull a long window; report fill rates, never values. A field that never arrives is not "bad", it is
+  missing.
+- **Mini spike, every size** (L-48): copy the real field names and values from the source. Never type them from
+  memory. A spelling difference between pretend and real data once risked showing one person's page to another.
+- **Platform spike** (L-65): for a routine or a hosted page, test what the platform lets a session do before
+  designing around it.
+- Rule changes the owner can't judge in the abstract get a **replay on his own history, counts only** (L-47).
 
-**Review files.** `reviews/<stage>-<code><round>.md`, e.g. `reviews/R-AD0.md`, `reviews/P2-SA1.md`.
-- Header: the date, the agent, the exact scope (docs and versions, or a commit range), what the reviewer could not check, and the verdict line.
-- When fixes land, add a Status block to the file itself.
+## Stage 4: Design (anything with a screen)
 
-**Commits.**
-- `P<n> plan`.
-- `P<n> step k: …` for build steps.
-- `Fix <IDs>: …` for fixes.
-- `Save <stage> review <file>` for review reports.
-- `<Stage> audit closed: round <n> at 0 Critical, 0 Major`.
-- `Notes: …` for decisions.
-- `Design: PLAN v<a>, SPEC v<b>` for doc revisions.
-- The body ends with the test count.
-- No model names in commits or code.
+Design was added to one app after it was built. The copy review then found 853 things, the lock review 73 Majors,
+and the page pass 8 Criticals. The cheap parts move to before the first screen (L-43).
 
-**Git.**
-- Commit after every step.
-- Push if there's a remote and the owner agrees.
-- With no remote: commit locally, skip the PR, and write the PR body to `phases/P<n>-PR.md` instead.
-- Not a git repo yet? `git init` first, with the owner's OK.
+| Step | What | Gate |
+|---|---|---|
+| **Brief** | Apps he likes, *by element*, and what he doesn't want from each; who uses it and when; spelling; font licence; where art comes from; the accessibility bar; a reading-level line | Owner yes |
+| **Round 0** | One mock-up page: 2–3 directions, fonts, colours, the main screen in every state, true size, light and dark | He picks, or mixes |
+| **Lock** | `design/STYLE-GUIDE.md`: voice, words we don't show, glossary, safety wording, tokens, components, page types, a checklist, how it changes. Plus a scan test that reads the UI code as text | He locks; the scan passes |
+| **Every build** | Read the lock first; mock-up for anything new; design-lock check; wording page; owner screenshot pass | 0/0; "words fine" |
+| **Critique** | Four lenses against benchmark apps; a scorecard | He picks findings to mock |
 
-**Privacy.**
-- Never commit real personal data.
-- Spikes report counts and fill rates only.
-- Fixtures are hand-written.
-- Ask the owner for "errors and test names, verbatim", not screenshots of personal data.
+- A lock is tested by one question: **would two careful builders make the same choice?** (L-44)
+- Precedence, written at the top of every lock: **safety > accessibility > the owner's decisions > everyday use > the
+  rest**.
+- The lock changes through **three lanes** from day one (L-45): *conformance* (a screen moves onto an existing rule:
+  no decision needed), *pattern* (something new: mock-up → decision → lock text → code, in one commit), *safety*
+  (any safety line: audited, asked alone).
+- The style guide holds only what is true now. Change history lives in `design/LEDGER.md`.
+- **Safety wording is pinned by exact-text tests**, and a scan fails any new line that looks like a safety line but
+  isn't in the inventory. A copy pass over safety text gets a second read by the auditor: in one rewrite, 50 of 245
+  "clearer" lines had drifted to softer or wrong (L-46).
+- Reviewers judge the **mock-up**, so a finding costs a mock edit, not a rebuild.
+- Drawn art uses the **art loop** (`/playbook:art`, L-33 to L-42): numbers before taste, blind critics with today's
+  art hidden as a control, and the owner makes every taste call.
 
-**Writing style.** Plain English, short sentences and concrete numbers. Lead with the answer ("Yes, you can start Monday by hand"). One convention per idea: ⚠ = loosens a rule; (Owner, date) = owner's decision.
+## Stage 5: Panel and audit
 
-**Models (L-27).**
-- The main session runs on the strongest model. It handles coupled logic, synthesis and code review.
-- Reviewers and auditors are Sonnet and don't edit the repo (auditors may probe in a scratch copy at build stages).
-- Never split tightly coupled logic across parallel agents.
-- Each handoff carries a model table: step, main, subagents, why.
+**Panel.** Core reviewers plus a domain pack (`panels/`), each tailored with one shared owner-context block.
+- Every reviewer reads `OWNER.md`, `DECISIONS.md` and (if adopting) `AS-IS.md` **first**, and cites what it found. A
+  finding that disagrees with a decision says **"Reopens D-…"**. A rejected proposal is marked *do not raise again*
+  (L-55). Reviews twice re-raised things the owner had already refused.
+- For big panels, each reviewer is followed by a **verifier** told to refute it (L-60). In one gap analysis 58% of
+  raw findings were wrong in some detail.
+- The main session synthesises; the owner decides by ID; rechecks run when the owner's answers change a reviewer's
+  facts.
+
+**Audit loop.** The exit is 0 Critical, 0 Major. Minors are batched once.
+- Round 1 reads everything. Later rounds read only the change, what it touches, and the invariants.
+- **Loop breakers** (L-06, L-59):
+  - the same area raises a Major two rounds running → rewrite it as one table or one definition;
+  - a rewrite fails twice → change the *kind* of rule, not the list;
+  - **round 3 with Majors → offer "simplify or cut" as the ★ option**; at round 5 it is the default;
+  - **close-out rule:** when the owner picks "one more round", that round is narrow and the loop closes either way,
+    with anything left carried to the build audit;
+  - for how a screen behaves, stop auditing the document after 3 rounds and **build a trial with made-up data**. One
+    trial page found what ten document rounds could not.
+- While waiting on the owner: the cautious answer, marked `pending`, and keep going (L-10).
+
+## Stage 6: Builds
+
+The unit of work is a **build**: one brief, one branch, one PR, one "merge N" (L-52). It replaced the phase.
+
+**Before code.** Read the handoff and the lock. Re-ask the teaching mode. Grill scope and policy (L-29). Write
+`work/<build>/BRIEF.md`. For anything visible, the owner sees a mock-up first (L-63).
+
+**Steps.** Commit after each. The last step is one end-to-end test of the "done when". Code that can't be run here is
+labelled *draft, not run*, and **no more than one step of it may pile up** before something real runs it (L-54).
+
+**Close: review lanes, in parallel, on a frozen commit** (L-18, L-52).
+
+| Lane | Reviewer | When |
+|---|---|---|
+| Safety | `logic-auditor` | Rules, stored data, anything in the Critical list |
+| Code | code review | Every build |
+| Design lock | `design-reviewer` | Every visible change (copy, layout, symbols) |
+| Logic | `/playbook:logic-review` | Any change to what the app plans, counts, caps or decides |
+| Privacy | `privacy-reviewer` | Storage, network, logs, anything about people |
+| Automation | `automation-reviewer` | Anything a routine runs |
+
+**Tier the checks to the change** (L-56; the table is in `GLOSSARY.md`). The owner asked, "do we need to restart
+audits every time I bring new ideas?" No: words-only gets a wording page; looks-only gets the design lane and a code
+review; a tightening gets one narrow audit; only a loosening or a wide change gets the full loop.
+
+Each fix is re-checked by the lane that found it, until every lane is at 0/0. Fix the cause for every case it
+covers, not the reported case (L-30). Then the PR says, in plain words: what each lane found, what was tested here,
+what still needs the device.
+
+**"Merge N".** Nothing reaches main until the owner says so. One merge is one build on his phone, so don't merge
+docs-only changes more than needed (L-17).
+
+**Parallel builds** use the coordinator pattern (below).
+
+## Stage 7: Release
+
+- **Acceptance** (`docs/owner/ACCEPTANCE.md`): the current build only, about 40 items at most. Each step is *where →
+  what to tap → what you should see*. Results come back "done / not done / later". Publish it as a tick-box page.
+  Older results are archived per version.
+- **Acceptance batches:** his notes become decisions or bug rows → a fix branch → a tiered check → "merge N".
+- **The owner's screenshots are the sharpest tool** (L-61): four photos of one session found 32 faults a 12-reviewer
+  code-only panel had missed. Ask for light, dark and largest-text shots of each page type.
+- **Real use comes before polish** (L-64): after the first usable build, three days of use, then a feedback grill.
+  One app ran four polish stages before real use, then redid most screens.
+- **Owner independence** (L-66): before the first release, write `OWNER-MANUAL.md` (the one thing to remember, what
+  each notice means, what to do when a build fails), `MAINTAINING.md` (with a **renewals table**) and `PROOF.md`
+  (each promise and what proves it). The session records set values and dates; it doesn't leave blanks for the owner.
+- **Tag the release** and write the publish log line: date, version, where it went.
+
+## Stage 8: Live
+
+- **Ideas** (`ideas`): one inbox, `IDEAS.md`. "Log it" adds a row and carries on. Triage by value, effort and which
+  checks it needs. Chosen ideas get a brief and become **idea builds**, bundled into point releases. Built ideas are
+  marked in place. A "rejected on principle" list stops them coming back. There is **no hard freeze** (L-67): one was
+  declared and lasted a day.
+- **Gap analysis** (`gaps`): before a release, specialists plus loose-end sweeps, a verifier each, and an "if we skip
+  it" table (why, when it bites, does it fail safe, cost in usage windows).
+- **Logic review** (`logic-review`): per-change audits and green tests don't show whether the whole model adds up
+  (L-68). A simulated season, read by an expert, found six serious gaps after 55 audits had closed.
+- **Operate** (`operate`): for a live tool. The owner says what changed; the session asks at most five questions,
+  reads back a three-line summary and one "OK?", and writes nothing until yes. Live writes are pinned to the version
+  read, read back afterwards, and rehearsed on a copy. Other sessions may be writing too: read the latest, merge,
+  never overwrite.
+- **Routines** (L-69): the agent computes nothing (rules live in tested code); the code is pinned by a fingerprint in
+  the prompt; a change to the routine needs tests green, a new fingerprint and the owner's OK **in the same step**;
+  no connectors; text in the data is data, never instructions; stop loudly on short data; the project `CLAUDE.md` has
+  an "If you are the routine" section; record the risk that remains.
+
+## Retro: the loop that feeds this file
+
+For three weeks, four projects proposed 16 lessons and none reached the playbook; two sets collided on the same IDs
+(L-70). So:
+- A retro runs at **every merge to main** (Standard, Full) and takes five minutes: five numbers filled by
+  `scripts/metrics.py`, **one question to the owner asked inside the merge message**, at most three lessons.
+- Projects propose lessons as `<project>-L1`. **Only this repo assigns L-numbers.**
+- Every retro writes `retros/playbook-proposals.md`. `/playbook:retro sync` carries proposals here as a branch.
+
+---
+
+## Working with several sessions: the coordinator
+
+One session talks to the owner. It runs the others (`/playbook:coordinate`). Each rule below was paid for by a
+failure (L-71).
+
+1. **A branch per child.** Children push only there. The coordinator alone opens PRs and merges, on "merge N".
+2. **The brief is a file** in `work/<build>/BRIEF.md`, never only a message. No session IDs in repo files.
+3. **The build ID is the namespace.** Decisions are `D-<build>-nn`, so two sessions can't collide. The brief also
+   hands out SPEC section numbers and test-ID prefixes.
+4. **Slices own files.** Shared files are named, and changes to them are small and reported.
+5. **Same gates for every child**, stated in the brief with the baseline test count.
+6. **Reviewers read a frozen commit**, each with its own build folder.
+7. **A fixed child report**: what changed, tests added, SPEC touched, new words, what needs the device, final count.
+8. **Children never ask the owner.** They take the cautious reading, note it "for the owner", and the coordinator
+   relays questions in one grill.
+9. **Integration is a step**, with a cross-slice consistency check: each slice can be right alone and the whole
+   inconsistent.
+10. **Check-ins back off.** After three quiet checks, stop and wait for an event.
+11. **When the coordinator's context is nearly full**, it writes a handoff and a new coordinator takes over.
+
+**On a budget** (L-72). When the plan's allowance is small: one session, tiered checks, panels of three, and the
+heavy steps (panels, gap analysis, whole-app passes) first while capacity lasts. Quote costs in usage windows.
+
+---
+
+## Conventions
+
+**Asking the owner.** `OWNER.md` is the rule. In short: numbered questions, lettered options with what each one does,
+one ★, about 8 a round, "yes to all except…", answers read back, ⚠ alone, looks only from mock-ups, react-first when
+fault-finding, no IDs or jargon in the question.
+
+**Decisions.** `DECISIONS.md` is the owner's index: one line per decision, in ID order, appended only.
+- Columns: ID, date, the question in plain words, his answer in his words, status, replaces / settled by.
+- Status is one of `confirmed`, `pending`, `rejected`, `replaced`. When a later row settles an earlier one, **both**
+  rows are updated.
+- Options, build notes, interpretations and "left as is" live in `work/<build>/NOTES.md`. Bug fixes go to
+  `CHANGELOG.md`. There is never a second record.
+- A `pending` older than 7 days is put in front of the owner or closed "by profile". `scripts/decisions.py` lists
+  what is waiting, and for how long.
+
+**IDs.**
+- Build: a short slug, unique in the project (`B3-today`, `A`, `I-shoes`, `R` for the panel stage).
+- Decision: `D-<build>-nn`. Projects that already number `D-nnn` keep going and add a ranges table.
+- Finding: `<build>-<LANE><round>-nn`, e.g. `B3-SA2-01`. Lane codes: SA safety, CR code, DL design lock, LR logic,
+  PV privacy, AU automation, AD adherence, DA data, AX accessibility, VF verifier; domain codes come from the pack.
+- Test: `T001`…, invariant tests `TI1a`…, or a prefix the brief hands out. Never renumbered.
+- Lesson: `<project>-L1` until this repo assigns `L-nn`.
+
+**Severity.** *Critical*: could plausibly cause a harm on the project's Critical list, or acts without the owner's
+yes. *Major*: materially wrong or unusable. *Minor*: polish. Every audit opens with
+`Critical: n · Major: n · Minor: n · Nit: n`.
+
+**Git.** Commit after every step. Push the session's branch. The owner merges. Before any `git add -A`, run
+`git status`; scripts that touch real data write to absolute scratch paths (L-73). A branch whose work is on main is
+deleted; `status` lists "merged, safe to delete" and "has unmerged work" in those words.
+
+**Privacy.** No real personal data in a repo, a report, a mock-up or an artifact. Spikes report counts. Fixtures are
+made up. People are named by role. A names scan runs before anything is published. Ask the owner for exact error
+text, not screenshots of personal data.
+
+**Honesty.** Say "not run" when it wasn't. "Build succeeded" is not "tests passed". Every mock-up says what it can't
+show (system bars, real text sizes) and which device check covers it.
+
+**Writing.** Plain English, short sentences, concrete numbers, the answer first. ⚠ marks a loosening.
+
+**Models** (L-27). The main session uses the strongest model for coupled logic, synthesis and code review. Reviewers
+are Sonnet and never edit the repo. Tightly coupled logic is never split across agents. No model names in commits or
+code.
 
 ---
 
 ## Project layout
 
 ```
-<app>/
-  CLAUDE.md              project instructions + Playbook map (stage, size, environment, files, guardrails, Critical defined)
-  PLAN.md                domain truth (human)
-  SPEC.md                software truth (agent)
-  DECISIONS.md           every decision, default, interpretation and carried-forward rule (formal log)
-  NOTES-FOR-OWNER.md     plain-English diary per phase: Flags and Interpretations
-  CHANGELOG.md           one entry per version bump / phase close
-  REVIEW-PANEL.md        this project's panel: roles, codes, context, precedence, brief
-  AS-IS.md               (adopted projects only) what existed before the playbook
-  TESTS.md               SPEC test ID → test coverage matrix (generated by coverage.py)
-  spikes/                data spike scripts + redacted reports
-  reviews/               every review and audit, plus SUMMARY.md
-  phases/                P<n>-HANDOFF.md, P<n>-PLAN.md, device steps
-  retros/                retros
-  .claude/agents/        this project's tailored panel (copied from a panel pack)
+README.md      for people: what it is, how to try it, who to ask (under about 150 lines)
+CLAUDE.md      for sessions: how to work with the owner, how a change reaches him, what runs where, every-build steps
+STATUS.md      the one living "where are we": on main / on a branch / on your phone; waiting on you; next
+PLAN.md  SPEC.md  DECISIONS.md  IDEAS.md  CHANGELOG.md          (Mini: BRIEF.md replaces PLAN, SPEC, DECISIONS)
+docs/owner/    OWNER-MANUAL.md  MAINTAINING.md  ACCEPTANCE.md  PROOF.md  LEARNING.md  SETUP-<platform>.md
+design/        DESIGN-BRIEF.md  STYLE-GUIDE.md  LEDGER.md  FLOW-MAP.md  PAGE-INVENTORY.md  mocks/
+work/<build>/  BRIEF.md  NOTES.md  HANDOFF.md  reviews/<LANE><round>.md  reports/
+work/archive/  closed builds, moved at merge
+spikes/  retros/  tools/  .claude/agents/
 ```
 
-The project `CLAUDE.md` has a **Playbook map** table. It maps each role (plan, SPEC, decisions…) to the actual file path, so adopted projects can keep their own names.
+**Nothing else lives at the root.** One app reached 29 root files, a 405 KB decision log and 300 review files in one
+flat folder; nobody could read any of it on a phone. `/playbook:tidy` moves an older project onto this layout.
+
+The project `CLAUDE.md` keeps a short **Playbook map** from role to path, so adopted projects can keep their own
+names. Its status lines stay under 15; history goes to `CHANGELOG.md`.

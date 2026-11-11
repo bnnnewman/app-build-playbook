@@ -8,15 +8,17 @@
 
 ---
 
-## 0. Before writing any app code
+## 0. Before writing any code
 
-Do these in order. Stop and report back where it says so. **No app code until all are met.**
+In order. Stop and report where it says so. **No code until all are met.**
 
-1. **Read `PLAN.md` in full.**
-2. **Summarise the real data** <owner> already has (exports, history): every column, fill rate, format quirks. Facts only, no values committed.
-3. **Data spike (Phase 0; mandatory if the app reads any external data).** Run `/playbook:spike`. Confirm these fields actually arrive: <list the exact fields the rules depend on>. **Report back to <owner> before building the data layer.**
-4. **Expert review done (Phase R).** The panel (`REVIEW-PANEL.md`) has run, <owner> has decided every Critical and Major item, and the audit loop is closed at 0 Critical, 0 Major.
-5. **Ask the §14 open questions** that are still open.
+1. **Read `PLAN.md` in full**, and the playbook's `OWNER.md`.
+2. **Prove the set-up:** this session can build and test, or the stand-ins exist. "How a change reaches the owner" is
+   written in `CLAUDE.md`.
+3. **Spike** (`/playbook:spike`): the mini spike always; a data or platform spike if the rules depend on one. These
+   must really arrive: <the exact fields>. **Report to <owner> before building on them.**
+4. **Design** (anything with a screen): brief, round-0 mock-ups, the lock.
+5. **Panel and audit:** every Critical and Major decided; the loop closed at 0 Critical, 0 Major.
 
 ## 1. Goal
 
@@ -45,7 +47,8 @@ Numbered, testable statements that must hold on every path. Each has at least on
 | I3 | Missing data is never treated as good, and never as bad. It is "missing". | |
 | I4 | A hard flag blocks <risky action> until cleared by a deliberate two-step action, never from a widget, notification or background task. | |
 | I5 | Every reduction is one-way: a later record can't restore a higher level. | |
-| I6 | Every loosening of a rule needs <owner>'s separate, explicit sign-off. | (process, not code) |
+| I6 | Unknown or unreadable input never shows a guess. It fails to the cautious side, or to a person. | |
+| I7 | Every loosening of a rule needs <owner>'s separate, explicit sign-off. | (process, not code) |
 
 ## 4. Definitions
 
@@ -107,15 +110,15 @@ Behaviour and copy rules only, no pixel design. Which actions are possible from 
 - Time and privacy rules: what may leave the device, and in what form.
 - CI: a cheap per-push job; expensive platform jobs only on PR, `main` and manual runs (lesson L-17).
 
-## 12. Build phases
+## 12. Builds
 
-| Phase | Deliverable | Done when |
+| Build | What it delivers | Done when |
 |---|---|---|
-| 0 | Data spike + field report | <owner> has seen which fields arrive; SPEC updated to match |
+| S | Spike + report | <owner> has seen which fields arrive; SPEC updated to match |
 | R | Expert review panel + audit loop | Every Critical/Major decided; rechecks done; audit loop at 0 Critical, 0 Major |
-| 1 | Pure logic + tests | Every §13 test ID passes; invariant tests pass; `coverage.py` shows 0 missing (Standard and Full) |
-| 2 | Persistence, import, sync (+ CI, + a way to run it on the real device for your platform) | <observable outcome> |
-| 3… | <feature slice> | <one end-to-end scenario a person can try on the device> |
+| B1 | The rules, pure and tested, plus the path to the device | Every §13 test ID passes; invariant tests pass; `coverage.py` shows 0 missing (Standard and Full) |
+| B2 | Storage, import, sync | <something the owner can see on the device> |
+| B3… | <a slice the owner can use> | <one end-to-end scenario he can try on the device> |
 
 ## 13. Acceptance tests
 
@@ -145,3 +148,12 @@ Point to `DECISIONS.md`. Every question gets an ID there, with the conservative 
 - <Things the app must not do.>
 - Never weaken a safety rule without <owner>'s explicit, separate confirmation.
 - Never commit real personal data. Fixtures are hand-written.
+
+## 16. Acceptance (written now, with the rules)
+
+What <owner> will check for himself. Tag each: **machine** (a scenario test can prove it), **partly**, or **device**
+(only real use shows it). Automate the first two; `docs/owner/ACCEPTANCE.md` gets only the rest.
+
+| ID | The owner can… | Tag | Proved by |
+|---|---|---|---|
+| A01 | <"see today's plan and why, within two seconds of opening"> | device | acceptance step |

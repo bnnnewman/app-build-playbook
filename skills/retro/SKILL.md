@@ -1,50 +1,51 @@
 ---
 name: retro
-description: Run a playbook retrospective. Phase retros are short (numbers + one owner question). The project-end retro collects all phase retros, proposes new LESSONS and concrete playbook edits, and feeds them back to the playbook repo. Use after a phase close, at project end, or when the user asks to improve the playbook.
-argument-hint: "[R | A | P<n> | project]"
+description: Run a five-minute retro at a merge to main, a release or a project's end - numbers filled by a script, one question to the owner, at most three lessons - and carry proposals back to the playbook repo so the process actually improves. Use after every close on Standard and Full projects, at each release, and when the owner asks to improve the playbook.
+argument-hint: "[<build> | release | project | sync]"
 ---
-# Retro and playbook feedback
+# Retro
 
-*`${CLAUDE_PLUGIN_ROOT}` is the playbook folder. If you see it literally, find the folder by searching for `PLAYBOOK.md` under `~/.claude/plugins/` or `.claude/playbook/`.*
+*`${CLAUDE_PLUGIN_ROOT}` is the playbook folder. If you see it literally, find the folder by searching for `PLAYBOOK.md` under `~/.claude/plugins/`, `/opt/app-build-playbook` or `.claude/playbook/`.*
 
-The playbook gets better only through this step. Keep phase retros to about 5 minutes. Make the project-end retro thorough.
+For three weeks, four projects proposed 16 lessons and none reached the playbook. So the retro is small, it always
+runs, and it always writes somewhere the playbook can collect.
 
-**The playbook version used:**
-- `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json` if the playbook is installed as a plugin;
-- `.claude/playbook/VERSION` if it was copied into the project;
-- otherwise the `PLAYBOOK.md` header.
+## `<build>` or `release` (five minutes)
 
-## Phase retro (`R`, `A`, `P<n>`)
+1. **Numbers, from files:** `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/metrics.py .` prints, per build and lane, the
+   rounds and first-round counts from the review files' verdict lines. Add: commits; tests at close (a count a
+   command produced); findings caused by our own fixes (search the reviews for "introduced"); things the owner found
+   on the device that the lanes missed; **usage windows** spent, roughly.
+2. **One question to the owner, inside the merge or release message**, not as a separate step that gets skipped:
+   *"Anything this time that felt slow, confusing or great?"* Record his answer, or "not answered".
+3. **At most three lessons.** Check `${CLAUDE_PLUGIN_ROOT}/LESSONS.md` first.
+   - An existing lesson repeated → say which. Its fix isn't working well enough.
+   - Something new → `<project>-L<n>` (for example `FL-L3`). **Never an `L-nn` number: only the playbook repo
+     assigns those.**
+4. Write `retros/<build>.md` (from `${CLAUDE_PLUGIN_ROOT}/templates/RETRO.md`) and **append** each lesson and
+   proposed edit to `retros/playbook-proposals.md`: the lesson, the evidence, the file to change, the words.
+5. If a rule for *this project* follows (as tiered audits once did), make it now: one line in the project
+   `CLAUDE.md`, with the decision ID.
 
-1. **Collect the numbers from files, not memory:**
-   - **Git:** commits, and elapsed time from first to last commit for the stage (`git log --format='%h %ad %s' --date=iso`).
-   - **Review files:** rounds to 0/0. Findings per round by severity, from each verdict line. How many findings were introduced by your own fixes (search for "introduced").
-   - **Tests:** the count at close, and the change.
-   - **CI:** runs and approximate billed minutes.
-   - **`DECISIONS.md`:** decisions this stage, and how many were confirmed defaults.
-   - **Scope added mid-stage:** steps not in the original plan.
-2. **Ask the owner one question:** "Anything that felt slow, confusing or great this phase?"
-3. **Write `retros/<stage>.md`** from `${CLAUDE_PLUGIN_ROOT}/templates/RETRO.md`. Fill in the numbers, the owner's answer, and any candidate lessons (one line each).
-4. That's all. Don't edit the playbook yet, unless a lesson is urgent (the same costly problem twice in a row). Then do the project-end steps 3–4 for that lesson alone.
+Light projects run this at release only. Mini: once, at the end.
 
-## Project-end retro (`project`)
+## `project`
 
-1. **Read every `retros/*.md`,** and add up the numbers into one table per stage.
-2. **Write `retros/PROJECT.md`:** what worked, what cost too much, surprises, and the owner's view. Ask the owner up to 3 questions.
-3. **Lessons.** Compare with `${CLAUDE_PLUGIN_ROOT}/LESSONS.md`.
-   - **Did an existing lesson repeat?** The playbook's fix for it didn't work well enough. Strengthen it.
-   - **Anything new?** Write it as a lesson: next free ID, Keep or Change, the evidence, and the playbook edit it implies.
-4. **Feed it back.** The playbook repo is `github.com/bnnnewman/app-build-playbook`.
-   - **If it's reachable here** (attached to this cloud session, or cloned locally), make the edits on a branch:
-     - `LESSONS.md`: the new lessons;
-     - `METRICS.md`: the project's block, one row per stage, plus whether the "targets for the next project" were met;
-     - templates, skills, agents and panel packs: the Change edits;
-     - panel packs: promote the tailored agents (placeholders restored), and mark the pack "used in anger";
-     - `.claude-plugin/plugin.json` version (patch for wording, minor for a process change, major for a restructure), plus the `PLAYBOOK.md` header and `CHANGELOG.md`;
-     - run `claude plugin validate . --strict` if the CLI is available.
-     Then push the branch and offer to open a PR.
-   - **If it's not reachable,** write the proposed edits to `retros/playbook-proposals.md`, and tell the owner to bring that file to a session that has the playbook repo. In a cloud session, they can attach it.
-5. **Tell the owner,** in 3–6 lines:
-   - the key numbers against the targets;
-   - the top lessons;
-   - the playbook changes proposed, with where they went.
+Read every `retros/*.md`. Write `retros/PROJECT.md`: numbers per stage against the targets in the playbook's
+`METRICS.md`; what worked; what cost too much; up to three questions to the owner. Then `sync`.
+
+## `sync` (carry proposals to the playbook)
+
+The playbook repo is `bnnnewman/app-build-playbook`. If it isn't in this session, attach it (read is enough to
+check; pushing a branch needs push access), or tell the owner the proposals are waiting in
+`retros/playbook-proposals.md`.
+
+On a branch of the playbook repo:
+- `LESSONS.md`: give each proposal the next free `L-nn`, with its project code and evidence.
+- `METRICS.md`: the project's rows.
+- The template, skill, agent or pack each lesson changes. Promote tailored reviewers back into their pack, with the
+  placeholders restored.
+- Bump the version (`.claude-plugin/plugin.json`, the `PLAYBOOK.md` header), add a `CHANGELOG.md` entry, run
+  `claude plugin validate . --strict`.
+- Push the branch. The owner merges playbook changes like any other.
+- Mark the synced lines in `retros/playbook-proposals.md` with the L-number they became.

@@ -1,6 +1,6 @@
 # Panel pack: health and fitness
 
-**Status:** used in anger on Running-App (Oct 2026): 8-reviewer panel, then 2 rechecks.
+**Status:** used on First Light (Oct–Nov 2026): the original 8-reviewer panel, two rechecks, then many feature and logic-review panels.
 
 | Agent | Code | Holds precedence on | Notes |
 |---|---|---|---|

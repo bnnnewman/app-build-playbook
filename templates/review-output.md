@@ -1,6 +1,6 @@
 # <Role> review
 
-*<date> · <agent name> · Read: <files and versions> · Could not check: <anything>*
+*<date> · <agent> · Commit <sha> · Read first: OWNER.md ✓ DECISIONS.md ✓ AS-IS.md ✓ / n/a · Could not check: <…>*
 
 ## Verdict
 Approve | Approve with changes | Major concerns. One or two sentences.
@@ -8,25 +8,25 @@ Approve | Approve with changes | Major concerns. One or two sentences.
 ## Strengths (max 5)
 - …
 
-## Issues (ranked, most important first)
+## Issues (most important first)
 
-### <ID, e.g. R-PH0-01>: <short title>
+### <ID, e.g. R-PP0-01>: <short title>
 - **Severity:** Critical | Major | Minor
 - **Effect:** Tightens | Loosens ⚠ | Neutral
 - **Where:** <file> §<section>
-- **Problem:** … (with a concrete example or counter-example)
-- **Recommended change:** specific and actionable (what to change it to, with exact values)
-- **Rationale:** evidence (source, verified) | evidence `[unverified]` | professional opinion
+- **Problem:** … (with a concrete example)
+- **Recommended change:** exactly what to change it to, with values
+- **Why:** evidence (source, checked) | evidence `[unverified]` | professional opinion
+- **Touches a decision?** No | "Agrees with D-…" | **"Reopens D-…"** because <new evidence>
 - **Confidence:** High | Medium | Low
 
-## Likely conflicts with other disciplines
+## Likely conflicts with other reviewers
 - …
 
-## Questions for <owner> (max 3)
+## Questions for the owner (max 3; only what the context didn't answer)
 - …
 
 ---
-**Severity guide.** Use the project `CLAUDE.md` definition of Critical for this domain. In general:
-- **Critical:** could plausibly cause harm, or give unsafe or wrong advice; or a path that loosens a guardrail or acts without the owner's Confirm.
-- **Major:** materially reduces correctness, effectiveness or adherence.
-- **Minor:** polish.
+**Severity.** Use the project's own "What Critical means here". In general: **Critical** could plausibly cause a
+harm on that list, or acts without the owner's yes. **Major** makes it materially wrong or unusable. **Minor** is
+polish.

@@ -7,6 +7,8 @@
 # PLAYBOOK_GITHUB_TOKEN holding a fine-grained token (this repo only, Contents: Read-only).
 # Never prints the token, never leaves it in the clone's git config, and never fails the session
 # start: if the install can't happen it says why and carries on.
+# The environment keeps a snapshot, so this may not run every session: scripts/orient.sh (the plugin's SessionStart
+# hook) pulls the latest playbook in the background to keep the copy current.
 # ---
 export GIT_TERMINAL_PROMPT=0
 pb_token="${PLAYBOOK_GITHUB_TOKEN:-}"
@@ -35,6 +37,14 @@ if [ -d /opt/app-build-playbook/.git ]; then
     echo "Playbook installed: v$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' /opt/app-build-playbook/.claude-plugin/plugin.json)"
   else
     echo "Playbook: cloned, but 'claude plugin install' failed."
+  fi
+fi
+# Every cloud session also gets the owner's standing preferences, even where plugin hooks don't run.
+if [ -f /opt/app-build-playbook/OWNER.md ]; then
+  mkdir -p "$HOME/.claude"
+  touch "$HOME/.claude/CLAUDE.md"
+  if ! grep -q "playbook-owner-profile" "$HOME/.claude/CLAUDE.md"; then
+    printf '\n<!-- playbook-owner-profile -->\n@/opt/app-build-playbook/OWNER.md\n' >> "$HOME/.claude/CLAUDE.md"
   fi
 fi
 unset pb_token url

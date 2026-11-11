@@ -23,6 +23,18 @@
 
 **Implausible rows:** <count, and the pattern, e.g. "one row is 1000× too large (metres vs km)">. These become test data and a plausibility rule.
 
+## Real names and values (copied from the source)
+
+| Field | Exact name | Allowed values, exact spelling | In the pretend data? |
+|---|---|---|---|
+
+Time zone and date format of the source: <…>. Blank rows, duplicates, text where a yes/no was expected: <…>.
+
+## Platform facts (platform spikes)
+
+| What we tested | Result | Only the owner can change it? Where? |
+|---|---|---|
+
 ## What this changes in the SPEC
 
 | Change | SPEC § | Effect (Tightens / Loosens ⚠ / Neutral) |
@@ -30,7 +42,7 @@
 
 ## Thresholds still unknown (replay later)
 
-- <Threshold>: replay over real history in Phase <n>, reporting counts only.
+- <Threshold>: `/playbook:spike replay`, counts only, before the rule is settled.
 
 ## Practical snags
 

@@ -1,38 +1,28 @@
-# Retro: <project>, <stage or phase>, <date>
+# Retro: <project>, <build | release | project>, <date>
 
-*Playbook version used: v<x.y.z>*
+*Playbook version: v<x.y.z> · Size: <…>*
 
-## Numbers
-
+## Numbers (from files; `scripts/metrics.py`)
 | Measure | Value |
 |---|---|
-| Wall time (first commit → close) | |
 | Commits | |
-| Audit rounds to 0/0 | |
-| Findings, Critical / Major / Minor (first round) | |
-| Findings introduced by our own fixes | |
-| Code review Majors | |
-| Tests at close (+ change) | |
-| CI runs / billed minutes | |
-| Owner decisions (count; how many were defaults confirmed) | |
-| Scope added mid-stage | |
+| Lanes run, and rounds to 0/0 in each | |
+| First-round findings, Critical / Major / Minor | |
+| Findings caused by our own fixes | |
+| Found by the owner on the device that the lanes missed | |
+| Tests at close (a count a command produced) | |
+| Usage windows, roughly | |
+| Decisions; how many "by profile" | |
+| Scope added after the brief | |
 
-## What worked (keep)
+## The owner's answer
+> "Anything this time that felt slow, confusing or great?"
+<His words, or "not answered".>
 
-- …
-
-## What cost too much (change)
-
-- <What happened> → <what the playbook should do instead>.
-
-## Surprises
-
-- …
-
-## Lessons to add
-
-New IDs go in the playbook's `LESSONS.md`.
-
-| Proposed ID | Keep/Change | Lesson | Evidence | Playbook edit |
+## Lessons (at most three)
+| ID (`<project>-L<n>`) | Keep / Change | Lesson | Evidence | What should change in the playbook (file, words) |
 |---|---|---|---|---|
-| L-31 | Change | | | <file + change> |
+
+Repeats an existing lesson: <L-nn, and why its fix didn't hold>.
+
+*Each row above is also appended to `retros/playbook-proposals.md`.*

@@ -1,34 +1,28 @@
 ---
 name: decide
-description: Batch open questions, proposals, flags and pending conservative defaults for the owner, ask them as grill rounds with a recommendation, and record every answer in DECISIONS.md (and NOTES-FOR-OWNER.md for flags) with a Notes commit. Use whenever decisions are waiting - after a panel synthesis, at audit exit, or before a phase plan is fixed.
+description: Gather everything waiting on the owner (review proposals, pending defaults, flags, PRs waiting for "merge", device steps not reported) and put it to him in grill rounds; record every answer and close what it settles. Use after a panel or review summary, at audit exit, before a build brief is fixed, or when status shows things waiting.
 ---
 # Owner decisions
 
-The owner decides. Your job is to make deciding fast and to record it exactly.
+*`${CLAUDE_PLUGIN_ROOT}` is the playbook folder. If you see it literally, find the folder by searching for `PLAYBOOK.md` under `~/.claude/plugins/`, `/opt/app-build-playbook` or `.claude/playbook/`.*
 
-1. **Gather what's waiting.** Look at:
-   - `reviews/SUMMARY.md` IDs with no decision;
-   - `DECISIONS.md` rows with status `pending-default`;
-   - ⚠ loosening items;
-   - unanswered Flags in `NOTES-FOR-OWNER.md`;
-   - open questions in the latest handoff or phase plan;
-   - PLAN §9 "Still open".
-2. **Deduplicate and order them:**
-   - Critical first, then ⚠ loosenings, then Major, then the rest.
-   - Put things that block the next step ahead of things that don't.
-3. **Ask in grill rounds**, using `/playbook:grill`'s format and its recording rules, with source `Decide <date> R<n>`:
-   - numbered questions, each with a recommended answer that "yes" accepts, so "yes to all" or "yes except Q3: (b)" works;
-   - questions that depend on another open answer wait for the next round.
-   - Each question is self-contained. The owner may be on their phone with no other context, so say what it's about in one line.
-   - A ⚠ loosening is **never in a round**. Ask it alone, with AskUserQuestion if you have it, saying plainly that it loosens a safety rule.
-   - For panel proposals, ask accept / reject / modify. Minors can be batched: "Accept all Minors except…?"
-   - For `pending-default` items: "We've been using <default>. Keep it?"
-4. **Record each answer immediately** in `DECISIONS.md`:
-   - its ID, the date, the source, the options, the answer, who decided, whether it's reversible, and its status (`confirmed` / `changed` / `rejected`);
-   - keep the owner's words where they're short ("go with your recommendation").
-   - Answer any Flag in `NOTES-FOR-OWNER.md` as "(Owner, date): …".
-   - Update SUMMARY's decision section if it's from the panel.
-   - Rejected items keep their row.
-5. **Commit straight away**, separate from code: `Notes: <short summary> (<IDs>)`.
-6. If an answer changes a rule, follow up with `/playbook:design revise decision <IDs>`. If it reopens a closed area, run one narrow audit round on it.
-7. **Tell the owner what changed**, in 2–4 lines. decide ends when every gathered item has a recorded answer, or a `pending-default`. Then hand back to the skill that called it (panel R4, audit exit, phase-start).
+1. **Gather.** `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/decisions.py DECISIONS.md` lists `pending` rows by age. Add:
+   review-summary IDs with no decision; ⚠ items; open questions in the newest handoff; PRs waiting for "merge N";
+   device steps with no result.
+2. **Cut the list first.**
+   - Answered by `${CLAUDE_PLUGIN_ROOT}/OWNER.md` → close as "by profile".
+   - A `pending` older than 7 days that nobody would reverse → propose closing it as confirmed, in one line.
+   - Domain content the reviewers agree on → apply, report.
+3. **Order:** Critical, then ⚠ (each alone), then Major, then the rest. Things that block the next step come first.
+4. **Ask in grill rounds** (`/playbook:grill` format and rules).
+   - Review proposals: accept / reject / change. Minors: "accept all Minors except…".
+   - Rank anything with a cost using the **"if we skip it" columns**: why; when it bites; does it fail safe; cost in
+     usage windows.
+   - Anything visible comes with a mock-up link (`/playbook:mock`).
+5. **Read back, then record** every answer in `DECISIONS.md` with his words.
+   - When an answer settles an older row, **update that row too** (status `replaced`, "settled by D-…").
+   - A rejected proposal keeps its row, marked *do not raise again*.
+6. **Commit** `Notes: <summary>`, separate from code.
+7. If an answer changes a rule: `/playbook:plan revise` or `/playbook:spec revise`, then the checks its size needs
+   (`${CLAUDE_PLUGIN_ROOT}/GLOSSARY.md`, "Sizes of change").
+8. Tell the owner what changed in three lines, then hand back to the skill that called you.

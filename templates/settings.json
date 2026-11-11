@@ -1,0 +1,6 @@
+{
+  "extraKnownMarketplaces": {
+    "bnnnewman-playbook": { "source": { "source": "github", "repo": "bnnnewman/app-build-playbook" } }
+  },
+  "enabledPlugins": { "playbook@bnnnewman-playbook": true }
+}

@@ -48,6 +48,11 @@
 
 <The main table the rules move through (a block of weeks, a care calendar, a level ladder…).>
 
+## 7a. The smallest start, and when to stop
+
+- **Goes live first for:** <the smallest group or case>. Widen only when <owner> says.
+- **Stop if:** <the sign that this isn't worth carrying on>.
+
 ## 8. Doing it by hand
 
 <Paper logs or a checklist so the domain works with no app. This keeps the app's lateness from ever blocking the owner (lesson L-11).>

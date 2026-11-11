@@ -7,7 +7,8 @@
 # Result in the project:
 #   .claude/skills/playbook-<name>/SKILL.md   -> /playbook-<name>
 #   .claude/agents/<core agent>.md            -> logic-auditor, adherence-reviewer, ...
-#   .claude/playbook/                          -> PLAYBOOK.md, LESSONS.md, THIRD-PARTY-NOTICES.md, templates/, panels/, scripts/, VERSION
+#   .claude/playbook/                          -> PLAYBOOK.md, OWNER.md, GLOSSARY.md, LESSONS.md, THIRD-PARTY-NOTICES.md,
+#                                                 templates/, panels/, platforms/, scripts/, VERSION
 #
 # .claude/playbook/ is owned by the playbook and replaced on every run: don't edit files there.
 # Agent files the playbook didn't put there (e.g. a project-tailored adherence-reviewer) are never overwritten.
@@ -33,18 +34,19 @@ rewrite() {
     -e 's#\$\{CLAUDE_PLUGIN_ROOT\}#.claude/playbook#g' \
     -e 's#/playbook:([a-z<>-]+)#/playbook-\1#g' \
     -e 's#`playbook:([a-z-]+)`#`\1`#g' \
-    -e 's#playbook:(logic-auditor|adherence-reviewer|data-reviewer|privacy-reviewer)#\1#g'
+    -e 's#playbook:(logic-auditor|adherence-reviewer|data-reviewer|privacy-reviewer|design-reviewer|automation-reviewer|finding-verifier)#\1#g'
 }
 
 # Reference material (owned by the playbook; replaced each run).
-rm -rf "$root/templates" "$root/panels" "$root/scripts"
+rm -rf "$root/templates" "$root/panels" "$root/platforms" "$root/scripts"
 mkdir -p "$root/scripts"
-cp -R "$src/templates" "$src/panels" "$root/"
-cp "$src/scripts/coverage.py" "$root/scripts/"
-find "$root/templates" "$root/panels" -name '*.md' | while read -r f; do
+cp -R "$src/templates" "$src/panels" "$src/platforms" "$root/"
+cp "$src/scripts/coverage.py" "$src/scripts/decisions.py" "$src/scripts/metrics.py" "$src/scripts/orient.sh" "$root/scripts/"
+mkdir -p "$root/.claude-plugin" && cp "$src/.claude-plugin/plugin.json" "$root/.claude-plugin/"
+find "$root/templates" "$root/panels" "$root/platforms" "$root/scripts" \( -name '*.md' -o -name '*.py' -o -name '*.sh' \) | while read -r f; do
   rewrite < "$f" > "$f.tmp" && mv "$f.tmp" "$f"
 done
-for f in PLAYBOOK.md LESSONS.md THIRD-PARTY-NOTICES.md; do rewrite < "$src/$f" > "$root/$f"; done
+for f in PLAYBOOK.md OWNER.md GLOSSARY.md LESSONS.md THIRD-PARTY-NOTICES.md; do rewrite < "$src/$f" > "$root/$f"; done
 echo "$version" > "$root/VERSION"
 
 # Skills, renamed playbook-<name>.
@@ -82,6 +84,8 @@ while read -r entry; do
 done < "$manifest"
 
 echo "Vendored playbook v$version into $dest/.claude"
+echo "To orient every session in this project (cloud included), add this hook to $dest/.claude/settings.json:"
+echo '  "hooks": {"SessionStart": [{"hooks": [{"type": "command", "command": "bash .claude/playbook/scripts/orient.sh"}]}]}'
 echo "Commands: $(ls "$dest/.claude/skills" | grep '^playbook-' | sed 's#^#/#' | tr '\n' ' ')"
 if [ ${#skipped[@]} -gt 0 ]; then
   echo "Kept the project's own agent(s), not overwritten: ${skipped[*]}"
