@@ -28,6 +28,7 @@ The three-line footer you'll see: **On main** (merged) · **On a branch** (waiti
 | **Design-lock check** | A screen that drifts from the agreed look or wording. | Every build that changes what you see. |
 | **Logic review** | Rules that are each right but don't add up over weeks of use. | When a rule changes; whole app before a release. |
 | **Privacy review** | Personal data going where it shouldn't. | Builds that store, send or log data. |
+| **Security review** | Someone getting in, or reaching what isn't theirs. | Builds that change sign-in, access, stored keys or a connection to another system. |
 | **Design critique** | Screens that work but could be calmer, faster, clearer. | New screens; whole app before a release. |
 | **Acceptance** | What only real use on your phone shows. | You, after each build reaches you. |
 

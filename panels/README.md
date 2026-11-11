@@ -1,7 +1,7 @@
 # Panel packs
 
 A pack is a set of **domain expert reviewers** for one kind of project. The core reviewers ship with the plugin and
-suit anything: `logic-auditor`, `adherence-reviewer`, `data-reviewer`, `privacy-reviewer`, `design-reviewer`,
+suit anything: `logic-auditor`, `adherence-reviewer`, `data-reviewer`, `privacy-reviewer`, `security-reviewer`, `design-reviewer`,
 `automation-reviewer`, `finding-verifier`. A pack adds the specialists a domain needs.
 
 Pack agents are **templates**. `/playbook:panel` copies the ones you choose into the project's `.claude/agents/` and

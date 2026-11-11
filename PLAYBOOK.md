@@ -207,6 +207,7 @@ labelled *draft, not run*, and **no more than one step of it may pile up** befor
 | Design lock | `design-reviewer` | Every visible change (copy, layout, symbols) |
 | Logic | `/playbook:logic-review` | Any change to what the app plans, counts, caps or decides |
 | Privacy | `privacy-reviewer` | Storage, network, logs, anything about people |
+| Security | `security-reviewer` | Sign-in, who can see what, stored keys, connections to other systems (L-101) |
 | Automation | `automation-reviewer` | Anything a routine runs |
 
 **Tier the checks to the change** (L-56; the table is in `GLOSSARY.md`). The owner asked, "do we need to restart
@@ -320,7 +321,7 @@ fault-finding, no IDs or jargon in the question.
 - Decision: `D-<build>-nn`. Projects that already number `D-nnn` keep going and add a ranges table. Mini: `D-01`…
   in the brief.
 - Finding: `<build>-<LANE><round>-nn`, e.g. `B3-SA2-01`. Lane codes: SA safety, CR code, DL design lock, LR logic,
-  PV privacy, AU automation, AD adherence, DA data, AX accessibility, VF verifier; domain codes come from the pack.
+  PV privacy, SE security, AU automation, AD adherence, DA data, AX accessibility, VF verifier; domain codes come from the pack.
 - Test: `T001`…, invariant tests `TI1a`…, or a prefix the brief hands out. Never renumbered.
 - Lesson: `<project>-L1` until this repo assigns `L-nn`.
 

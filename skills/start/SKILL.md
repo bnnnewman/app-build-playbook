@@ -1,7 +1,7 @@
 ---
 name: start
-description: Start a new project on the playbook, or adopt an existing one. Asks the harm questions, sets the size (Mini, Light, Standard, Full), the project type (phone app, web tool, tool with a routine) and the teaching mode, proves the set-up, and scaffolds the project. Use when the owner says "start a new app/tool", "set this up", or "adopt/onboard this project".
-argument-hint: "[new | adopt]"
+description: Start a new project on the playbook, adopt an existing one, or upgrade a project from an older playbook version. Asks the harm questions, sets the size (Mini, Light, Standard, Full), the project type (phone app, web tool, tool with a routine) and the teaching mode, proves the set-up, and scaffolds the project. Use when the owner says "start a new app/tool", "set this up", or "adopt/onboard this project" or "upgrade this project to the new playbook".
+argument-hint: "[new | adopt | upgrade]"
 ---
 # Start or adopt a project
 
@@ -9,7 +9,8 @@ argument-hint: "[new | adopt]"
 
 Read first: `${CLAUDE_PLUGIN_ROOT}/OWNER.md`, then `${CLAUDE_PLUGIN_ROOT}/PLAYBOOK.md` ("Three choices at the start", "Stage 0", "Project layout").
 
-**Mode:** from `$ARGUMENTS`. If none: code in the repo means **adopt**, none means **new**. Say which, in one line.
+**Mode:** from `$ARGUMENTS`. If none: a project `CLAUDE.md` that names an older playbook version means **upgrade**;
+other code in the repo means **adopt**; none means **new**. Say which, in one line.
 
 ## 1. The interview (one grill, via `/playbook:grill start`)
 
@@ -67,10 +68,28 @@ Do these before the interview finishes. Don't redesign anything yet.
 8. **Re-entry plan**, for the owner's yes: `plan` and `spec` (recovered, with provenance) → `spike` → `design` if
    wanted → `panel` and `audit` → `build A` (audit the existing code first, then plan fixes from the findings).
 
-## 5. Finish
+## 5. Upgrade only (a project on an older playbook version)
+
+Skip sections 1 to 4. Nothing about the product changes. **Propose the list below, wait for yes, then do it** on a
+branch, in one PR. Never during an open build.
+1. **Read what the project already decided.** Its own `CLAUDE.md` rules and decisions win over the playbook's
+   defaults. List each place they differ and keep the project's, unless the owner says otherwise.
+2. **Keep every ID** (decisions, findings, tests) and the project's own numbering. Add a ranges table if needed.
+3. **Size, type and teaching mode:** take them from the project; ask only for what is missing.
+4. **Replace the old copy of the playbook** under `.claude/` with the current one, and remove skills it no longer
+   ships. Keep the project's own tailored reviewers.
+5. **Map the old words to the new** in `CLAUDE.md`: a phase is a build; `phase-start` and `phase-close` are `build`
+   and `close`; `design` (plan and spec) is `plan` and `spec`; `NOTES-FOR-OWNER.md` is `STATUS.md` plus
+   `docs/owner/`. Closed phases keep their names and files.
+6. **Add what is missing**, from the templates: `STATUS.md`, `IDEAS.md`, the "Every build, every session" section.
+   Don't move existing files here: that is `/playbook:tidy layout`, offered as a separate step.
+7. **Carry lessons home:** anything in `retros/playbook-proposals.md` goes to `/playbook:retro sync`.
+8. Say what was left as it is, and why.
+
+## 6. Finish
 
 - Write `STATUS.md` (run `/playbook:status`).
-- Commit: `Playbook: start (<new|adopt>): <size>, <type>, <mode>`. Push this session's branch (no remote: commit
+- Commit: `Playbook: start (<new|adopt|upgrade>): <size>, <type>, <mode>`. Push this session's branch (no remote: commit
   locally and say so).
 - Tell the owner in five lines: what was set up, the size and why, how a change reaches him, anything the scan
   found, and the one next step.

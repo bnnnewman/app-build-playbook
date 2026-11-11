@@ -27,6 +27,7 @@ Say what you want. The session picks the right step. These are the things worth 
 | **"Is that done?"** (with a screenshot) | Tells you what you should be seeing, and what "done" looks like. |
 | **"What are my options for…"** | Researches it, compares 3–5 ways, recommends one, and answers your doubt directly. |
 | **"Hand off to a new session"** | Writes a hand-over so a fresh session carries on. |
+| **"Upgrade this project to the new playbook"** | Swaps in the current playbook and keeps everything the project already decided. |
 | **"Tidy this repo"** | Proposes a clean-up. Changes nothing until you agree. |
 
 Three choices are made once per project and can change later:
@@ -64,8 +65,8 @@ That's it. Everything else is the session's job.
 | `release` · `ideas` · `gaps` · `logic-review` · `operate` | Acceptance on my phone · the ideas list · what's missing · do the rules add up · run a live tool |
 | `retro` · `handoff` · `tidy` | Five-minute retro that feeds this repo · hand-over · housekeeping |
 
-Invoked as `/playbook:<name>`. Seven reviewers ship with it, each looking for one kind of problem (safety and
-logic, real-life use, data, privacy, design, automation, and one that checks the others). Domain packs in
+Invoked as `/playbook:<name>`. Eight reviewers ship with it, each looking for one kind of problem (safety and
+logic, real-life use, data, privacy, security, design, automation, and one that checks the others). Domain packs in
 `panels/`: health and fitness, plant care, governance, design.
 Platform notes in `platforms/`: iPhone apps, web tools, routines.
 

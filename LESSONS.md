@@ -15,6 +15,7 @@ Every lesson has an ID, the project it came from, the evidence, and where the pl
 | FB | Flobbadob (Oct 2026): plant-care iOS app, adopted onto playbook v1.0; 140 commits |
 | PT | A work policy tracker (Oct 2026): a published page, a database and a weekly routine, adopted onto v1.0.2; 222 commits |
 | EC | A work enrolment checklist (Sep–Nov 2026): a web page built with no playbook; 59 commits |
+| PB | This playbook itself (Nov 2026): the version 2 rebuild and its reviews |
 
 ---
 
@@ -403,5 +404,13 @@ Eighteen test IDs were untestable until the last step.
 
 **L-95 · Change · A short "never do on the Mac" list.** *(FB)*
 Accepting an editor's recommended settings on main sent a build to the phone.
+
+**L-100 · Change · A new playbook version needs an upgrade step for projects already running.** *(PB)*
+At version 2, three projects held old copies of the skills and their own local rules, and nothing said how to move
+them. `/playbook:start upgrade` keeps the project's decisions and IDs and swaps only the process.
+
+**L-101 · Change · Anything with sign-in or a connection to another system gets a security lane.** *(PB)*
+One web tool settled its sign-in, an emailed code and a read-only connection case by case, with only a privacy
+reviewer to ask. Privacy covers what is held; security covers who can reach it.
 
 *(L-90 and L-92 were proposed by a project and folded into L-59 and L-76.)*

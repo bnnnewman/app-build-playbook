@@ -15,7 +15,8 @@ the plan-and-spec panel).
 1. **Gates:** what is being reviewed is written and grilled; the spike is done or not needed; SPEC invariants exist.
 2. **Choose the panel** by size (Light about 3; Standard 5–6; Full 6–8).
    - Core (shipped with the playbook): `logic-auditor` and `adherence-reviewer` always; `data-reviewer` for sensors or
-     outside data; `privacy-reviewer` for data about people; `automation-reviewer` for routines;
+     outside data; `privacy-reviewer` for data about people; `security-reviewer` when anyone signs in or it
+     connects to another system; `automation-reviewer` for routines;
      `design-reviewer` for anything visible.
    - Domain: `${CLAUDE_PLUGIN_ROOT}/panels/<pack>/`. No pack fits? Design one with `panels/README.md`.
    - **Tell the owner which reviewers will run, one line each, and wait for "start".**

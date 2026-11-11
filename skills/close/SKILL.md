@@ -1,6 +1,6 @@
 ---
 name: close
-description: Close a build - freeze, run the review lanes it needs in parallel (safety, code, design lock, logic, privacy, automation), fix and re-check each lane to 0 Critical and 0 Major, get the wording approved, write the device steps and a plain-words PR, then wait for the owner's "merge N". Ends by recording the owner's answer to the one question, and a handoff. Use when a build's steps are done.
+description: Close a build - freeze, run the review lanes it needs in parallel (safety, code, design lock, logic, privacy, security, automation), fix and re-check each lane to 0 Critical and 0 Major, get the wording approved, write the device steps and a plain-words PR, then wait for the owner's "merge N". Ends by recording the owner's answer to the one question, and a handoff. Use when a build's steps are done.
 argument-hint: "<build id>"
 ---
 # Close a build
@@ -26,6 +26,7 @@ one retro (`/playbook:retro release`). Skip sections 2 to 5.
 | Design lock | DL | changes anything visible (copy, layout, symbols) | `playbook:design-reviewer`, against the lock and the approved mock-up |
 | Logic | LR | changes what the app plans, counts, caps or decides | `/playbook:logic-review concept` or `clash` |
 | Privacy | PV | adds storage, network, logs or anything about people | `playbook:privacy-reviewer` |
+| Security | SE | changes sign-in, who can see what, stored keys, or a connection to another system | `playbook:security-reviewer` |
 | Automation | AU | changes anything a routine runs | `playbook:automation-reviewer` |
 
 New screen → also `/playbook:critique screen`. Words-only or looks-only builds skip SA (see `/playbook:audit` tiers).

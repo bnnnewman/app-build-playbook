@@ -16,7 +16,7 @@ with its link, if anything is visible>.
 
 ## Checks this build needs
 Tier: <words only | looks only | a rule gets stricter | a loosening or wide change | new feature>.
-Lanes at close: <SA · CR · DL · LR · PV · AU>.
+Lanes at close: <SA · CR · DL · LR · PV · SE · AU>.
 
 ## What you own
 - **Your files:** <paths>

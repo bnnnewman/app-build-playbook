@@ -34,7 +34,7 @@ rewrite() {
     -e 's#\$\{CLAUDE_PLUGIN_ROOT\}#.claude/playbook#g' \
     -e 's#/playbook:([a-z<>-]+)#/playbook-\1#g' \
     -e 's#`playbook:([a-z-]+)`#`\1`#g' \
-    -e 's#playbook:(logic-auditor|adherence-reviewer|data-reviewer|privacy-reviewer|design-reviewer|automation-reviewer|finding-verifier)#\1#g'
+    -e 's#playbook:(logic-auditor|adherence-reviewer|data-reviewer|privacy-reviewer|security-reviewer|design-reviewer|automation-reviewer|finding-verifier)#\1#g'
 }
 
 # Reference material (owned by the playbook; replaced each run).

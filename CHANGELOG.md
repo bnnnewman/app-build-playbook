@@ -5,9 +5,12 @@ Newest first. Versions use semver (see `.claude/CLAUDE.md`).
 ## 2.0.0 · 11 Nov 2026 (rebuilt from four projects)
 
 A rebuild from what the owner actually did and decided between 19 Oct and 11 Nov 2026: about 1,100 decisions, 60
-audit loops and 4 projects. Evidence: `examples/2026-11-deep-dive.md`. Lessons L-33 to L-99.
+audit loops and 4 projects. Evidence: `examples/2026-11-deep-dive.md`. Lessons L-33 to L-101.
 
 **New**
+- **`/playbook:start upgrade`**: moves a project from an older playbook version, keeping its decisions and IDs
+  (L-100). A **`security-reviewer`** and a security lane (SE) for sign-in, access, keys and connections (L-101).
+  An `IDEAS.md` for the playbook itself.
 - **`OWNER.md`**: the owner's standing preferences, read first by every session and reviewer. A session-start hook
   prints it, with the project's status, at the start of every session (L-74).
 - **Three set-up choices:** size (now with **Mini**, one `BRIEF.md`, and a grow check), project **type** (phone app,
