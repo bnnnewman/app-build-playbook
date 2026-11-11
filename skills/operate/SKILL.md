@@ -32,7 +32,7 @@ Before asking:
 - a **private preview** he has looked at; for anything that writes, a **trial copy with made-up data** he has tried;
 - the page renders without errors, light and dark, desktop and phone widths;
 - "what this changes for you on Monday", in one line.
-Afterwards: read back, add the publish-log line, and the footer (On main · On a branch · Live).
+Afterwards: read back, add a line to `STATUS.md` → Published, and the footer (On main · On a branch · Live).
 A build may only count as done after the **first real run** matches what the code said it would send.
 
 ## `routine <change>`

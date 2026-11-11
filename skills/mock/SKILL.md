@@ -18,8 +18,8 @@ picture.
 - **True size, light and dark,** and the largest text size where layout could break.
 - **Each option is labelled** (A, B, C) and its parts are named, so he can say "A with C's title".
 - **Under each option, one line: what it does** and what it costs.
-- **Say what the mock-up can't show** (system bars, real fonts at system sizes, motion) and which device check
-  covers it.
+- **Say what the picture can't show**, in plain words ("the phone's top and bottom bars, real text sizes,
+  movement: you'll check those on the phone"), and which device check covers it.
 - One page per topic, **republished to the same link** as it changes. Put the link in `work/<build>/NOTES.md`.
 - Publish as a private artifact where the session can; otherwise write `design/mocks/<build>/<name>.html` and tell
   him how to open it.

@@ -10,6 +10,9 @@ argument-hint: "<build id or name>"
 A **build** is one brief, one branch, one PR, one "merge N". Its ID is a short slug unique in the project
 (`B3-today`, `I-shoes`, `A` for the audit of adopted code). Everything it makes lives in `work/<build>/`.
 
+**Mini:** the root `BRIEF.md` is the brief. Decisions go in its section 6 (`D-01`…), new words and findings in
+section 10. No `work/` folder, no separate build brief. Steps 4 and 5 still apply.
+
 ## 1. Pick up cold
 
 - Read `${CLAUDE_PLUGIN_ROOT}/OWNER.md`, the project `CLAUDE.md`, `STATUS.md`, and `work/<build>/HANDOFF.md` or
@@ -41,7 +44,8 @@ picked. If the build can't match it, say so before building.
 
 - Tests named for their SPEC IDs. A step that touches a promise adds or runs its invariant test.
 - **Pull a rule out of the screen code in the same step that changes it**, so it can be tested here.
-- Run the full checks; commit `<build> step k: <outcome>` with the count; push the branch.
+- Run the full checks; commit `<build> step k: <outcome>` with the count; push the branch (no remote:
+  commit locally and say "not pushed").
 - **Unrun code:** label it *draft, not run* in the commit. At most **one step** of it before something real runs it
   (the platform's test channel, the type-check harness, the owner). Never state a count no command produced.
 - **Teach mode:** explain the idea before the step; one check question after a new idea; add it to

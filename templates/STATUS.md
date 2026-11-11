@@ -1,6 +1,6 @@
 # Status
 
-**Stage:** <name> · **Size:** <…> · updated <Fri 20 Nov>
+**Where we are:** <stage name, in plain words> · **Size:** <…> · updated <Fri 20 Nov>
 
 **On main:** <what is merged>
 **On a branch:** <what is waiting for "merge", with PR numbers>
@@ -20,5 +20,7 @@
 - Has unmerged work: <branch, how old>
 
 ## Published
-| Date | Version | Where it went | Who did the manual step |
-|---|---|---|---|
+*The only record of what is live. Rows are added, never removed.*
+
+| Date | Version | Commit | Where it went | Who did the manual step |
+|---|---|---|---|---|

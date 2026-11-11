@@ -2,7 +2,7 @@
 
 This repo is a readable playbook and a Claude Code plugin (`playbook`, published through the `bnnnewman-playbook`
 marketplace in `.claude-plugin/`). It is **public**: no personal data, no employer or third-party names, no health
-values, in any file or example. Projects are referred to by their codes in `LESSONS.md`.
+values, in any file or example. The owner's own apps may be named. Work projects are described, never named.
 
 **Main is live.** Cloud sessions pull this repo's main branch. Work on a branch; the owner merges.
 

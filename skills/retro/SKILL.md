@@ -1,6 +1,6 @@
 ---
 name: retro
-description: Run a five-minute retro at a merge to main, a release or a project's end - numbers filled by a script, one question to the owner, at most three lessons - and carry proposals back to the playbook repo so the process actually improves. Use after every close on Standard and Full projects, at each release, and when the owner asks to improve the playbook.
+description: Run a five-minute retro at a release (or each merge, on Full projects) or a project's end - numbers filled by a script, one question to the owner, at most three lessons - and carry proposals back to the playbook repo so the process actually improves. Use at each release, after every merge on Full projects, and when the owner asks to improve the playbook.
 argument-hint: "[<build> | release | project | sync]"
 ---
 # Retro
@@ -16,8 +16,9 @@ runs, and it always writes somewhere the playbook can collect.
    rounds and first-round counts from the review files' verdict lines. Add: commits; tests at close (a count a
    command produced); findings caused by our own fixes (search the reviews for "introduced"); things the owner found
    on the device that the lanes missed; **usage windows** spent, roughly.
-2. **One question to the owner, inside the merge or release message**, not as a separate step that gets skipped:
-   *"Anything this time that felt slow, confusing or great?"* Record his answer, or "not answered".
+2. **The owner's answers.** The one question (*"Anything this time that felt slow, confusing or great?"*) rides in
+   every PR summary, so it isn't a separate step that gets skipped. Read his answers from `retros/answers.md`; ask
+   once now if there are none.
 3. **At most three lessons.** Check `${CLAUDE_PLUGIN_ROOT}/LESSONS.md` first.
    - An existing lesson repeated → say which. Its fix isn't working well enough.
    - Something new → `<project>-L<n>` (for example `FL-L3`). **Never an `L-nn` number: only the playbook repo
@@ -27,7 +28,7 @@ runs, and it always writes somewhere the playbook can collect.
 5. If a rule for *this project* follows (as tiered audits once did), make it now: one line in the project
    `CLAUDE.md`, with the decision ID.
 
-Light projects run this at release only. Mini: once, at the end.
+**When:** Full: every merge. Standard and Light: each release. Mini: once, at the end.
 
 ## `project`
 

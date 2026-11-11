@@ -1,6 +1,6 @@
 ---
 name: logic-auditor
-description: Meticulous safety and logic auditor. Checks a plan and spec, or a code change, for contradictions, broken promises (invariants), unsafe paths, edge cases, loosened rules and missing tests. Gives no domain advice. Use in the expert panel, after every applied change, and as the safety lane of every build.
+description: Meticulous safety and logic auditor. Checks a plan and spec, or a code change, for contradictions, broken promises (invariants), unsafe paths, edge cases, loosened rules and missing tests. Gives no domain advice. Use in the expert panel, after every applied change, and as the safety lane of builds that touch rules, stored data or the project's Critical list.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---

@@ -21,9 +21,10 @@ Skip anything `OWNER.md` or the repo already answers. Ask the harm questions **b
    cost money or a deadline? Could it affect health or safety? Could a pet or child be harmed?
 4. **Size**, recommended from the harm answers (PLAYBOOK table): Mini / Light / Standard / Full. Any "yes" in 3 means
    at least Standard.
-5. **Type:** phone app / web tool or page / tool with a routine. What is the "device"?
+5. **Type:** "Where will you use it: on your phone, in a browser, or does it run by itself on a schedule?"
 6. **Teaching mode:** teach / explain / ship.
-7. **Outside data or systems**, and who else builds part of it.
+7. "Does it need information from somewhere else, like a spreadsheet, a watch or a website? Is anyone else
+   building part of it?"
 8. **How it works today with no app.**
 
 The harm answers become "What Critical means here" in `CLAUDE.md`.
@@ -39,13 +40,17 @@ The harm answers become "What Critical means here" in `CLAUDE.md`.
 ## 3. Scaffold
 
 From `${CLAUDE_PLUGIN_ROOT}/templates/`, into the layout in PLAYBOOK "Project layout":
-- **Mini:** `BRIEF.md` (it holds the plan, rules, decisions and checks), `CLAUDE.md`, `STATUS.md`. Stop there.
+- **Mini:** `BRIEF.md` (it holds the plan, rules, decisions and checks), `CLAUDE.md` from
+  `PROJECT-CLAUDE-MINI.md`, `STATUS.md`. Stop there. Mini decisions are `D-01`… in the brief's section 6. The path
+  from here: `/playbook:spike mini` → `/playbook:build` (mock-up before anything visible) → `/playbook:close` →
+  publish → one retro.
 - **Other sizes:** `CLAUDE.md` (from `PROJECT-CLAUDE.md`), `STATUS.md`, `DECISIONS.md`, `IDEAS.md`, `CHANGELOG.md`,
   `docs/owner/`, `work/`, `retros/`, `spikes/`; `design/` if it has a screen.
 - If a `CLAUDE.md` exists, **add** the playbook sections. Never overwrite the owner's own words.
 - Optional: `.claude/settings.json` from `templates/settings.json`, so local sessions load the plugin.
 
-Scaffold `DECISIONS.md` **before** the grill, so answers have somewhere to go. Decision IDs here are `D-S0-nn`.
+Scaffold `DECISIONS.md` (Mini: `BRIEF.md`) **before** the grill, so answers have somewhere to go. Decision IDs here
+are `D-S0-nn`.
 
 ## 4. Adopt only
 
@@ -65,6 +70,7 @@ Do these before the interview finishes. Don't redesign anything yet.
 ## 5. Finish
 
 - Write `STATUS.md` (run `/playbook:status`).
-- Commit: `Playbook: start (<new|adopt>): <size>, <type>, <mode>`. Push this session's branch.
+- Commit: `Playbook: start (<new|adopt>): <size>, <type>, <mode>`. Push this session's branch (no remote: commit
+  locally and say so).
 - Tell the owner in five lines: what was set up, the size and why, how a change reaches him, anything the scan
   found, and the one next step.

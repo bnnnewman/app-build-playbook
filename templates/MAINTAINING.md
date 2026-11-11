@@ -29,9 +29,8 @@ The promises in SPEC §3. The design lock. `DECISIONS.md`. The every-build steps
 | <Test builds> | <90 days after each build> | | | |
 | <API key> | | | | |
 
-## Published
-| Date | Version | Commit | Where | Who did the manual step |
-|---|---|---|---|---|
+## What is live
+See `STATUS.md` → Published. That table is the only publish log.
 
 ## When something breaks: runbooks
 <The two or three failures that will happen, each as numbered steps.>

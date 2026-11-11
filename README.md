@@ -36,6 +36,19 @@ Three choices are made once per project and can change later:
 
 A picture of the stages: [`docs/stage-map.html`](docs/stage-map.html).
 
+### What you'll be asked, from start to first release (a Standard phone app)
+
+| When | What you do |
+|---|---|
+| Start | One round of questions: what it's for, what could go wrong, how you want to work |
+| Plan and spec | Two or three rounds: "yes to all except…" |
+| Design | Say which apps you like; pick from one mock-up page; say "lock it" |
+| Expert panel | Say "start"; then one or two rounds on what they found. Anything that loosens safety is asked alone |
+| Each build | Agree the scope; pick a mock-up if it's visible; "words fine"; "merge N" |
+| Release | Tick through a checklist on your phone; send screenshots of anything odd |
+
+That's it. Everything else is the session's job.
+
 ---
 
 ## All the skills
@@ -51,9 +64,9 @@ A picture of the stages: [`docs/stage-map.html`](docs/stage-map.html).
 | `release` · `ideas` · `gaps` · `logic-review` · `operate` | Acceptance on my phone · the ideas list · what's missing · do the rules add up · run a live tool |
 | `retro` · `handoff` · `tidy` | Five-minute retro that feeds this repo · hand-over · housekeeping |
 
-Invoked as `/playbook:<name>`. Reviewers (`playbook:<name>`): `logic-auditor`, `adherence-reviewer`,
-`data-reviewer`, `privacy-reviewer`, `design-reviewer`, `automation-reviewer`, `finding-verifier`.
-Domain packs in `panels/`: health and fitness, plant care, governance, design.
+Invoked as `/playbook:<name>`. Seven reviewers ship with it, each looking for one kind of problem (safety and
+logic, real-life use, data, privacy, design, automation, and one that checks the others). Domain packs in
+`panels/`: health and fitness, plant care, governance, design.
 Platform notes in `platforms/`: iPhone apps, web tools, routines.
 
 ---
@@ -62,7 +75,7 @@ Platform notes in `platforms/`: iPhone apps, web tools, routines.
 
 ### On my own computer (every project)
 
-In Claude Code:
+On a computer, in Claude Code (from the phone, ask a session: "install the playbook for me"):
 
 ```
 /plugin marketplace add bnnnewman/app-build-playbook
@@ -76,33 +89,33 @@ To teach as we build: `/output-style` and pick **Playbook Teach**.
 
 ### In every cloud session (claude.ai/code and the phone app)
 
-Cloud sessions start from a saved snapshot, so the **environment** installs the playbook.
+Do this once. Easiest: ask any cloud session, **"update my environment's setup script from the playbook"**. It will
+show you the change to approve.
 
-1. In any cloud session: the cloud environment menu in the title bar → **Edit**.
+By hand:
+1. In any cloud session, open the environment menu in the title bar, then **Edit**.
 2. Paste everything below the `# ---` line of [`scripts/cloud-setup.sh`](scripts/cloud-setup.sh) into **Setup
    script**. Save.
 3. Start a **new** session and say "where are we?".
 
-What the script does: clones this repo to `/opt/app-build-playbook`, installs the plugin, and adds `OWNER.md` to the
-session's standing instructions. After that the plugin keeps its own copy up to date in the background.
+The script installs the playbook and adds `OWNER.md` to every session's standing instructions. After that the
+playbook keeps itself up to date.
 
 **If you set this up before version 2, paste the script again**: the new one also installs the owner profile.
 
 ### Per project, with nothing installed (fallback)
 
-```bash
-./scripts/vendor.sh /path/to/project
-```
-
-Copies the skills (as `/playbook-<name>`), reviewers, templates and scripts into the project's `.claude/`. Re-run to
-update. If a session won't run a script from another repo, ask it to do the same copy by hand.
+If the playbook isn't showing up in a project, say **"copy the playbook into this project"**. The session copies the
+skills (as `/playbook-<name>`), reviewers and templates into the project's `.claude/` folder, using
+`scripts/vendor.sh`.
 
 ---
 
 ## How it gets better
 
-1. Every merge ends with a five-minute retro: numbers filled in by a script, and one question to me.
-2. Each project writes what it learned to `retros/playbook-proposals.md`.
+1. Every PR summary asks me one question: "anything slow, confusing or great?"
+2. At each release, a five-minute retro: numbers filled in by a script, my answers, and what the project learned,
+   written to `retros/playbook-proposals.md`.
 3. `/playbook:retro sync` brings those here as a branch: new lessons in [`LESSONS.md`](LESSONS.md), numbers in
    [`METRICS.md`](METRICS.md), and the edits themselves.
 4. I merge playbook changes like any other.

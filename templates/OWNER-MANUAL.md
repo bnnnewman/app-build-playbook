@@ -20,7 +20,8 @@ week automatically; if the app warns you, make one by hand (section 2).">
 ## 5. Keys and passwords: where each lives, how to replace one
 ## 6. Backups, and a new phone
 ## 7. Changing a setting without help
-<An owner-editable file, if there is one: which line, what values are allowed. "Don't touch anything else.">
+<If there is one file you can safely change yourself: where it is, which line, and what values are allowed.
+"Don't change anything else in it.">
 
 ## 8. Briefing a future helper
 Give them `MAINTAINING.md`. Tell them: <three lines>.

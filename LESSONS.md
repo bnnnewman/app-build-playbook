@@ -22,7 +22,7 @@ Every lesson has an ID, the project it came from, the evidence, and where the pl
 
 **L-01 · Change · Run the data spike before expert review, not after.** *(RA)*
 In Running-App the panel and 10 audit rounds polished rules that assumed data fields which, it turned out, never arrive (HRV status, readiness and weather all arrived on 0 of 366 days). The spike forced a rewrite (SPEC v1.11) and 7 more audit rounds.
-→ PLAYBOOK stage 3 now comes before stage 4.
+→ The spike (stage 3) comes before the panel (stage 5).
 
 **L-04 · Change · One home for each rule.** *(RA)*
 The plan and the SPEC restated the same rules, so every fix had to land twice, and drift between them was a recurring finding (RA-09, RA-11, RK-01, RL-05, RM-01). Within the SPEC, the same rule appeared in prose, in a table and in tests (RA-06).
@@ -42,7 +42,7 @@ The plan had paper logs, so week 1 ran from the document while the app was still
 
 **L-15 · Change · Decide fail-safe policy for untrusted inputs before coding.** *(RA)*
 Phase 2 took 5 audit rounds, mostly on a wrong device clock, and grew a whole subsystem mid-phase.
-→ SPEC §4 Time; PHASE-HANDOFF "Decisions needed before step 1".
+→ SPEC §4 Time; the build grill (`/playbook:build` step 2).
 
 **L-16 · Change · Settle data-format strictness before the first persisted byte.** *(RA)*
 A handoff rule (tolerant decoding) was reversed mid-phase (P1-04), which made earlier stores unreadable.
@@ -109,7 +109,7 @@ Most logic was tested under `swift test` on Linux, and the UI holds no rules. Cl
 
 **L-14 · Keep · Write handoff docs with fixed fields.** *(RA)*
 Six sessions each started cold from one file and finished their phase without asking where things stood.
-→ templates/PHASE-HANDOFF.md.
+→ `templates/HANDOFF.md`.
 
 **L-17 · Change · Budget CI for its cost, and start platform CI early.** *(RA)*
 Running 4 macOS jobs on every push used up the month's 2,000 free minutes (macOS bills 10×, about 110 minutes a run). Platform code drafted with no compiler broke when CI first ran.

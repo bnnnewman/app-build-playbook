@@ -36,4 +36,4 @@ As in `/playbook:plan` "Revise", plus: recompute every test the change touches, 
 `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/coverage.py --spec SPEC.md --tests '<glob>'`. It must report 0 missing and 0
 rows it couldn't read.
 
-Commit `Spec: v<n> (<reason>)`. Next: `/playbook:spike`, or `/playbook:design` if there's no outside data.
+Commit `Spec: v<n> (<reason>)`. Next: `/playbook:spike` (the mini spike at least, at every size), then `/playbook:design` if it has a screen.

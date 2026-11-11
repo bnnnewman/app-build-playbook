@@ -20,9 +20,8 @@
 One decision, asked alone: publish + merge + <routine fingerprint> + one test run. Preview first; for anything that
 writes, a trial copy with made-up data first.
 
-## Published
-| Date | Version | What changed for the owner | Read back |
-|---|---|---|---|
+## What is live
+See `STATUS.md` → Published (the only publish log). Add a line there at every go-live, with "read back n of n".
 
 ## Open live-data items (only when the owner brings them)
 | Item | Waiting for | Since |

@@ -11,7 +11,7 @@ Work from the files and git, not memory.
 ## 1. Gather
 
 - **Set-up:** the project `CLAUDE.md` (size, type, mode, Playbook map). None? Say so and suggest `/playbook:start`.
-- **Git:** `git fetch`; what is on main; branches with unmerged work (and how old); branches fully merged; open PRs
+- **Git:** `git fetch` (no remote: skip it and say so); what is on main; branches with unmerged work (and how old); branches fully merged; open PRs
   if you can see them; uncommitted work.
 - **What the owner can use now:** the last release tag or publish-log line; for an app, the last merge to main.
 - **Waiting on the owner:** run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/decisions.py DECISIONS.md` for `pending`
@@ -25,8 +25,9 @@ Work from the files and git, not memory.
 
 ## 2. Write `STATUS.md`
 
-Replace the whole file (history lives in `CHANGELOG.md`). Use `${CLAUDE_PLUGIN_ROOT}/templates/STATUS.md`. Keep it
-under 40 lines, so it reads on a phone:
+Use `${CLAUDE_PLUGIN_ROOT}/templates/STATUS.md`. **Rewrite everything above `## Running now`. Keep `## Running now`
+and `## Published` as they are** (the Published table is the only record of what is live; add to it, never drop
+rows). Keep the part you rewrite under 40 lines, so it reads on a phone:
 
 ```
 **Stage:** <name> · **Size:** <…> · updated <date>
@@ -42,10 +43,17 @@ under 40 lines, so it reads on a phone:
 
 ## Housekeeping
 - Merged, safe to delete: <branches>
-- Has unmerged work: <branches, age>
+- Has unmerged work: <branches, age>   (older than 2 days: say so)
+
+## Running now        (kept)
+## Published          (kept; the one publish log)
 ```
+
+Also flag: a `CLAUDE.md` status line that disagrees with the newest branch; `pending` items over 7 days.
+
+**Mini:** there is no `DECISIONS.md`; read `BRIEF.md` sections 6, 7 and 9 instead, and its grow check.
 
 ## 3. Tell the owner
 
-Under 12 lines, same shape, no IDs unless he needs one to answer. If the grow trigger fired, say so first and
-recommend the size change. Commit `STATUS.md` with the work it describes, not as a commit of its own on main.
+Under 12 lines, same shape, no IDs unless he needs one to answer. If the project has outgrown its size, say so first, in plain words ("this now
+handles other people's data; I suggest moving from Light to Standard"). Commit `STATUS.md` with the work it describes, not as a commit of its own on main.

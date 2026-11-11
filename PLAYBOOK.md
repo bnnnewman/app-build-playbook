@@ -25,7 +25,7 @@ BUILD       6 Builds (repeat):  brief ─► mock-up if visible ─► steps ─
                                 review lanes in parallel ─► fix ─► re-check ─► "merge N"
 SHIP        7 Release: acceptance on the real device ─► owner docs ─► tag
 LIVE        8 Use it ─► ideas ─► idea builds · gap analysis · logic review · critique · operate
-ALWAYS      status · grill · decide · mock · options · coordinate · handoff · retro · tidy
+ALWAYS      status · grill · decide · mock · options · coordinate · handoff · retro · tidy   (any stage)
 ```
 
 | Stage | Skill | Output | Gate (done when) |
@@ -38,8 +38,8 @@ ALWAYS      status · grill · decide · mock · options · coordinate · handof
 | 5 Panel + audit | `panel`, `audit` | `work/R/reviews/…`, `SUMMARY.md` | Every Critical and Major decided; audit at 0/0 |
 | 6 Build | `build`, `close` | `work/<build>/…`, code, tests, a PR | Every lane at 0/0; the owner says "merge N" |
 | 7 Release | `release` | `docs/owner/ACCEPTANCE.md`, owner docs, a tag | Acceptance done on the device; owner docs exist |
-| 8 Live | `ideas`, `gaps`, `logic-review`, `critique`, `operate` | `IDEAS.md`, reports, the live tool | (a loop, not a gate) |
-| Retro | `retro` | `retros/…`, proposals for this repo | Numbers recorded; proposals sent to the playbook |
+| 8 Live | `ideas`, `gaps`, `logic-review`, `critique`, `operate`, `options` | `IDEAS.md`, reports, the live tool | (a loop, not a gate) |
+| Retro | `retro` | `retros/…`, proposals for this repo | At each release (Full: each merge). Numbers recorded; proposals sent to the playbook |
 
 At any point `status` says where things stand and the one next action, and writes it to `STATUS.md`.
 
@@ -58,8 +58,12 @@ health or safety? pets or children? Then size it.
 |---|---|---|---|---|---|---|
 | **Mini** | A few days' tool; every harm answer is "no" | One `BRIEF.md` | None; one review pass, findings kept | None | Mock-up before anything visible | At the end |
 | **Light** | Annoyance or a small loss | PLAN, SPEC (short) | About 3 reviewers | Up to 3 rounds, then simplify | Brief, one mock round, one-page style guide | At release |
-| **Standard** | Real data, money, property, pets, or other users | Full set | 5–6 | To 0/0; simplify offered at round 3 | Brief → round 0 → lock → per-build checks | Each merge to main (5 minutes) |
-| **Full** | Health, safety, financial advice | Full set | 6–8, with verifiers and rechecks | To 0/0; every invariant every round | Everything, plus lock panel, flow map, art loop | Each merge to main |
+| **Standard** | Real data, money, property, pets, or other users | Full set | 5–6 | To 0/0; simplify offered at round 3 | Brief → round 0 → lock → per-build checks | Each release (5 minutes) |
+| **Full** | Health, safety, financial advice | Full set, plus `PROOF.md` | 6–8, with verifiers and rechecks | To 0/0; simplify offered at round 3 | Everything, plus lock panel, flow map, art loop | Each merge to main |
+
+**The Mini path** is: `start` → the mini spike → `build` (the root `BRIEF.md` is the brief; a mock-up before anything
+visible) → `close` (one review pass, the brief's checklist) → publish → one retro. Decisions are `D-01`… in the
+brief. No `work/` folder, no `DECISIONS.md`, no audit loop.
 
 **Size the stages separately** (L-58): a project can take a Standard panel and a Light build routine.
 
@@ -186,7 +190,7 @@ and the page pass 8 Criticals. The cheap parts move to before the first screen (
 
 ## Stage 6: Builds
 
-The unit of work is a **build**: one brief, one branch, one PR, one "merge N" (L-52). It replaced the phase.
+The unit of work is a **build**: one brief, one branch, one PR, one "merge N" (L-52).
 
 **Before code.** Read the handoff and the lock. Re-ask the teaching mode. Grill scope and policy (L-29). Write
 `work/<build>/BRIEF.md`. For anything visible, the owner sees a mock-up first (L-63).
@@ -228,10 +232,15 @@ docs-only changes more than needed (L-17).
   code-only panel had missed. Ask for light, dark and largest-text shots of each page type.
 - **Real use comes before polish** (L-64): after the first usable build, three days of use, then a feedback grill.
   One app ran four polish stages before real use, then redid most screens.
+- **A trial** (Standard and Full, when it will hold real data): the pass test is written first, in his words; he
+  uses it for a set number of days; during the trial only bug fixes are built, each confirmed on his device; he
+  ends it by saying "trial passed".
+- **Before a first release** (Standard and Full): a gap analysis and a whole-engine logic review.
 - **Owner independence** (L-66): before the first release, write `OWNER-MANUAL.md` (the one thing to remember, what
   each notice means, what to do when a build fails), `MAINTAINING.md` (with a **renewals table**) and `PROOF.md`
   (each promise and what proves it). The session records set values and dates; it doesn't leave blanks for the owner.
-- **Tag the release** and write the publish log line: date, version, where it went.
+- **Tag the release** and add the publish-log line to `STATUS.md` → Published (the one record): date, version,
+  where it went.
 
 ## Stage 8: Live
 
@@ -256,8 +265,10 @@ docs-only changes more than needed (L-17).
 
 For three weeks, four projects proposed 16 lessons and none reached the playbook; two sets collided on the same IDs
 (L-70). So:
-- A retro runs at **every merge to main** (Standard, Full) and takes five minutes: five numbers filled by
-  `scripts/metrics.py`, **one question to the owner asked inside the merge message**, at most three lessons.
+- **One question to the owner rides in every PR summary** ("anything slow, confusing or great?"), so it can't be
+  skipped; his answers are kept in `retros/answers.md`.
+- The retro itself runs at **each release** (Full: each merge; Mini: once at the end) and takes five minutes: the
+  numbers filled by `scripts/metrics.py`, his answers, at most three lessons.
 - Projects propose lessons as `<project>-L1`. **Only this repo assigns L-numbers.**
 - Every retro writes `retros/playbook-proposals.md`. `/playbook:retro sync` carries proposals here as a branch.
 
@@ -304,8 +315,10 @@ fault-finding, no IDs or jargon in the question.
   what is waiting, and for how long.
 
 **IDs.**
-- Build: a short slug, unique in the project (`B3-today`, `A`, `I-shoes`, `R` for the panel stage).
-- Decision: `D-<build>-nn`. Projects that already number `D-nnn` keep going and add a ranges table.
+- Build: a short slug, unique in the project; hyphens allowed, no spaces (`B3-today`, `A`, `I-shoes`, `fix-2`).
+  The stages before building have fixed ones: `S0` start, `PL` plan, `SP` spec, `LK` look, `R` panel, `GAPS`.
+- Decision: `D-<build>-nn`. Projects that already number `D-nnn` keep going and add a ranges table. Mini: `D-01`…
+  in the brief.
 - Finding: `<build>-<LANE><round>-nn`, e.g. `B3-SA2-01`. Lane codes: SA safety, CR code, DL design lock, LR logic,
   PV privacy, AU automation, AD adherence, DA data, AX accessibility, VF verifier; domain codes come from the pack.
 - Test: `T001`…, invariant tests `TI1a`…, or a prefix the brief hands out. Never renumbered.
@@ -315,7 +328,8 @@ fault-finding, no IDs or jargon in the question.
 yes. *Major*: materially wrong or unusable. *Minor*: polish. Every audit opens with
 `Critical: n · Major: n · Minor: n · Nit: n`.
 
-**Git.** Commit after every step. Push the session's branch. The owner merges. Before any `git add -A`, run
+**Git.** Commit after every step. Push the session's branch. The owner merges. **No remote, or a push is refused:
+commit locally, say "not pushed" in the footer, and carry on. Never stop on it.** Before any `git add -A`, run
 `git status`; scripts that touch real data write to absolute scratch paths (L-73). A branch whose work is on main is
 deleted; `status` lists "merged, safe to delete" and "has unmerged work" in those words.
 
@@ -339,12 +353,14 @@ code.
 ```
 README.md      for people: what it is, how to try it, who to ask (under about 150 lines)
 CLAUDE.md      for sessions: how to work with the owner, how a change reaches him, what runs where, every-build steps
-STATUS.md      the one living "where are we": on main / on a branch / on your phone; waiting on you; next
+STATUS.md      the one living "where are we": on main / on a branch / on your phone; waiting on you; next;
+               and the publish log
 PLAN.md  SPEC.md  DECISIONS.md  IDEAS.md  CHANGELOG.md          (Mini: BRIEF.md replaces PLAN, SPEC, DECISIONS)
-docs/owner/    OWNER-MANUAL.md  MAINTAINING.md  ACCEPTANCE.md  PROOF.md  LEARNING.md  SETUP-<platform>.md
-design/        DESIGN-BRIEF.md  STYLE-GUIDE.md  LEDGER.md  FLOW-MAP.md  PAGE-INVENTORY.md  mocks/
+docs/owner/    OWNER-MANUAL.md  MAINTAINING.md  ACCEPTANCE.md  acceptance-archive/  LEARNING.md  SETUP-<platform>.md
+               (Full: PROOF.md · live tools: OPERATIONS.md)
+design/        DESIGN-BRIEF.md  STYLE-GUIDE.md  LEDGER.md  mocks/  critiques/   (Full: FLOW-MAP.md  PAGE-INVENTORY.md)
 work/<build>/  BRIEF.md  NOTES.md  HANDOFF.md  reviews/<LANE><round>.md  reports/
-work/archive/  closed builds, moved at merge
+work/archive/  closed builds, moved at merge          (also work/GAPS/, work/COORDINATOR-HANDOFF.md when used)
 spikes/  retros/  tools/  .claude/agents/
 ```
 

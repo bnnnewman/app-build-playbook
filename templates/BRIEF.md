@@ -1,7 +1,7 @@
 # <Name>: the brief
 
-*Mini size: this one file is the plan, the rules, the decisions and the checks. Fill it in about 20 minutes. It
-grows in place. If the grow check at the bottom ever says yes, split it into the full documents.*
+*Mini size only: this one file is the plan, the rules, the decisions and the checks. It grows in place. If the
+grow check at the bottom ever says yes, split it into the full documents.*
 
 ## 1. What and why
 <Name. One sentence on what it does. One on what it does **not** do.>
@@ -29,6 +29,8 @@ grows in place. If the grow check at the bottom ever says yes, split it into the
 | 1 | <e.g. "Anything we don't recognise shows 'contact us', never a guess."> | |
 
 ## 6. Decisions
+*Mini projects number decisions `D-01`, `D-02`… here. There is no separate decisions file.*
+
 | ID | Date | Decision | Why | Who decided |
 |---|---|---|---|---|
 | D-01 | | | | |
@@ -40,7 +42,7 @@ grows in place. If the grow check at the bottom ever says yes, split it into the
 ## 8. Checks before publishing
 - [ ] It builds.
 - [ ] Each test case in section 5 shows the right thing.
-- [ ] Phone width; keyboard only; an accessibility scan.
+- [ ] Works at phone width, with the keyboard only, and passes an automatic accessibility check.
 - [ ] Links open. Wording read aloud.
 - [ ] Dates and times right for the owner's time zone, including daylight saving.
 - [ ] No real data or personal names anywhere.

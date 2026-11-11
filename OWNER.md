@@ -2,7 +2,7 @@
 
 *Standing preferences, drawn from about 1,100 recorded decisions across four projects (Oct–Nov 2026). Every session,
 reviewer and child session reads this first. A question this file already answers is **not asked again**: apply the
-default and log it as "by profile". Change a line here only on the owner's word, through a playbook change.*
+default, tell him it was "already settled by your standing preferences", and log it as "by profile". Change a line here only on the owner's word, through a playbook change.*
 
 Ben owns the projects. He is not a professional developer. He works from his phone and cloud sessions, and uses a Mac
 only for Xcode and Apple steps.
@@ -18,7 +18,7 @@ only for Xcode and Apple steps.
 ## How to ask him things
 
 6. **Numbered questions, lettered options, one recommended (★).** He answers "1a 2c 3 yes".
-7. **About 8 questions a round.** End with: *Reply "yes to all", or "yes to all except n: …".*
+7. **Up to about 8 questions a round** (he copes with more; this keeps each one considered). End with: *Reply "yes to all", or "yes to all except n: …".*
    The exceptions are the real decision. Record them in his words.
 8. **Read his answers back in one line before acting** ("You chose: 1 A, 2 C, 3 B").
 9. **Never ask him to choose a look from words.** Show every option as a mock-up first. He often mixes options
@@ -29,7 +29,7 @@ only for Xcode and Apple steps.
     counts from his own data where there are any.
 13. **When hunting for faults, let him react first.** Name the screen and what looks wrong. Ask what he thinks.
     Give your recommendation after he answers.
-14. **Don't ask engineering questions.** Choose, and log the choice as an interpretation.
+14. **Don't ask engineering questions.** Choose, and note "I chose this" in the build's notes (an *interpretation*).
 15. **On domain content, apply the expert reviewers' agreed view and report it.** Ask him only where they disagree.
 
 ## Standing defaults (don't re-ask)
@@ -37,16 +37,16 @@ only for Xcode and Apple steps.
 | Topic | Default |
 |---|---|
 | Words on screen | Fewer. Nothing said twice. No background logic shown to the user. |
-| Look | One consistent system everywhere. Consistency beats novelty. No brand colour for its own sake. |
+| Look | One consistent system everywhere. Consistency beats novelty. Keep to the app's own look. |
 | Tone | Calm. No streaks, scores, guilt or exclamation marks. |
 | Wording | Plain words, his own vocabulary. No glossing of terms he knows. Australian spelling. Metric units. Dates as "Fri 20 Nov". |
-| Scope | If it is small and fits the current window, build it now. Don't park it. |
-| Safety | Take every tightening. A loosening only when asked alone, with evidence. |
+| Scope | Asked "now or later?" about something small that fits: build it now. When he says "log it", log it and carry on. |
+| Safety | He accepts tightenings as recommended. A loosening only when asked alone, with evidence. |
 | Unknown or missing input | Never good news. Fail to the cautious side, or to a human. |
 | Experts | Follow the clinician or domain expert on content. Taste is his. |
 | His own data | Stays in his own storage. Inside that he accepts convenience. Never in a repo, a report or a mock-up. |
 | Other people | Roles, not names. No pronouns guessed from names. |
-| Money | Free tiers. No paid CI. Every recurring service gets a cost line. |
+| Money | Free tiers. No paid build service. Say what anything recurring costs. |
 | Choices on screen | Each one shows what it does. Nothing fails silently. Nothing is lost without asking. |
 | Timelines | Plans list stages and gates, not dates. The only waits are his decisions and his phone. |
 
@@ -58,7 +58,8 @@ only for Xcode and Apple steps.
 
 ## Keeping him oriented
 
-- After a manual step, say **what he should now see** and what "done" looks like.
+- After a manual step, say **what he should now see** and what "done" looks like. End with: "If it looks
+  different, send a screenshot."
 - End a hand-over or a merge with the three-line footer: **On main: … · On a branch: … · On your phone: …**
 - On long runs, post a one-line progress note: done, left, and anything that needs him.
 - Before he commits to an idea, say **what it costs in process** (which checks re-run).

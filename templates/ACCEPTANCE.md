@@ -11,7 +11,7 @@ things *look*. No screenshots that show personal data.
 ## <Build id>: <what it is> (about <n> minutes)
 <Use a test item for steps x–y, so your real data isn't touched.>
 
-| # | Where | What to tap or do | What you should see (exact words) | Checks |
+| # | Where | What to tap or do | What you should see (exact words) | Checks (for the session) |
 |---|---|---|---|---|
 | 1 | Settings → Export | Tap Export | The share sheet opens straight away. Cancel it. | T041 |
 
@@ -20,11 +20,11 @@ If you see "<expected oddity>" before then, that's expected.
 ## Once per release: first-run checks
 | # | Do this | You should see |
 |---|---|---|
-| S1 | Send the app to the background for a minute, come back | The same screen, up to date |
+| S1 | Switch to another app for a minute, then come back | The same screen, up to date |
 | S2 | Close it completely and reopen | No data lost |
 | S3 | Turn on aeroplane mode, open it | A calm "offline" state, nothing lost |
 | S4 | Open it the next morning | Today is today |
-| S5 | Type in a text field, then dismiss the keyboard | The keyboard goes; you can save |
+| S5 | Type in a text box, then tap outside it | The keyboard goes away; you can save |
 
 ## Once per release: looks and accessibility (screenshots, please)
 Open <the five main screens> in each of: **dark mode · the largest text size · increased contrast.**

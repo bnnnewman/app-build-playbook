@@ -22,9 +22,13 @@ existing number plus one.
 
 Say which tier you chose and why, in one line.
 
+**Before a rule changes** (stricter or looser), where the owner has real history: `/playbook:spike replay` first, and show him the counts.
+
+**By size.** *Mini:* no audit loop (one review pass at close). *Light:* at round 3 with Majors, stop and offer simplify. *Standard:* simplify offered at round 3, the default at round 5. *Full:* as Standard.
+
 ## Each round
 
-1. **Freeze.** Commit. Record the exact scope (document versions, or `<base>..<head>`).
+1. **Freeze.** Commit (no remote, or a push refused: commit locally and carry on). Record the exact scope (document versions, or `<base>..<head>`).
 2. **Brief `playbook:logic-auditor`:**
    - Scope: round 1 reads everything in scope; later rounds read only the diff, what it touches, and the invariants.
      For code, "probe in a scratch copy outside the repo".

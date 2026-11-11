@@ -13,11 +13,12 @@ description: Gather everything waiting on the owner (review proposals, pending d
    - Answered by `${CLAUDE_PLUGIN_ROOT}/OWNER.md` → close as "by profile".
    - A `pending` older than 7 days that nobody would reverse → propose closing it as confirmed, in one line.
    - Domain content the reviewers agree on → apply, report.
-3. **Order:** Critical, then ⚠ (each alone), then Major, then the rest. Things that block the next step come first.
+3. **Order:** most serious first (Critical, then ⚠ each alone, then Major, then the rest). Things that block the
+   next step come first.
 4. **Ask in grill rounds** (`/playbook:grill` format and rules).
    - Review proposals: accept / reject / change. Minors: "accept all Minors except…".
-   - Rank anything with a cost using the **"if we skip it" columns**: why; when it bites; does it fail safe; cost in
-     usage windows.
+   - For anything with a cost, say: why it matters; when it would hurt; whether things stay safe if we skip it; and
+     what it costs in plan allowance.
    - Anything visible comes with a mock-up link (`/playbook:mock`).
 5. **Read back, then record** every answer in `DECISIONS.md` with his words.
    - When an answer settles an older row, **update that row too** (status `replaced`, "settled by D-…").

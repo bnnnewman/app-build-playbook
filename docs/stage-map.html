@@ -4,7 +4,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: a single route line down the page; each stage is a station with a gate. The build phase is a loop off the line. */
+/* Layout: a single route line down the page; each stage is a station with a gate. The builds stage is a loop off the line. */
 :root {
   --paper: #f6f7f4;
   --panel: #ffffff;
@@ -69,6 +69,7 @@ header p.lede { color: var(--muted); max-width: 62ch; font-size: 1.05rem; }
   background: var(--panel); border: 4px solid var(--route); display: grid; place-items: center;
   font: 800 1rem var(--display); color: var(--route);
 }
+.station .node.wide { font-size: 0.7em; letter-spacing: -0.03em; }
 .station.loop .node { background: var(--route); color: var(--paper); }
 details { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
 summary { list-style: none; cursor: pointer; padding: 14px 16px; display: grid; gap: 8px; }
@@ -148,7 +149,7 @@ footer { color: var(--muted); font-size: 0.88rem; }
         <p class="out">Docs: <span class="sized" data-mini="one BRIEF.md" data-light="short PLAN and SPEC" data-standard="the full set" data-full="the full set">the full set</span></p>
       </div></details></div>
 
-    <div class="station"><span class="node">1</span>
+    <div class="station"><span class="node wide">1–3</span>
       <details><summary>
         <div class="s-top"><h3>Plan, spec, spike</h3><span class="cmd">"grill me on the plan"</span></div>
         <div class="gate"><b>Gate</b><span>You could run it by hand from the plan. Every rule has a test. You've seen what data really arrives.</span></div>
@@ -160,10 +161,9 @@ footer { color: var(--muted); font-size: 0.88rem; }
           <li><strong>Spike:</strong> copy the real field names from the source on day one. Report counts, never values.</li>
           <li>Both documents are grilled before any reviewer sees them.</li>
         </ul>
-        <div class="lessons"><span>L-48 copy real names</span><span>L-08 test the promise</span><span>L-01 spike first</span></div>
       </div></details></div>
 
-    <div class="station"><span class="node">2</span>
+    <div class="station"><span class="node">4</span>
       <details><summary>
         <div class="s-top"><h3>Design, before the first screen</h3><span class="cmd">"show me options"</span></div>
         <div class="gate"><b>Gate</b><span>You lock the look. A scan test keeps builds to it.</span></div>
@@ -176,10 +176,9 @@ footer { color: var(--muted); font-size: 0.88rem; }
           <li>After that: a mock-up before any visible change, and a wording page for new words.</li>
           <li>Design depth: <span class="sized" data-mini="a mock-up before anything visible" data-light="brief, one mock round, a one-page guide" data-standard="brief, round 0, lock, checks every build" data-full="everything, plus a lock panel, flow map and art loop">brief, round 0, lock, checks every build</span>.</li>
         </ul>
-        <div class="lessons"><span>L-43 design first: 853 findings when it came last</span><span>L-63 mock-up before code</span></div>
       </div></details></div>
 
-    <div class="station"><span class="node">3</span>
+    <div class="station"><span class="node">5</span>
       <details><summary>
         <div class="s-top"><h3>Expert panel and safety audit</h3><span class="cmd">"run the panel"</span></div>
         <div class="gate"><b>Gate</b><span>Every serious item has your decision. The audit finds nothing serious left.</span></div>
@@ -191,17 +190,16 @@ footer { color: var(--muted); font-size: 0.88rem; }
           <li>The audit loop ends by fixing, by <strong>simplifying</strong> (offered at round 3), or by building a trial to try.</li>
           <li>⚠ Anything that loosens a safety rule is asked on its own, never inside "yes to all".</li>
         </ul>
-        <div class="lessons"><span>L-55 reviewers read decisions first</span><span>L-59 loops end by simplifying</span></div>
       </div></details></div>
 
-    <div class="station loop"><span class="node">4</span>
+    <div class="station loop"><span class="node">6</span>
       <details open><summary>
         <div class="s-top"><h3>Builds (repeat)</h3><span class="cmd">"merge 65"</span></div>
         <div class="gate"><b>Gate</b><span>Every check finds nothing serious. Nothing reaches the real project until you say "merge".</span></div>
         <span class="more">Show what happens</span>
       </summary><div class="body">
         <div class="loop-track" aria-label="Build loop">
-          <span>Brief</span><i>→</i><span>Mock-up if visible</span><i>→</i><span>Small steps</span><i>→</i><span class="stop">Freeze</span><i>→</i><span>Safety · Code · Design checks, side by side</span><i>→</i><span>Fix, re-check</span><i>→</i><span>Words OK</span><i>→</i><span class="stop">"Merge N"</span><i>→</i><span>5-minute retro</span><i>↺</i>
+          <span>Brief</span><i>→</i><span>Mock-up if visible</span><i>→</i><span>Small steps</span><i>→</i><span class="stop">Code stops changing</span><i>→</i><span>Safety · Code · Design checks, side by side</span><i>→</i><span>Fix, re-check</span><i>→</i><span>Words OK</span><i>→</i><span class="stop">"Merge N"</span><i>→</i><span>One question to you</span><i>↺</i>
         </div>
         <ul>
           <li><strong>Checks are sized to the change.</strong> Words only: a wording page. Looks only: a design check. A stricter rule: one narrow audit. Only a loosening gets the full loop.</li>
@@ -209,10 +207,9 @@ footer { color: var(--muted); font-size: 0.88rem; }
           <li>Several builds at once: one <strong>coordinator</strong> session you talk to; it briefs, relays and merges.</li>
           <li>Every message ends: <em>on main · on a branch · on your phone</em>.</li>
         </ul>
-        <div class="lessons"><span>L-52 builds and lanes</span><span>L-56 tier the checks</span><span>L-71 coordinator rules</span></div>
       </div></details></div>
 
-    <div class="station"><span class="node">5</span>
+    <div class="station"><span class="node">7</span>
       <details><summary>
         <div class="s-top"><h3>Release</h3><span class="cmd">"is that done?"</span></div>
         <div class="gate"><b>Gate</b><span>You've tried it for real. You could keep it going without a session.</span></div>
@@ -224,10 +221,9 @@ footer { color: var(--muted); font-size: 0.88rem; }
           <li>Three days of real use before any polish.</li>
           <li>An owner's manual, a renewals table, and a page of promises with what proves each.</li>
         </ul>
-        <div class="lessons"><span>L-61 four screenshots, 32 faults</span><span>L-64 use before polish</span><span>L-66 owner independence</span></div>
       </div></details></div>
 
-    <div class="station"><span class="node">6</span>
+    <div class="station"><span class="node">8</span>
       <details><summary>
         <div class="s-top"><h3>Live</h3><span class="cmd">"log it"</span></div>
         <div class="gate"><b>Loop</b><span>Use it, log ideas, build the small ones now, ship small releases.</span></div>
@@ -237,10 +233,9 @@ footer { color: var(--muted); font-size: 0.88rem; }
           <li><strong>Ideas:</strong> one list. "Log it" adds a line and carries on. No hard freeze.</li>
           <li><strong>What's missing?</strong> A whole-project sweep with an "if we skip it" table.</li>
           <li><strong>Operate:</strong> for a live tool. You say what changed; a three-line summary; one OK; then it's written and read back.</li>
-          <li><strong>Routines:</strong> the routine works nothing out itself, runs only pinned code, and can't change without you.</li>
+          <li><strong>Routines:</strong> the routine works nothing out itself, runs only code that has been checked, and can't change without you.</li>
           <li><strong>Options:</strong> research, 3–5 ways compared, a recommendation, your doubt answered.</li>
         </ul>
-        <div class="lessons"><span>L-67 ideas, not a freeze</span><span>L-69 routine safety</span><span>L-79 operating is a stage</span></div>
       </div></details></div>
   </section>
 
@@ -279,7 +274,7 @@ footer { color: var(--muted); font-size: 0.88rem; }
   var notes = {
     mini: "Mini: a few days' tool, and every harm answer is no. One file holds the plan, rules and decisions. If it grows, it moves up a size.",
     light: "Light: the worst case is annoyance or a small loss. About 3 reviewers, the audit loop capped at 3 rounds, one retro at release.",
-    standard: "Standard: real data, money, pets or other users. 5–6 reviewers, checks sized to each change, a 5-minute retro at each merge.",
+    standard: "Standard: real data, money, pets or other users. 5–6 reviewers, checks sized to each change, a 5-minute retro at each release.",
     full: "Full: health, safety or financial advice. 6–8 reviewers each checked by a verifier, every promise re-checked every round."
   };
   var buttons = document.querySelectorAll('.seg button');

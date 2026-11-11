@@ -40,7 +40,8 @@ From `${CLAUDE_PLUGIN_ROOT}/templates/STYLE-GUIDE.md`:
 3. **A scan test** that reads the UI code as text: no one-off colours or fonts, the shared components used, no
    shrinking text, banned words. An allow-list entry needs a decision ID.
 4. Test the lock with one question: **would two careful builders make the same choice?** Where not, add the rule.
-5. The owner locks it (one grill). Add the design block to the project `CLAUDE.md` (from
+5. Start `design/LEDGER.md` from `templates/DESIGN-LEDGER.md`. Full: also `FLOW-MAP.md` and `PAGE-INVENTORY.md` from their templates.
+6. The owner locks it (one grill). Add the design block to the project `CLAUDE.md` (from
    `templates/PROJECT-CLAUDE.md`).
 
 After the lock, changes follow the three lanes in the style guide: *conformance* (no decision), *pattern* (mock-up →

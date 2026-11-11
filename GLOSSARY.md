@@ -41,7 +41,7 @@ either fixed in one go or left with a reason.
 | **Words only** (not safety wording) | Wording page for your OK. No audit. |
 | **Looks only** (same information, same rules) | Mock-up first, design-lock check, code review. |
 | **A rule gets stricter** | One narrow safety audit of the change, code review. |
-| **A rule gets looser** ⚠, or a change that reaches many areas | Asked alone, full safety audit, logic review. |
+| **A rule gets looser** ⚠, a change that reaches many areas, or new stored data | Asked alone, full safety audit, logic review. |
 | **New feature** | A brief, mock-up if visible, all the lanes that apply, acceptance on your phone. |
 
 So a new idea does **not** restart everything. It gets the checks its size needs.
@@ -58,3 +58,20 @@ So a new idea does **not** restart everything. It gets the checks its size needs
 | **Coordinator** | The one session you talk to. It runs the others. |
 | **Hand-over** | A note that lets a fresh session carry on when one is full. |
 | **Usage window** | Your plan's 5-hour allowance. Costs are quoted in windows. |
+| **★** | The recommended option. "Yes" accepts it. |
+| **⚠** | This would loosen a safety rule. It is always asked on its own. |
+| **Tightening / loosening** | Making a rule stricter / less strict. |
+| **Freeze** | Stop changing the code while the checks read it. |
+| **Round** | One pass of a check. "3 rounds" means it was checked, fixed and re-checked twice. |
+| **Lane** | One kind of check (safety, code, design…). They run side by side. |
+| **Verifier** | A second reviewer whose only job is to catch the first one's mistakes. |
+| **Critical / Major / Minor** | Could cause real harm / materially wrong / polish. |
+| **Scan test** | An automatic check that reads the code as text, for example "no one-off colours". |
+| **Ledger** | The list of what changed in the design lock, and when. |
+| **By profile** | Not asked, because your standing preferences already answer it. |
+| **Interpretation** | A small technical choice a session made for you, written down in case you disagree. |
+| **Fails safe** | If it goes wrong, it goes wrong on the cautious side. |
+| **Tag** | A named marker on a released version, so it can be found again. |
+| **Acceptance batch** | A set of your results from trying a build, turned into fixes. |
+| **Grown out of its size** | The project now does more, or riskier things, than its size allows for. |
+| **Child session** | A session the coordinator started to do one piece of work. |

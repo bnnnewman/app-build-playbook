@@ -12,7 +12,7 @@ Exit code 1 if there are duplicate IDs or collisions, so it can gate a close.
 import datetime, re, subprocess, sys
 from collections import Counter, defaultdict
 
-ID = re.compile(r'^(?:D|P)-[A-Za-z0-9.]+(?:-\d+)?$')
+ID = re.compile(r'^(?:D|P)-[A-Za-z0-9.]+(?:-[A-Za-z0-9.]+)*$')
 DATE = re.compile(r'(\d{1,2})\s+([A-Z][a-z]{2})[a-z]*\.?(?:\s+(\d{4}))?|(\d{4})-(\d{2})-(\d{2})')
 MONTHS = {m: i for i, m in enumerate('Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(), 1)}
 
@@ -22,22 +22,21 @@ def cells(line):
 
 
 def parse(text):
-    rows, header = [], None
+    rows, header, previous = [], None, None
     for line in text.splitlines():
         if not line.lstrip().startswith('|'):
-            header = None
+            header, previous = None, None
             continue
         c = cells(line)
         if all(re.fullmatch(r':?-{2,}:?', x) for x in c if x):
+            # A separator row: the row just before it is the header of this table.
+            if previous is not None:
+                header = [x.lower() for x in previous]
             continue
+        previous = c
         first = c[0].replace('*', '').replace('`', '').strip()
-        if ID.match(first):
-            row = {'id': first, 'cells': c, 'header': header or []}
-            for name, value in zip(header or [], c):
-                row[name] = value
-            rows.append(row)
-        else:
-            header = [x.lower() for x in c]
+        if header and ID.match(first):
+            rows.append({'id': first, 'cells': c, 'header': header})
     return rows
 
 
@@ -88,7 +87,7 @@ def main():
     settled_elsewhere = set()
     for r in rows:
         link = col(r, 'replaces', 'settled', 'supersed') + ' ' + col(r, 'source')
-        for m in re.finditer(r'(?:settles|replaces|supersedes|confirm(?:s|ed by)?)\s+((?:D|P)-[A-Za-z0-9.]+(?:-\d+)?)', link, re.I):
+        for m in re.finditer(r'(?:settles|replaces|supersedes|confirm(?:s|ed by)?)\s+((?:D|P)-[A-Za-z0-9.]+(?:-[A-Za-z0-9.]+)*)', link, re.I):
             settled_elsewhere.add(m.group(1))
 
     print(f'{len(rows)} decisions in {path}.')
@@ -99,11 +98,11 @@ def main():
         aged.append(((today - d).days if d else -1, r))
     for days, r in sorted(aged, key=lambda x: -x[0]):
         age = f'{days} days' if days >= 0 else 'age unknown'
-        own = re.search(r'(?:confirmed|settled|replaced|superseded) by ((?:D|P)-[A-Za-z0-9.]+(?:-\d+)?)', col(r, 'status'), re.I)
+        own = re.search(r'(?:confirmed|settled|replaced|superseded) by ((?:D|P)-[A-Za-z0-9.]+(?:-[A-Za-z0-9.]+)*)', col(r, 'status'), re.I)
         note = ('  ← a later row settles this: update its status'
                 if r['id'] in settled_elsewhere or own else '')
         over = '  ← over 7 days: ask, or close "by profile"' if days > 7 and not note else ''
-        q = (col(r, 'question') or col(r, 'source'))[:90]
+        q = (col(r, 'question', 'decision', 'what') or col(r, 'source'))[:90]
         print(f"- {r['id']} ({age}): {q}{note}{over}")
 
     dupes = [i for i, n in Counter(ids).items() if n > 1]

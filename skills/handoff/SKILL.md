@@ -11,7 +11,7 @@ Say when your context is nearly full; don't wait to be asked.
 
 ## `session` (default): for the next Claude Code session
 
-1. Commit and push everything. A hand-over that points at uncommitted work is useless.
+1. Commit and push everything (no remote: commit, and say "not pushed" at the top of the hand-over). A hand-over that points at uncommitted work is useless.
 2. Write `work/<build>/HANDOFF.md` from `${CLAUDE_PLUGIN_ROOT}/templates/HANDOFF.md`. Keep it under 80 lines:
    - the branch to start from, and the footer (On main · On a branch · On your phone);
    - where things stand: steps done, checks and the count a command produced, lanes closed or open;

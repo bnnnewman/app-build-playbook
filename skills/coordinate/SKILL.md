@@ -32,7 +32,8 @@ Every brief says:
   children);
 - the base commit, the branch, the files owned, the shared files;
 - **the gates**, with the baseline count: what must pass before every push;
-- **push only to your branch. No PR, no merge, never main;**
+- **push only to your branch (no remote, or a push refused: commit locally and say "not pushed"). No PR, no
+  merge, never main;**
 - **don't ask the owner.** Take the cautious reading, list it "for the owner" in your report;
 - the **report** (`templates/CHILD-REPORT.md`): what changed, tests added, SPEC touched, new words, what couldn't be
   done or needs the device, the final count.

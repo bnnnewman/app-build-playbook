@@ -78,6 +78,7 @@ names checked on day 9 of 12.
 - **0 builds broken on the build service** after the set-up check.
 - **0 decisions re-asked** that `OWNER.md` already answers; 0 reviewer proposals that reopen a decision unmarked.
 - **Nothing "pending" for more than 7 days.**
-- **A retro at every merge**, with the owner's answer recorded; proposals reach this repo within the project.
+- **A retro at every release** (Full: every merge), with the owner's answers recorded; proposals reach this repo
+  within the project.
 - **Design lock before the first screen**; under 50 design findings at the first whole-app pass.
 - **Acceptance:** every device step has a recorded result.

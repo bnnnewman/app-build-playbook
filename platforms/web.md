@@ -18,7 +18,7 @@ rest.
 ## What is live?
 
 Git doesn't say, when publishing is a paste or an upload. So:
-- a **publish log** (`STATUS.md` and `docs/owner/MAINTAINING.md`): date, version, commit, where, who;
+- a **publish log** (`STATUS.md` → Published): date, version, commit, where, who;
 - **stamp the built file** with the version and date, so the live page can be matched to its source;
 - commit the built file, never edit it by hand, and have the build refuse to run if it would produce a broken page.
 

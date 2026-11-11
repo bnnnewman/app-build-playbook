@@ -50,13 +50,16 @@ Reply "yes to all", or "yes to all except 2: b".
 
 ## 3. Read back, then record
 
-1. **Read the answers back in one line** ("You chose: 1 a, 2 b, 3 a") before acting on any of them. If an exception
+1. **Read the answers back in one line, with what each means** ("You chose: 1 a (pause in winter), 2 b (every 14
+   days)") before acting on any of them. If an exception
    came with a comment ("a, but it's over-duplicating"), the comment is the decision: restate it.
 2. **Record each answer in `DECISIONS.md`** as its own row: ID `D-<build or stage>-nn`, date, the question in plain
    words, **his words**, status `confirmed`. Options and reasoning go in `work/<build>/NOTES.md`.
 3. **Parked answers** ("not sure yet") get the cautious default, status `pending`, and stay on the tree.
 4. Terms he defines go into SPEC §4.
 5. Commit after each round: `Notes: grill <topic> round <n>`.
+
+**Mini:** record in `BRIEF.md` section 6 (`D-01`…) instead of `DECISIONS.md`.
 
 ## 4. Walkthrough mode (`walkthrough`)
 
@@ -66,7 +69,8 @@ ask what he thinks. **No options and no recommendation until he has answered.** 
 ## 5. Done
 
 When every branch is settled:
-1. Summarise: decisions made, applied "by profile", left to defaults, still open.
+1. Summarise: decisions made; settled already by his standing preferences (logged "by profile"); left to defaults;
+   still open.
 2. Ask: **"Have we got a shared understanding? Say yes and I'll go ahead."**
 3. Act on nothing until he says yes. If another skill called you, hand back only then.
 

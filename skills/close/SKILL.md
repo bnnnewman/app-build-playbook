@@ -9,9 +9,12 @@ argument-hint: "<build id>"
 
 ## 1. Freeze
 
-Commit and push. Record `<base>..<head>`. No commits land while reviewers read. Gates first: the checks that run
+Commit and push (no remote, or push refused: commit locally, say "not pushed", carry on). Record `<base>..<head>`. No commits land while reviewers read. Gates first: the checks that run
 here pass with **0 failures** (read the result, don't grep for a count); the type-check or compile stand-in passes;
-`coverage.py` shows 0 missing.
+`coverage.py` shows 0 missing (Standard and Full).
+
+**Mini:** one review pass only (the code lane), the checklist in `BRIEF.md` section 8, findings into section 10,
+then publish by section 9. Skip the rest of this skill except "Merge N".
 
 ## 2. Pick the lanes (from the brief's tier)
 
@@ -38,7 +41,8 @@ Launch the lanes **in one message**, each on the frozen commit with its own scra
 
 ## 4. Words and device
 
-- **Wording page** (`/playbook:mock wording <build>`): he replies "words fine" or names lines.
+- **Wording page** (`/playbook:mock wording <build>`, from `${CLAUDE_PLUGIN_ROOT}/templates/WORDING-PAGE.md`): he
+  replies "words fine" or names lines.
 - **Device steps** into `docs/owner/ACCEPTANCE.md` under this build: *where → what to tap → what you should see*,
   with a time budget, a "use a test item" line where real data could be touched, and the test IDs each step covers.
   Ask for a **screenshot pass** of anything visible: light, dark, largest text.
@@ -59,5 +63,8 @@ app, one merge is one build on his phone: bundle docs-only changes with the next
 
 - `CHANGELOG.md`: one entry (what changed, the decisions, bug fixes). Bump the SPEC if a rule changed.
 - Move `work/<build>/` to `work/archive/`. Delete the merged branch. Update `STATUS.md`.
-- **Retro, five minutes:** `/playbook:retro <build>`. Its one question to the owner goes in the merge message.
+- **Record his answer** to the one question in the PR summary ("anything slow, confusing or great?") in
+  `retros/answers.md`, or "not answered".
+- **Retro:** Full: now, `/playbook:retro <build>`. Standard and Light: at the next `/playbook:release`. Mini: once, at
+  the end.
 - `work/<next>/HANDOFF.md` if the next build is known.

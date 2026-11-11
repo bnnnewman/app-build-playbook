@@ -5,6 +5,8 @@
 **After "merge <N>":** <how and when it reaches the phone or goes live>.
 
 ### What was checked, and what was found
+*Found = problems the check raised. Critical = could cause real harm; Major = materially wrong; Minor = polish.*
+
 | Check | Found | Fixed | Left as it is (why) |
 |---|---|---|---|
 | Safety audit | <n Major, n Minor> | all | <or "2 small things, both on the safe side"> |
@@ -16,7 +18,7 @@
 <The command>: <N> tests, 0 failures. **Not run here:** <what>.
 
 ### For you to check on the device (about <n> minutes)
-See `docs/owner/ACCEPTANCE.md` → "<build>". <k> steps. Please also send screenshots of <screens>: light, dark,
+Checklist: <link to the tick-box page, or `docs/owner/ACCEPTANCE.md` → "<build>">. <k> steps. Please also send screenshots of <screens>: light, dark,
 largest text.
 
 ### For you to know
@@ -25,4 +27,4 @@ largest text.
 
 **One question:** anything this time that felt slow, confusing or great?
 
-*Decisions: <IDs>. Base: `<branch>`. If stacked, merge order: <…>.*
+*If other changes are waiting too, merge them in this order: <…>.*

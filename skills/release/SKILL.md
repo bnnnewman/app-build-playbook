@@ -15,19 +15,24 @@ argument-hint: "[prepare <version> | batch | ship <version>]"
      item); give the owner only the *device* items.
    - Each step: *where → what to tap → what you should see* (the exact words). Items that need a rare situation
      ("on a red day") go under "Later, when it happens".
-   - Include once: the **first-run smoke list** (send it to the background, kill it, go offline, next morning, type
-     in a text field and dismiss the keyboard) and the **three-setting accessibility check** (largest text, dark
-     mode, increased contrast: five screens, screenshots).
+   - Include once: the **start-up checks** (leave the app and come back, close it fully, go offline, open it next
+     morning, type something and put the keyboard away) and the **looks check** (dark mode, the biggest text, high
+     contrast: five screens, screenshots).
    - Publish it as a **tick-box page** he can use on his phone (done / not done / later, a note per item).
 2. **Real use first.** After the first usable build: about three days of use, then `/playbook:grill feedback`.
    Polish stages (whole-app passes, critique) come after that, not before.
+   **A trial** (Standard and Full, when it will hold real data): write the pass test in his words first; he uses it
+   for a set number of days; during the trial only bug fixes are built, each confirmed on his device; he ends it by
+   saying "trial passed".
 3. **Before the first release, the owner docs** (`docs/owner/`, from the templates):
    - `OWNER-MANUAL.md`: the one thing to remember; one-time set-up; what each notice means; "if it says X, do Y".
-   - `MAINTAINING.md`: for a developer or a future session; includes the **renewals table**.
-   - `PROOF.md`: each promise the app makes and what proves it.
+   - `MAINTAINING.md`: for a developer or a future session; includes the list of **things that need renewing and
+     when**.
+   - `PROOF.md` (Full; optional for Standard): each promise the app makes and what proves it.
    - `SETUP-<platform>.md`: each one-time step with "done on <date>". **You fill in set values and dates** when he
      reports a step done. No blanks left for him.
-4. **Whole-batch pass** if several small builds are going out together: one `/playbook:audit` over the batch.
+4. **One check across the batch** if several small builds are going out together: one `/playbook:audit` over all
+   of them.
    Before a first release also `/playbook:gaps` and `/playbook:logic-review engine` (Standard and Full).
 
 ## `batch` (his results or screenshots have come back)
@@ -43,8 +48,8 @@ argument-hint: "[prepare <version> | batch | ship <version>]"
 ## `ship <version>`
 
 - Every device item is done, or listed as "later" with his OK. No Critical or Major open in any lane.
-- **Tag** the release. Add the **publish log** line to `STATUS.md` and `docs/owner/MAINTAINING.md`: date, version,
-  commit, where it went, who did the manual step. For a pasted or uploaded build, stamp the version and date inside
+- **Tag** the release. Add the **publish log** line to `STATUS.md` → Published (the one record; Mini: `BRIEF.md`
+  section 9): date, version, commit, where it went, who did the manual step. For a pasted or uploaded build, stamp the version and date inside
   the built file.
 - Final footer: **On main · On a branch · On your phone / live.**
-- `/playbook:retro release`.
+- `/playbook:retro release` (Standard, Light). It reads the answers saved in `retros/answers.md`.

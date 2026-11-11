@@ -8,7 +8,7 @@
 #   .claude/skills/playbook-<name>/SKILL.md   -> /playbook-<name>
 #   .claude/agents/<core agent>.md            -> logic-auditor, adherence-reviewer, ...
 #   .claude/playbook/                          -> PLAYBOOK.md, OWNER.md, GLOSSARY.md, LESSONS.md, THIRD-PARTY-NOTICES.md,
-#                                                 templates/, panels/, platforms/, scripts/, VERSION
+#                                                 METRICS.md, templates/, panels/, platforms/, examples/, scripts/, VERSION
 #
 # .claude/playbook/ is owned by the playbook and replaced on every run: don't edit files there.
 # Agent files the playbook didn't put there (e.g. a project-tailored adherence-reviewer) are never overwritten.
@@ -38,15 +38,15 @@ rewrite() {
 }
 
 # Reference material (owned by the playbook; replaced each run).
-rm -rf "$root/templates" "$root/panels" "$root/platforms" "$root/scripts"
+rm -rf "$root/templates" "$root/panels" "$root/platforms" "$root/examples" "$root/scripts"
 mkdir -p "$root/scripts"
-cp -R "$src/templates" "$src/panels" "$src/platforms" "$root/"
+cp -R "$src/templates" "$src/panels" "$src/platforms" "$src/examples" "$root/"
 cp "$src/scripts/coverage.py" "$src/scripts/decisions.py" "$src/scripts/metrics.py" "$src/scripts/orient.sh" "$root/scripts/"
 mkdir -p "$root/.claude-plugin" && cp "$src/.claude-plugin/plugin.json" "$root/.claude-plugin/"
-find "$root/templates" "$root/panels" "$root/platforms" "$root/scripts" \( -name '*.md' -o -name '*.py' -o -name '*.sh' \) | while read -r f; do
+find "$root/templates" "$root/panels" "$root/platforms" "$root/examples" "$root/scripts" \( -name '*.md' -o -name '*.py' -o -name '*.sh' \) | while read -r f; do
   rewrite < "$f" > "$f.tmp" && mv "$f.tmp" "$f"
 done
-for f in PLAYBOOK.md OWNER.md GLOSSARY.md LESSONS.md THIRD-PARTY-NOTICES.md; do rewrite < "$src/$f" > "$root/$f"; done
+for f in PLAYBOOK.md OWNER.md GLOSSARY.md LESSONS.md METRICS.md THIRD-PARTY-NOTICES.md; do rewrite < "$src/$f" > "$root/$f"; done
 echo "$version" > "$root/VERSION"
 
 # Skills, renamed playbook-<name>.
@@ -55,7 +55,7 @@ for dir in "$src"/skills/*/; do
   name="$(basename "$dir")"
   out="$dest/.claude/skills/playbook-$name"
   mkdir -p "$out"
-  rewrite < "$dir/SKILL.md" | sed -e "s/^name: $name\$/name: playbook-$name/" > "$out/SKILL.md"
+  rewrite < "$dir/SKILL.md" | sed -e "s/^name: $name\$/name: playbook-$name/" -e '/^\*`\.claude\/playbook` is the playbook folder\./d' > "$out/SKILL.md"
   shipped+=("skills/playbook-$name")
   grep -qxF "skills/playbook-$name" "$manifest" || echo "skills/playbook-$name" >> "$manifest"
 done
