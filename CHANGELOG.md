@@ -2,6 +2,15 @@
 
 Newest first. Versions use semver (see `.claude/CLAUDE.md`).
 
+## 2.1.0 · 11 Nov 2026 (models and the session board)
+
+- **Who does this job** (L-102): before every helper or child session the coordinator picks the cheapest model that
+  can do it: itself, Haiku, Sonnet or Opus. Fable only after the owner's yes, asked alone. Every helper has its
+  model named; none inherits Fable. Each helper's cost is recorded and added up at the retro.
+- **The session board** (L-103): child sessions are titled and tagged by project and build, report back when done
+  or stuck, and are listed with state and model in `STATUS.md` → Running now; a phone page when two or more run.
+- `OWNER.md`: a Models line, on the owner's word.
+
 ## 2.0.0 · 11 Nov 2026 (rebuilt from four projects)
 
 A rebuild from what the owner actually did and decided between 19 Oct and 11 Nov 2026: about 1,100 decisions, 60

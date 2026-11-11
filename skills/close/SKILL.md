@@ -7,6 +7,8 @@ argument-hint: "<build id>"
 
 *`${CLAUDE_PLUGIN_ROOT}` is the playbook folder. If you see it literally, find the folder by searching for `PLAYBOOK.md` under `~/.claude/plugins/`, `/opt/app-build-playbook` or `.claude/playbook/`.*
 
+**Helpers:** pick each one's model, and record its cost, by `/playbook:coordinate` → "Who does this job". Fable needs the owner's yes first.
+
 ## 1. Freeze
 
 Commit and push (no remote, or push refused: commit locally, say "not pushed", carry on). Record `<base>..<head>`. No commits land while reviewers read. Gates first: the checks that run

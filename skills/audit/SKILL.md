@@ -7,6 +7,8 @@ argument-hint: "<build> [one-round] [tier]"
 
 *`${CLAUDE_PLUGIN_ROOT}` is the playbook folder. If you see it literally, find the folder by searching for `PLAYBOOK.md` under `~/.claude/plugins/`, `/opt/app-build-playbook` or `.claude/playbook/`.*
 
+**Helpers:** pick each one's model, and record its cost, by `/playbook:coordinate` → "Who does this job". Fable needs the owner's yes first.
+
 Files: `work/<build>/reviews/SA<round>.md`. Finding IDs: `<build>-SA<round>-nn`. The next round is the highest
 existing number plus one.
 

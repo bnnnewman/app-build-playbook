@@ -7,6 +7,8 @@ argument-hint: "[pack name | design] [scope]"
 
 *`${CLAUDE_PLUGIN_ROOT}` is the playbook folder. If you see it literally, find the folder by searching for `PLAYBOOK.md` under `~/.claude/plugins/`, `/opt/app-build-playbook` or `.claude/playbook/`.*
 
+**Helpers:** pick each one's model, and record its cost, by `/playbook:coordinate` → "Who does this job". Fable needs the owner's yes first.
+
 **Reviewers advise. The owner decides. No reviewer edits a file.** Files go in `work/<build>/reviews/` (`work/R/` for
 the plan-and-spec panel).
 

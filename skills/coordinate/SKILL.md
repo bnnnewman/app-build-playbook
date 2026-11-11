@@ -13,6 +13,29 @@ paid for by a failure (`${CLAUDE_PLUGIN_ROOT}/PLAYBOOK.md`, "the coordinator").
 **On a small plan allowance, don't fan out.** One session, tiered checks. Say what the plan costs in usage windows
 before starting it.
 
+## Who does this job (decide before every helper or child session)
+
+Take the **first row that fits**. A helper starts cold and its report loses detail, so the first row wins often.
+
+| The job | Who | Why |
+|---|---|---|
+| A handful of steps, or a look-up whose place you know | **You, no helper** | A helper costs more than it saves |
+| Find, list, count, check links, gather status, collect new words, list branches | **Haiku** helper | Nothing to judge |
+| One review lane, a verifier, a contained fix with tests, a doc from a template | **Sonnet** helper | Judgement inside clear limits |
+| A build session, connected rules, integration, synthesis, the safety lane on a Full project | **Opus** | Many things must agree |
+| Opus has tried and failed, or the harm of a miss is Critical and the reasoning is long | **Fable, only after the owner's yes** | See below |
+
+- **You, the coordinator, run on Opus.** If this session is on Fable and the owner hasn't agreed to it for this
+  work, say so in one line and suggest he switches.
+- **Name the model on every helper and every child session.** A child left unset inherits your model. Never let a
+  child inherit Fable.
+- **Asking for Fable** (a question on its own, never in a round): what the job is; what Opus got wrong, or why a
+  miss here would be Critical; roughly what it costs against Opus; what happens if he says no. Wait for yes. The yes
+  covers that one job.
+- **Record the cost.** When a helper finishes, add a line to `work/<build>/NOTES.md` → Cost: the job, the model, the
+  tokens its finish notice gives, and whether it found anything. The retro adds these up, so the playbook learns
+  which steps are worth their cost.
+
 ## `plan`
 
 1. List the work packages. Propose them to the owner with sizes, and **run a few at a time**.
@@ -38,15 +61,24 @@ Every brief says:
 - the **report** (`templates/CHILD-REPORT.md`): what changed, tests added, SPEC touched, new words, what couldn't be
   done or needs the device, the final count.
 
-Start the child (a new session, or a subagent for small slices). Reviewers get a frozen commit and their own
-scratch folder.
+- **report back yourself:** message the session that started you when you finish, when you are stuck, and when you
+  have a question for the owner. Don't wait to be asked.
+
+Start the child (a new session, or a subagent for small slices), **with its model named** and titled
+`<project> · <build> · <what it is doing>`, with the tags `pb:<project>` and `pb:<project>:<build>`. The title is how
+you, the owner and the next coordinator find it. Reviewers get a frozen commit and their own scratch folder.
 
 ## While they run
 
 - **Relay, don't make the owner carry messages.** If one session needs to know something, tell it yourself.
 - Collect children's questions into **one** grill for the owner. Record each answer once, in the build that asked.
 - **Check-ins back off:** if three in a row find nothing new, stop and wait for an event or the owner.
-- Keep `STATUS.md` current: which builds are running, what waits on him.
+- **Keep the board.** `STATUS.md` → Running now has one line per child: build, what it is doing, its state
+  (working · waiting on you · waiting on a check · done · stuck), the model, and when it last reported. Update it on
+  every report. Before answering "where are we?", list your sessions by title and check any child that has been
+  quiet: a child that finished cleanly may not have said so.
+- **The board as a page:** when two or more children run, publish the board as one private page the owner can open
+  on his phone, and republish it to the same link on every change. The link goes in `STATUS.md`.
 
 ## `integrate <build>`
 
@@ -59,6 +91,6 @@ scratch folder.
 
 ## `hand-over`
 
-When your context is nearly full, say so. Write `work/COORDINATOR-HANDOFF.md` (`templates/HANDOFF.md`): builds
-running and their branches, what waits on the owner, the next three actions, reminders set. Start the new
+When your context is nearly full, say so. Write `work/COORDINATOR-HANDOFF.md` (`templates/HANDOFF.md`): the board
+(builds running, their branches, session titles, models and states), what waits on the owner, the next three actions, reminders set. Start the new
 coordinator with that file, and tell the owner which session to talk to now.

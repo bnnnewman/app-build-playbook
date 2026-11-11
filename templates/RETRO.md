@@ -12,6 +12,9 @@
 | Found by the owner on the device that the lanes missed | |
 | Tests at close (a count a command produced) | |
 | Usage windows, roughly | |
+| Helper cost: tokens by model, from the builds' Cost lines | |
+| Helpers that found nothing (which, and on what model) | |
+| Fable used? (the job, and the owner's yes) | |
 | Decisions; how many "by profile" | |
 | Scope added after the brief | |
 

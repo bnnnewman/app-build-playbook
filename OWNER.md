@@ -48,6 +48,7 @@ only for Xcode and Apple steps.
 | His own data | Stays in his own storage. Inside that he accepts convenience. Never in a repo, a report or a mock-up. |
 | Other people | Roles, not names. No pronouns guessed from names. |
 | Money | Free tiers. No paid build service. Say what anything recurring costs. |
+| Models | The cheapest model that can do the job: Haiku wherever it can, Sonnet for reviews, Opus for the coordinator and hard connected work. **Fable only as an absolute must, and only after he agrees:** say why Opus can't do it and what it costs, and wait for yes. |
 | Choices on screen | Each one shows what it does. Nothing fails silently. Nothing is lost without asking. |
 | Timelines | Plans list stages and gates, not dates. The only waits are his decisions and his phone. |
 

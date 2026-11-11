@@ -7,6 +7,8 @@ argument-hint: "[scope]"
 
 *`${CLAUDE_PLUGIN_ROOT}` is the playbook folder. If you see it literally, find the folder by searching for `PLAYBOOK.md` under `~/.claude/plugins/`, `/opt/app-build-playbook` or `.claude/playbook/`.*
 
+**Helpers:** pick each one's model, and record its cost, by `/playbook:coordinate` → "Who does this job". Fable needs the owner's yes first.
+
 The question is "is this actually finished, for this owner?", asked of the whole project, not of one change. Files:
 `work/GAPS/reviews/`. This is a heavy step: say what it costs in usage windows first, and run it early while the
 allowance lasts.

@@ -1,6 +1,6 @@
 # The app build playbook
 
-*Version 2.0.0 · 11 Nov 2026 · Rebuilt from four projects and about 1,100 recorded decisions (see
+*Version 2.1.0 · 11 Nov 2026 · Rebuilt from four projects and about 1,100 recorded decisions (see
 `examples/2026-11-deep-dive.md`). Lessons are in `LESSONS.md` and are cited as L-nn.*
 
 This is how the owner builds apps and tools with Claude Code:
@@ -294,6 +294,10 @@ failure (L-71).
    inconsistent.
 10. **Check-ins back off.** After three quiet checks, stop and wait for an event.
 11. **When the coordinator's context is nearly full**, it writes a handoff and a new coordinator takes over.
+12. **Children report back themselves** when done, stuck or holding a question, and every child session is titled
+    `<project> · <build> · <what>` so it can be found (L-103).
+13. **One board.** `STATUS.md` → Running now lists every child, its state and its model. With two or more children
+    it is also a page the owner can open on his phone.
 
 **On a budget** (L-72). When the plan's allowance is small: one session, tiered checks, panels of three, and the
 heavy steps (panels, gap analysis, whole-app passes) first while capacity lasts. Quote costs in usage windows.
@@ -343,9 +347,13 @@ show (system bars, real text sizes) and which device check covers it.
 
 **Writing.** Plain English, short sentences, concrete numbers, the answer first. ⚠ marks a loosening.
 
-**Models** (L-27). The main session uses the strongest model for coupled logic, synthesis and code review. Reviewers
-are Sonnet and never edit the repo. Tightly coupled logic is never split across agents. No model names in commits or
-code.
+**Models** (L-27, L-102). The cheapest model that can do the job, decided before every helper is started: the
+session itself for a handful of steps; Haiku for finding, listing and counting; Sonnet for a review lane or a
+contained fix; Opus for the coordinator, builds, connected rules and synthesis. **Fable only as an absolute must and
+only after the owner's yes**, asked alone, with why Opus can't do it and what it costs. Every helper and child
+session has its model named; none inherits Fable. Each helper's cost is recorded in the build's notes and added up
+at the retro. Reviewers never edit the repo. Tightly coupled logic is never split across agents. No model names in
+commits or code.
 
 ---
 

@@ -76,3 +76,6 @@ So a new idea does **not** restart everything. It gets the checks its size needs
 | **Acceptance batch** | A set of your results from trying a build, turned into fixes. |
 | **Grown out of its size** | The project now does more, or riskier things, than its size allows for. |
 | **Child session** | A session the coordinator started to do one piece of work. |
+| **Helper** | A short-lived assistant a session starts for one job. It reports back and is gone. |
+| **Model** | Which version of Claude does a job. Haiku is the cheapest and fastest, then Sonnet, then Opus; Fable is the strongest and dearest. |
+| **The board** | The list of every session at work: what it's doing, its state, its model. |

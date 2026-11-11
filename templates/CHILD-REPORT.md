@@ -1,6 +1,6 @@
 # Report: <build id> (<date>)
 
-**Branch:** `claude/<build>` at `<commit>` · **Status:** done | blocked on <…>
+**Branch:** `claude/<build>` at `<commit>` · **Status:** done | blocked on <…> · **Model:** <…>
 
 | Step | What changed (files) | Tests added | SPEC touched |
 |---|---|---|---|

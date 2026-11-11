@@ -413,4 +413,16 @@ them. `/playbook:start upgrade` keeps the project's decisions and IDs and swaps 
 One web tool settled its sign-in, an emailed code and a read-only connection case by case, with only a privacy
 reviewer to ask. Privacy covers what is held; security covers who can reach it.
 
+**L-102 · Change · Choose the model for each job, cheapest first, and measure it.** *(OF, 11 Nov 2026; PB)*
+The owner: "Haiku used where possible and Fable only as an absolute must… must rationalise with me before using
+Fable." Version 2 had one fixed rule (reviewers on Sonnet) and only guessed at cost. During the rebuild itself a
+research helper ran out the 5-hour allowance. Now the coordinator decides per job, names the model on every helper,
+asks before the dearest one, and records what each helper cost.
+
+**L-103 · Change · One board for every session, and children report back themselves.** *(OF, 11 Nov 2026; FL2)*
+The owner asked for "a cohesive management system… different sessions hooked from a single orchestrator chat".
+Coordinators kept the picture in their heads; a child that finished cleanly said nothing; a new coordinator had to
+rediscover its children. Now sessions are titled and tagged by project and build, report when done or stuck, and
+sit on one board.
+
 *(L-90 and L-92 were proposed by a project and folded into L-59 and L-76.)*

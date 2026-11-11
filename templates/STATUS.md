@@ -13,7 +13,9 @@
 <One action, and who does it.>
 
 ## Running now
-- <build>: <one line> (branch `<name>`)
+*The board. One line per session at work. Page: <link, when two or more are running>.*
+- <build>: <what it is doing> · <working | waiting on you | waiting on a check | done | stuck> · <model> · last
+  heard <time> (branch `<name>`)
 
 ## Housekeeping
 - Merged, safe to delete: <branches>

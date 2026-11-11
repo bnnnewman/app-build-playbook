@@ -16,6 +16,7 @@ with its link, if anything is visible>.
 
 ## Checks this build needs
 Tier: <words only | looks only | a rule gets stricter | a loosening or wide change | new feature>.
+Model for this build: <Opus | Sonnet; Fable only with the owner's yes, D-…>. Helpers: the cheapest that can do the job.
 Lanes at close: <SA · CR · DL · LR · PV · SE · AU>.
 
 ## What you own
