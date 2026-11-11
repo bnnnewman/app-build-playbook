@@ -50,7 +50,7 @@ From `${CLAUDE_PLUGIN_ROOT}/templates/`, into the layout in PLAYBOOK "Project la
 - Optional: `.claude/settings.json` from `templates/settings.json`, so local sessions load the plugin.
 
 Scaffold `DECISIONS.md` (Mini: `BRIEF.md`) **before** the grill, so answers have somewhere to go. Decision IDs here
-are `D-S0-nn`.
+are `D-S0-nn` (Mini: `D-01`… in the brief's section 6).
 
 ## 4. Adopt only
 

@@ -25,12 +25,11 @@ Work from the files and git, not memory.
 
 ## 2. Write `STATUS.md`
 
-Use `${CLAUDE_PLUGIN_ROOT}/templates/STATUS.md`. **Rewrite everything above `## Running now`. Keep `## Running now`
-and `## Published` as they are** (the Published table is the only record of what is live; add to it, never drop
-rows). Keep the part you rewrite under 40 lines, so it reads on a phone:
+Use `${CLAUDE_PLUGIN_ROOT}/templates/STATUS.md`. **Rewrite everything except `## Published`. Keep
+`## Published` exactly as it is** (the only record of what is live; add rows, never drop them). Keep the part you rewrite under 40 lines, so it reads on a phone:
 
 ```
-**Stage:** <name> · **Size:** <…> · updated <date>
+**Where we are:** <stage, in plain words> · **Size:** <…> · updated <date>
 **On main:** <what is merged>
 **On a branch:** <what is waiting, with PR numbers>
 **On your phone / live:** <version and date>
@@ -41,17 +40,19 @@ rows). Keep the part you rewrite under 40 lines, so it reads on a phone:
 ## Next
 <one action, with who does it>
 
+## Running now
+- <build>: <one line> (branch)
+
 ## Housekeeping
 - Merged, safe to delete: <branches>
 - Has unmerged work: <branches, age>   (older than 2 days: say so)
 
-## Running now        (kept)
 ## Published          (kept; the one publish log)
 ```
 
 Also flag: a `CLAUDE.md` status line that disagrees with the newest branch; `pending` items over 7 days.
 
-**Mini:** there is no `DECISIONS.md`; read `BRIEF.md` sections 6, 7 and 9 instead, and its grow check.
+**Mini:** there is no `DECISIONS.md`; read `BRIEF.md` sections 6 and 7 instead, and its grow check.
 
 ## 3. Tell the owner
 

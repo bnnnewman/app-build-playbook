@@ -12,10 +12,10 @@ can open on his phone (`/playbook:mock wording <build>`). Made-up data only. He 
 ## Checked before the owner sees it
 - [ ] Fewer words; nothing said twice; no background logic shown.
 - [ ] Calm tone: no scores, guilt or exclamation marks.
-- [ ] His own words for things (see the glossary in the PLAN). Australian spelling, metric units, dates as "Fri 20 Nov".
+- [ ] His own words for things (see SPEC §4 Definitions; Mini: the brief). Australian spelling, metric units, dates as "Fri 20 Nov".
 - [ ] Roles, not names.
-- [ ] **Safety wording** (warnings, limits, anything that tells him to stop or get help) is marked ⚠ and was checked
-      against the SPEC. A change to it is a rule change, not a wording change.
+- [ ] **Safety wording** (warnings, limits, anything that tells him to stop or get help) is marked **Safety**, is not approved on
+      this page, and goes through the safety check. A change to it is a rule change, not a wording change.
 - [ ] Each longest line fits at the largest text size.
 
 **Result:** <"words fine" on <date> | lines changed: …>

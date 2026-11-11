@@ -44,7 +44,7 @@ A picture of the stages: [`docs/stage-map.html`](docs/stage-map.html).
 | Plan and spec | Two or three rounds: "yes to all except…" |
 | Design | Say which apps you like; pick from one mock-up page; say "lock it" |
 | Expert panel | Say "start"; then one or two rounds on what they found. Anything that loosens safety is asked alone |
-| Each build | Agree the scope; pick a mock-up if it's visible; "words fine"; "merge N" |
+| Each build | Agree the scope; pick a mock-up if it's visible; "words fine"; "merge N"; one optional question: anything slow, confusing or great? |
 | Release | Tick through a checklist on your phone; send screenshots of anything odd |
 
 That's it. Everything else is the session's job.
@@ -75,7 +75,7 @@ Platform notes in `platforms/`: iPhone apps, web tools, routines.
 
 ### On my own computer (every project)
 
-On a computer, in Claude Code (from the phone, ask a session: "install the playbook for me"):
+On a computer, in Claude Code (on the phone, use the next section instead):
 
 ```
 /plugin marketplace add bnnnewman/app-build-playbook
@@ -101,7 +101,7 @@ By hand:
 The script installs the playbook and adds `OWNER.md` to every session's standing instructions. After that the
 playbook keeps itself up to date.
 
-**If you set this up before version 2, paste the script again**: the new one also installs the owner profile.
+**If you set this up before version 2, do this step again**: the new one also installs the owner profile.
 
 ### Per project, with nothing installed (fallback)
 

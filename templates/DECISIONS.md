@@ -9,7 +9,7 @@ again) · `replaced` (see "Settled by").
 When a later row settles an earlier one, **update both rows**.
 
 IDs are `D-<build>-nn`, so two sessions can't collide: `D-S0-` start, `D-PL-` plan, `D-SP-` spec, `D-LK-` look,
-`D-R-` panel, then the build's own ID.
+`D-R-` panel, `D-GAPS-` gap analysis, then the build's own ID.
 
 | ID | Date | Question, in plain words | The owner's answer, in his words | Status | Replaces / Settled by |
 |---|---|---|---|---|---|

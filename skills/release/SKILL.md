@@ -48,8 +48,9 @@ argument-hint: "[prepare <version> | batch | ship <version>]"
 ## `ship <version>`
 
 - Every device item is done, or listed as "later" with his OK. No Critical or Major open in any lane.
-- **Tag** the release. Add the **publish log** line to `STATUS.md` → Published (the one record; Mini: `BRIEF.md`
-  section 9): date, version, commit, where it went, who did the manual step. For a pasted or uploaded build, stamp the version and date inside
+- **Tag** the release. Add the **publish log** line to `STATUS.md` → Published (the one record):
+  date, version, commit, where it went, who did the manual step. For a pasted or uploaded build, stamp the version and date inside
   the built file.
 - Final footer: **On main · On a branch · On your phone / live.**
-- `/playbook:retro release` (Standard, Light). It reads the answers saved in `retros/answers.md`.
+- `/playbook:retro release` (Standard and Light. Full has already run one at each merge. Mini: this is its one
+  retro.) It reads the answers saved in `retros/answers.md`.

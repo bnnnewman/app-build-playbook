@@ -28,7 +28,7 @@ audit loops and 4 projects. Evidence: `examples/2026-11-deep-dive.md`. Lessons L
 - **`GLOSSARY.md`**: plain words, what each check catches, what each size of change costs.
 - **Scripts:** `decisions.py` (what's waiting on the owner; collisions), `metrics.py` (retro numbers from review
   files), `orient.sh` (the session-start hook). A **Playbook Teach** output style.
-- Templates: `BRIEF`, `STATUS`, `IDEAS`, `HANDOFF`, `BUILD-BRIEF`, `CHILD-REPORT`, `ACCEPTANCE`, `OWNER-MANUAL`,
+- Templates: `BRIEF`, `PROJECT-CLAUDE-MINI`, `WORDING-PAGE`, `STATUS`, `IDEAS`, `HANDOFF`, `BUILD-BRIEF`, `CHILD-REPORT`, `ACCEPTANCE`, `OWNER-MANUAL`,
   `MAINTAINING`, `PROOF`, `LEARNING`, `SETUP-PLATFORM`, `DESIGN-BRIEF`, `STYLE-GUIDE`, `DESIGN-LEDGER`, `FLOW-MAP`,
   `PAGE-INVENTORY`, `BENCHMARKS`, `ART-BRIEF`, `OPERATIONS`, `ROUTINE`, `OPTIONS`, `INTERFACE-AGREEMENT`,
   `TEST-SCRIPT`, `settings.json`, `gitignore`.
@@ -44,8 +44,11 @@ audit loops and 4 projects. Evidence: `examples/2026-11-deep-dive.md`. Lessons L
 - **Audit loop exits:** simplify offered at round 3; a close-out rule; a trial instead of more document rounds
   (L-59).
 - **Reviewers read `OWNER.md` and the decision log first** and mark "Reopens D-…" (L-55).
-- **Retro:** five minutes at every merge; numbers by script; the question inside the merge message; lessons as
-  `<project>-L<n>` until this repo numbers them (L-70).
+- **Retro:** one question to the owner in every PR summary, answers kept in `retros/answers.md`; the five-minute
+  retro at each release (Full: every merge; Mini: once at the end); numbers by script; lessons as `<project>-L<n>`
+  until this repo numbers them (L-70).
+- **Mini path:** start → mini spike → build → one review pass → publish → one retro, all in one `BRIEF.md`.
+- **No remote, or a push refused:** commit locally, say "not pushed", carry on.
 - **Project layout:** `work/<build>/`, `docs/owner/`, `design/`, one `STATUS.md`, nothing else at the root (L-77).
 - `coverage.py` reads test IDs of any prefix from the SPEC and fails on rows it can't read.
 - `/playbook:start` adopt: works on the session's branch; says "not run" when it can't run; allows fixes that touch

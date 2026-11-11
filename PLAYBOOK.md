@@ -237,7 +237,7 @@ docs-only changes more than needed (L-17).
   ends it by saying "trial passed".
 - **Before a first release** (Standard and Full): a gap analysis and a whole-engine logic review.
 - **Owner independence** (L-66): before the first release, write `OWNER-MANUAL.md` (the one thing to remember, what
-  each notice means, what to do when a build fails), `MAINTAINING.md` (with a **renewals table**) and `PROOF.md`
+  each notice means, what to do when a build fails), `MAINTAINING.md` (with a **renewals table**) and, for Full, `PROOF.md`
   (each promise and what proves it). The session records set values and dates; it doesn't leave blanks for the owner.
 - **Tag the release** and add the publish-log line to `STATUS.md` → Published (the one record): date, version,
   where it went.

@@ -28,14 +28,14 @@ def parse(text):
             header, previous = None, None
             continue
         c = cells(line)
-        if all(re.fullmatch(r':?-{2,}:?', x) for x in c if x):
+        if all(re.fullmatch(r':?-+:?', x) for x in c if x):
             # A separator row: the row just before it is the header of this table.
             if previous is not None:
                 header = [x.lower() for x in previous]
             continue
         previous = c
         first = c[0].replace('*', '').replace('`', '').strip()
-        if header and ID.match(first):
+        if header and any('status' in h for h in header) and ID.match(first):
             rows.append({'id': first, 'cells': c, 'header': header})
     return rows
 
@@ -88,7 +88,7 @@ def main():
     for r in rows:
         link = col(r, 'replaces', 'settled', 'supersed') + ' ' + col(r, 'source')
         for m in re.finditer(r'(?:settles|replaces|supersedes|confirm(?:s|ed by)?)\s+((?:D|P)-[A-Za-z0-9.]+(?:-[A-Za-z0-9.]+)*)', link, re.I):
-            settled_elsewhere.add(m.group(1))
+            settled_elsewhere.add(m.group(1).rstrip('.'))
 
     print(f'{len(rows)} decisions in {path}.')
     print(f'\n## Waiting on the owner: {len(pending)}')
@@ -98,7 +98,7 @@ def main():
         aged.append(((today - d).days if d else -1, r))
     for days, r in sorted(aged, key=lambda x: -x[0]):
         age = f'{days} days' if days >= 0 else 'age unknown'
-        own = re.search(r'(?:confirmed|settled|replaced|superseded) by ((?:D|P)-[A-Za-z0-9.]+(?:-[A-Za-z0-9.]+)*)', col(r, 'status'), re.I)
+        own = re.search(r'(?:confirmed|settled|replaced|superseded) by ((?:D|P)-[A-Za-z0-9.]+(?:-[A-Za-z0-9.]+)*)', col(r, 'status') + ' ' + col(r, 'replaces', 'settled'), re.I)
         note = ('  ← a later row settles this: update its status'
                 if r['id'] in settled_elsewhere or own else '')
         over = '  ← over 7 days: ask, or close "by profile"' if days > 7 and not note else ''

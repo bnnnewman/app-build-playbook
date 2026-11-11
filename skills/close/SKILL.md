@@ -1,6 +1,6 @@
 ---
 name: close
-description: Close a build - freeze, run the review lanes it needs in parallel (safety, code, design lock, logic, privacy, automation), fix and re-check each lane to 0 Critical and 0 Major, get the wording approved, write the device steps and a plain-words PR, then wait for the owner's "merge N". Ends with a five-minute retro and a handoff. Use when a build's steps are done.
+description: Close a build - freeze, run the review lanes it needs in parallel (safety, code, design lock, logic, privacy, automation), fix and re-check each lane to 0 Critical and 0 Major, get the wording approved, write the device steps and a plain-words PR, then wait for the owner's "merge N". Ends by recording the owner's answer to the one question, and a handoff. Use when a build's steps are done.
 argument-hint: "<build id>"
 ---
 # Close a build
@@ -13,8 +13,9 @@ Commit and push (no remote, or push refused: commit locally, say "not pushed", c
 here pass with **0 failures** (read the result, don't grep for a count); the type-check or compile stand-in passes;
 `coverage.py` shows 0 missing (Standard and Full).
 
-**Mini:** one review pass only (the code lane), the checklist in `BRIEF.md` section 8, findings into section 10,
-then publish by section 9. Skip the rest of this skill except "Merge N".
+**Mini:** one review pass only (the code lane), the checklist in `BRIEF.md` section 8, findings into section 10.
+Wait for his "merge" or "publish", then publish by section 9, add a row to `STATUS.md` → Published, and run the
+one retro (`/playbook:retro release`). Skip sections 2 to 5.
 
 ## 2. Pick the lanes (from the brief's tier)
 

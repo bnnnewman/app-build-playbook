@@ -48,11 +48,10 @@ grow check at the bottom ever says yes, split it into the full documents.*
 - [ ] No real data or personal names anywhere.
 - [ ] One review pass done; findings listed in section 10.
 
-## 9. How to publish, and what is live
+## 9. How to publish
 1. <numbered steps; who has permission>
 
-| Date | Version / commit | Where | Who |
-|---|---|---|---|
+What is live: see `STATUS.md` → Published.
 
 ## 10. Feedback and findings
 | Date | From (role) or review | What | What changed |

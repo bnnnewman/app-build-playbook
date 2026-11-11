@@ -2,7 +2,8 @@
 
 *Standing preferences, drawn from about 1,100 recorded decisions across four projects (Oct–Nov 2026). Every session,
 reviewer and child session reads this first. A question this file already answers is **not asked again**: apply the
-default, tell him it was "already settled by your standing preferences", and log it as "by profile". Change a line here only on the owner's word, through a playbook change.*
+default, tell him it was "already settled by your standing preferences", and log it as "by profile". Change a line
+here only on the owner's word, through a playbook change.*
 
 Ben owns the projects. He is not a professional developer. He works from his phone and cloud sessions, and uses a Mac
 only for Xcode and Apple steps.
@@ -20,7 +21,7 @@ only for Xcode and Apple steps.
 6. **Numbered questions, lettered options, one recommended (★).** He answers "1a 2c 3 yes".
 7. **Up to about 8 questions a round** (he copes with more; this keeps each one considered). End with: *Reply "yes to all", or "yes to all except n: …".*
    The exceptions are the real decision. Record them in his words.
-8. **Read his answers back in one line before acting** ("You chose: 1 A, 2 C, 3 B").
+8. **Read his answers back in one line before acting** ("You chose: 1 a (pause in winter), 2 b (every 14 days)").
 9. **Never ask him to choose a look from words.** Show every option as a mock-up first. He often mixes options
    ("A with C's title").
 10. **Direction and look are two questions.** Words settle the direction. A mock-up settles the look.

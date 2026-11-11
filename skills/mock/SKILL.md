@@ -20,7 +20,8 @@ picture.
 - **Under each option, one line: what it does** and what it costs.
 - **Say what the picture can't show**, in plain words ("the phone's top and bottom bars, real text sizes,
   movement: you'll check those on the phone"), and which device check covers it.
-- One page per topic, **republished to the same link** as it changes. Put the link in `work/<build>/NOTES.md`.
+- One page per topic, **republished to the same link** as it changes. Put the link in `work/<build>/NOTES.md` (Mini:
+  `BRIEF.md` section 10).
 - Publish as a private artifact where the session can; otherwise write `design/mocks/<build>/<name>.html` and tell
   him how to open it.
 
@@ -39,6 +40,6 @@ For `/playbook:design round0`: 2–3 named directions; font and colour choices; 
 
 ## `wording <build>`
 
-Every new or changed string of a build on one page: where it shows, the words, and for a change the old words beside
+From `${CLAUDE_PLUGIN_ROOT}/templates/WORDING-PAGE.md`. Every new or changed string of a build on one page: where it shows, the words, and for a change the old words beside
 the new. Safety lines are marked and are **not** approved here: they go through the safety lane, asked alone. He
 replies "words fine" or names the lines to change.
