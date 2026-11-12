@@ -37,8 +37,8 @@ Launch the lanes **in one message**, each on the frozen commit with its own scra
 - **Give each reviewer the code to read:** a separate copy checked out at the frozen commit, or a diff file in its
   scratch folder. A reviewer with no shell can't fetch it.
 - **Reviewers never touch the build's checkout:** no checkout, switch or reset there. Read only.
- Save each to
-`work/<build>/reviews/<LANE>1.md`.
+
+Save each to `work/<build>/reviews/<LANE>1.md`.
 
 ## 3. Fix and re-check
 
