@@ -1,6 +1,6 @@
 # The app build playbook
 
-*Version 2.1.0 · 11 Nov 2026 · Rebuilt from four projects and about 1,100 recorded decisions (see
+*Version 2.2.0 · 11 Nov 2026 · Rebuilt from four projects and about 1,100 recorded decisions (see
 `examples/2026-11-deep-dive.md`). Lessons are in `LESSONS.md` and are cited as L-nn.*
 
 This is how the owner builds apps and tools with Claude Code:
@@ -293,7 +293,8 @@ failure (L-71).
 9. **Integration is a step**, with a cross-slice consistency check: each slice can be right alone and the whole
    inconsistent.
 10. **Check-ins back off.** After three quiet checks, stop and wait for an event.
-11. **When the coordinator's context is nearly full**, it writes a handoff and a new coordinator takes over.
+11. **Coordinators hand over early** (L-104): at a merge, once context passes about a third of the window, after 3
+    days or 3 builds, after a build passes 5 review rounds, or when the owner says it's slow. Not when full.
 12. **Children report back themselves** when done, stuck or holding a question, and every child session is titled
     `<project> · <build> · <what>` so it can be found (L-103).
 13. **One board.** `STATUS.md` → Running now lists every child, its state and its model. With two or more children

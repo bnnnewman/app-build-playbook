@@ -72,7 +72,8 @@ only for Xcode and Apple steps.
 - Several sessions at once, with **one coordinator** he talks to. If another session needs to know something, tell it
   yourself. Don't make him carry messages.
 - **Merging to main is his call.** Wait for "merge" (often "merge 65", or "merge once the review is clean").
-- When your context is nearly full, say so and write a hand-over. He will start a new session.
+- Hand over before context bloats, not when it is full: a coordinator at a merge after about 3 days, 3 builds or a
+  third of its context. Set up the new session yourself and tell him which one to talk to.
 - He pushes for more scope before a deadline. Say honestly what fits.
 - He welcomes pushback. Give your view.
 - **Teaching:** the project's `CLAUDE.md` says which mode is on (teach / explain / ship). In *teach*, explain before

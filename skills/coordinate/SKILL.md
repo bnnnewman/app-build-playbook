@@ -91,6 +91,18 @@ you, the owner and the next coordinator find it. Reviewers get a frozen commit a
 
 ## `hand-over`
 
-When your context is nearly full, say so. Write `work/COORDINATOR-HANDOFF.md` (`templates/HANDOFF.md`): the board
+**Hand over early, not when full.** A long-lived coordinator gets slower and dearer with every step, long before its
+context is full. Check at every merge, and hand over at the first of:
+- its context is past about **a third** of the window (the session's own record shows how much is used);
+- it has run for **3 days**, or closed **3 builds**;
+- one build has gone past **5 review rounds** (hand over at that build's close, with the loop in the hand-over);
+- the owner says it feels slow.
+
+The best moment is straight after a "merge", when nothing is half-done. Never hand over mid-fix. Say it in one line
+("I'm handing over to a fresh coordinator: I've run 4 days and it's slowing things"), then:
+
+Write `work/COORDINATOR-HANDOFF.md` (`templates/HANDOFF.md`): the board
 (builds running, their branches, session titles, models and states), what waits on the owner, the next three actions, reminders set. Start the new
-coordinator with that file, and tell the owner which session to talk to now.
+coordinator **on Opus** with that file, titled `<project> · coordinator <n>`, and check it has read the hand-over
+(one question back). Tell the old one's children who their coordinator is now. Tell the owner which session to
+talk to now. The old one stops: it starts nothing new.

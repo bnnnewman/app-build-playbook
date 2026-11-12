@@ -7,7 +7,8 @@ argument-hint: "[session | chat <purpose>]"
 
 *`${CLAUDE_PLUGIN_ROOT}` is the playbook folder. If you see it literally, find the folder by searching for `PLAYBOOK.md` under `~/.claude/plugins/`, `/opt/app-build-playbook` or `.claude/playbook/`.*
 
-Say when your context is nearly full; don't wait to be asked.
+Say when your context is getting heavy (about a third used, for a coordinator); don't wait until it is full or to
+be asked. Coordinators: the triggers are in `/playbook:coordinate` → `hand-over`.
 
 ## `session` (default): for the next Claude Code session
 

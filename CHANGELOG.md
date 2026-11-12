@@ -2,6 +2,12 @@
 
 Newest first. Versions use semver (see `.claude/CLAUDE.md`).
 
+## 2.2.0 · 12 Nov 2026 (coordinators hand over early)
+
+- **Coordinator hand-over triggers** (L-104): at a merge, once context passes about a third of the window, after 3
+  days or 3 builds, after a build passes 5 review rounds, or when the owner says it's slow. The new coordinator runs
+  on Opus, confirms it has read the hand-over, and the children are told. `OWNER.md` updated on the owner's word.
+
 ## 2.1.0 · 11 Nov 2026 (models and the session board)
 
 - **Who does this job** (L-102): before every helper or child session the coordinator picks the cheapest model that

@@ -425,4 +425,10 @@ Coordinators kept the picture in their heads; a child that finished cleanly said
 rediscover its children. Now sessions are titled and tagged by project and build, report when done or stuck, and
 sit on one board.
 
+**L-104 · Change · Coordinators hand over early, on fixed triggers.** *(OF, 12 Nov 2026; FL2)*
+One coordinator ran 8 days and dozens of builds, carrying about a third of a million tokens of context. Its last build
+spent 1.5 hours building and 6 hours in ten review rounds, and the owner said "the latest fixes are taking ages". The
+old rule ("when context is nearly full") never fired. Now a coordinator hands over at a merge after a third of its
+context, 3 days, 3 builds or a 5-round loop.
+
 *(L-90 and L-92 were proposed by a project and folded into L-59 and L-76.)*
