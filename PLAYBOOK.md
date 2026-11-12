@@ -1,6 +1,6 @@
 # The app build playbook
 
-*Version 2.2.0 · 11 Nov 2026 · Rebuilt from four projects and about 1,100 recorded decisions (see
+*Version 2.2.1 · 11 Nov 2026 · Rebuilt from four projects and about 1,100 recorded decisions (see
 `examples/2026-11-deep-dive.md`). Lessons are in `LESSONS.md` and are cited as L-nn.*
 
 This is how the owner builds apps and tools with Claude Code:
@@ -286,7 +286,8 @@ failure (L-71).
    hands out SPEC section numbers and test-ID prefixes.
 4. **Slices own files.** Shared files are named, and changes to them are small and reported.
 5. **Same gates for every child**, stated in the brief with the baseline test count.
-6. **Reviewers read a frozen commit**, each with its own build folder.
+6. **Reviewers read a frozen commit**, each with its own build folder, from their own copy or a diff file, never
+   the builder's checkout. The builder's own check is not a lane (L-105).
 7. **A fixed child report**: what changed, tests added, SPEC touched, new words, what needs the device, final count.
 8. **Children never ask the owner.** They take the cautious reading, note it "for the owner", and the coordinator
    relays questions in one grill.

@@ -32,7 +32,12 @@ one retro (`/playbook:retro release`). Skip sections 2 to 5.
 | Automation | AU | changes anything a routine runs | `playbook:automation-reviewer` |
 
 New screen → also `/playbook:critique screen`. Words-only or looks-only builds skip SA (see `/playbook:audit` tiers).
-Launch the lanes **in one message**, each on the frozen commit with its own scratch folder. Save each to
+Launch the lanes **in one message**, each on the frozen commit with its own scratch folder (L-105):
+- **Each lane is a separate reviewer.** The builder's own check is not a lane.
+- **Give each reviewer the code to read:** a separate copy checked out at the frozen commit, or a diff file in its
+  scratch folder. A reviewer with no shell can't fetch it.
+- **Reviewers never touch the build's checkout:** no checkout, switch or reset there. Read only.
+ Save each to
 `work/<build>/reviews/<LANE>1.md`.
 
 ## 3. Fix and re-check

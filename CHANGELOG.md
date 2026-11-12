@@ -2,6 +2,11 @@
 
 Newest first. Versions use semver (see `.claude/CLAUDE.md`).
 
+## 2.2.1 · 12 Nov 2026
+
+- Review lanes (L-105): the builder's own check isn't a lane; each reviewer gets its own copy or a diff file; reviewers
+  never touch the build's checkout.
+
 ## 2.2.0 · 12 Nov 2026 (coordinators hand over early)
 
 - **Coordinator hand-over triggers** (L-104): at a merge, once context passes about a third of the window, after 3

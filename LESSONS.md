@@ -431,4 +431,10 @@ spent 1.5 hours building and 6 hours in ten review rounds, and the owner said "t
 old rule ("when context is nearly full") never fired. Now a coordinator hands over at a merge after a third of its
 context, 3 days, 3 builds or a 5-round loop.
 
+**L-105 · Change · Review lanes are separate, read-only, and given the code.** *(FL2, 12 Nov 2026)*
+A First Light coordinator found three faults in one build's close: the builder's own self-check was counted as a
+lane; reviewers without a shell couldn't see the code at the head; and a reviewer switching the shared checkout left
+it broken three times. Each lane is now its own reviewer, reads its own copy or a diff file, and never touches the
+build's checkout.
+
 *(L-90 and L-92 were proposed by a project and folded into L-59 and L-76.)*

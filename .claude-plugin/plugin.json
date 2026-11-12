@@ -1,6 +1,6 @@
 {
   "name": "playbook",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "The owner's app build playbook: an owner profile, set-up by size and type, plan and spec, a design track, expert panels, tiered review lanes, coordinated builds, release and acceptance, live operation, and retros that feed back.",
   "author": { "name": "Ben Newman" },
   "repository": "https://github.com/bnnnewman/app-build-playbook",
