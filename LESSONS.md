@@ -437,4 +437,9 @@ lane; reviewers without a shell couldn't see the code at the head; and a reviewe
 it broken three times. Each lane is now its own reviewer, reads its own copy or a diff file, and never touches the
 build's checkout.
 
+**L-106 · Keep · The screenshot pass and the design check before a mock-up both earn their place.** *(FL2, 13 Nov 2026)*
+In its first hour, First Light's screenshot pass caught a real safety fault: the made-up-data gallery left over real
+data. The same day, the design check run before the owner saw a mock-up caught a draft that hid the reason for a cap.
+Keep both steps, every build.
+
 *(L-90 and L-92 were proposed by a project and folded into L-59 and L-76.)*

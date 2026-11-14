@@ -6,6 +6,7 @@ Newest first. Versions use semver (see `.claude/CLAUDE.md`).
 
 - Review lanes (L-105): the builder's own check isn't a lane; each reviewer gets its own copy or a diff file; reviewers
   never touch the build's checkout.
+- L-106 (Keep): the screenshot pass and the design check before a mock-up, both proven in their first use.
 
 ## 2.2.0 · 12 Nov 2026 (coordinators hand over early)
 
